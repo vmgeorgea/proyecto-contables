@@ -48,14 +48,14 @@ public class CuentaDAO {
        Connection conn=c.getConexion();
        if(conn!=null){
         PreparedStatement pst = null;
-        String sql="insert into Cuenta (numeroCuenta, descripcionCuenta, saldoInicialCuenta, saldoFinalCuenta, Cuenta_idCuenta, Tipo_idTipo) values (?, ?, ?, ?, ?, ?)";
+        String sql="insert into cuenta (numeroCuenta, descripcionCuenta, saldoInicialCuenta, saldoFinalCuenta, Cuenta_idCuenta, Tipo_idTipo) values (?, ?, ?, ?, ?, ?)";
         pst = conn.prepareStatement(sql);
-        pst.setString(1, u.getNumeroCuenta());
+        pst.setInt(1, Integer.parseInt(u.getNumeroCuenta()));
         pst.setString(2, u.getDescripcionCuenta());
         pst.setString(3, u.getSaldoInicialCuenta());
         pst.setString(4, u.getSaldoFinalCuenta());
-        pst.setString(5, u.getCuenta_idCuenta());
-        pst.setString(6, u.getTipo_idTipo());
+        pst.setInt(5, Integer.parseInt(u.getCuenta_idCuenta()));
+        pst.setInt(6, Integer.parseInt(u.getTipo_idTipo()));
         pst.execute();
         agregado=true;
         pst.close();
@@ -124,12 +124,13 @@ public class CuentaDAO {
    ResultSet rs = st.executeQuery(sql);
        while(rs.next()){
         CuentaClass r= new CuentaClass();
-        r.setNumeroCuenta(rs.getString(1));
-        r.setDescripcionCuenta(rs.getString(2));
-        r.setSaldoInicialCuenta(rs.getString(3));
-        r.setSaldoFinalCuenta(rs.getString(4));
-        r.setCuenta_idCuenta(rs.getString(5));  
-        r.setTipo_idTipo(rs.getString(6));        
+        r.setIdCuenta(rs.getString(1));
+        r.setNumeroCuenta(rs.getString(2));
+        r.setDescripcionCuenta(rs.getString(3));
+        r.setSaldoInicialCuenta(rs.getString(4));
+        r.setSaldoFinalCuenta(rs.getString(5));
+        r.setCuenta_idCuenta(rs.getString(6));  
+        r.setTipo_idTipo(rs.getString(7));        
         listahistorial.add(r);
        }
    rs.close();
