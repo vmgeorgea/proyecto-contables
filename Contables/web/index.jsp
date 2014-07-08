@@ -9,9 +9,16 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>Inicio</title>
     </head>
-    <body>
-        <h1>Hello World!</h1>
-    </body>
+                <frameset rows="17%,*">
+                <frame src="Loggo.jsp" name="loggo">
+                
+                    <frameset rows="17%,*">
+                    <frame src="Menu.jsp" name="menu">
+                            <frameset cols="100%,*" border="0" frameborder="0">
+                            <frame name="contenido">
+                            </frameset>
+                    </frameset>
+                </frameset>
 </html>

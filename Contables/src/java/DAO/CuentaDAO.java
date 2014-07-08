@@ -7,7 +7,7 @@
 package DAO;
 
 
-import Clases.TipoClass;
+import Clases.CuentaClass;
 import Conexion.Conexion;
 import static com.sun.org.apache.xalan.internal.lib.ExsltDatetime.date;
 import java.sql.Connection;
@@ -24,7 +24,7 @@ import java.util.LinkedList;
  *
  * @author User
  */
-public class TipoDAO {
+public class CuentaDAO {
 
 
     public static boolean Validar(String idTipo) throws InstantiationException, IllegalAccessException, SQLException, SQLException {        
@@ -33,7 +33,7 @@ public class TipoDAO {
     ResultSet rs = null;
        Conexion c=new Conexion();
        Connection conn=c.getConexion();
-        String sql="select * from tipo where idTipo=?";
+        String sql="select * from Cuenta where idCuenta=?";
         pst = conn.prepareStatement(sql);
         pst.setString(1, idTipo);
         rs = pst.executeQuery();
@@ -41,16 +41,21 @@ public class TipoDAO {
     return status;
     }
     
-    public boolean insertar(TipoClass u) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException{       
+    public boolean insertar(CuentaClass u) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException{       
     boolean agregado=false;
       try {
        Conexion c=new Conexion();
        Connection conn=c.getConexion();
        if(conn!=null){
         PreparedStatement pst = null;
-        String sql="insert into tipo (nombreTipo) values (?)";
+        String sql="insert into Cuenta (numeroCuenta, descripcionCuenta, saldoInicialCuenta, saldoFinalCuenta, Cuenta_idCuenta, Tipo_idTipo) values (?, ?, ?, ?, ?, ?)";
         pst = conn.prepareStatement(sql);
-        pst.setString(1, u.getNombreTipo());
+        pst.setString(1, u.getNumeroCuenta());
+        pst.setString(2, u.getDescripcionCuenta());
+        pst.setString(3, u.getSaldoInicialCuenta());
+        pst.setString(4, u.getSaldoFinalCuenta());
+        pst.setString(5, u.getCuenta_idCuenta());
+        pst.setString(6, u.getTipo_idTipo());
         pst.execute();
         agregado=true;
         pst.close();
@@ -63,17 +68,21 @@ public class TipoDAO {
       return agregado;
      }
 
-    public boolean modificar(TipoClass u) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException{       
+    public boolean modificar(CuentaClass u) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException{       
     boolean agregado=false;
       try {
        Conexion c=new Conexion();
        Connection conn=c.getConexion();
        if(conn!=null){
         PreparedStatement pst = null;
-        String sql="update tipo set (?) where idTipo=?";
+        String sql="update Cuenta set (?, ?, ?, ?, ?, ?) where idTipo=?";
         pst = conn.prepareStatement(sql);
-        pst.setString(1, u.getNombreTipo());
-        pst.setString(2, u.getIdTipo());
+        pst.setString(1, u.getNumeroCuenta());
+        pst.setString(2, u.getDescripcionCuenta());
+        pst.setString(3, u.getSaldoInicialCuenta());
+        pst.setString(4, u.getSaldoFinalCuenta());
+        pst.setString(5, u.getCuenta_idCuenta());
+        pst.setString(6, u.getTipo_idTipo());
         pst.execute();
         agregado=true;
         pst.close();
@@ -85,16 +94,16 @@ public class TipoDAO {
       }
       return agregado;
      }    
-    public boolean eliminar(TipoClass u) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException{       
+    public boolean eliminar(CuentaClass u) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException{       
     boolean agregado=false;
       try {
        Conexion c=new Conexion();
        Connection conn=c.getConexion();
        if(conn!=null){
         PreparedStatement pst = null;
-        String sql="delete from  tipo where idTipo=?";
+        String sql="delete from  Cuenta where idTipo=?";
         pst = conn.prepareStatement(sql);
-        pst.setString(1, u.getIdTipo());
+        pst.setString(1, u.getIdCuenta());
         pst.execute();
         agregado=true;
         pst.close();
@@ -106,17 +115,21 @@ public class TipoDAO {
       }
       return agregado;
      } 
-  public static LinkedList<TipoClass>  consultar() throws InstantiationException, IllegalAccessException, SQLException{
-   LinkedList<TipoClass> listahistorial=new LinkedList<TipoClass>();
+  public static LinkedList<CuentaClass>  consultar() throws InstantiationException, IllegalAccessException, SQLException{
+   LinkedList<CuentaClass> listahistorial=new LinkedList<CuentaClass>();
    Conexion c=new Conexion();
    Connection conn=c.getConexion();
    Statement st = conn.createStatement();
-   String sql="select * from  tipo";
+   String sql="select * from  Cuenta";
    ResultSet rs = st.executeQuery(sql);
        while(rs.next()){
-        TipoClass r= new TipoClass();
-        r.setIdTipo(rs.getString(3));
-        r.setNombreTipo(rs.getString(4));
+        CuentaClass r= new CuentaClass();
+        r.setNumeroCuenta(rs.getString(1));
+        r.setDescripcionCuenta(rs.getString(2));
+        r.setSaldoInicialCuenta(rs.getString(3));
+        r.setSaldoFinalCuenta(rs.getString(4));
+        r.setCuenta_idCuenta(rs.getString(5));  
+        r.setTipo_idTipo(rs.getString(6));        
         listahistorial.add(r);
        }
    rs.close();
