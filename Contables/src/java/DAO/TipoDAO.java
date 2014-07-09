@@ -48,7 +48,7 @@ public class TipoDAO {
        Connection conn=c.getConexion();
        if(conn!=null){
         PreparedStatement pst = null;
-        String sql="insert into tipo (nombreTipo) values (?)";
+        String sql="insert into Tipo (nombreTipo) values (?)";
         pst = conn.prepareStatement(sql);
         pst.setString(1, u.getNombreTipo());
         pst.execute();
@@ -70,7 +70,7 @@ public class TipoDAO {
        Connection conn=c.getConexion();
        if(conn!=null){
         PreparedStatement pst = null;
-        String sql="update tipo set (?) where idTipo=?";
+        String sql="update Tipo set nombreTipo=? where idTipo=?";
         pst = conn.prepareStatement(sql);
         pst.setString(1, u.getNombreTipo());
         pst.setString(2, u.getIdTipo());
@@ -111,12 +111,12 @@ public class TipoDAO {
    Conexion c=new Conexion();
    Connection conn=c.getConexion();
    Statement st = conn.createStatement();
-   String sql="select * from  tipo";
+   String sql="select * from  Tipo";
    ResultSet rs = st.executeQuery(sql);
        while(rs.next()){
         TipoClass r= new TipoClass();
-        r.setIdTipo(rs.getString(3));
-        r.setNombreTipo(rs.getString(4));
+        r.setIdTipo(rs.getString(1));
+        r.setNombreTipo(rs.getString(2));
         listahistorial.add(r);
        }
    rs.close();
