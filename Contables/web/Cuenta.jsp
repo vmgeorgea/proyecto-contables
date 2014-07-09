@@ -17,7 +17,6 @@
     <head lang="en">
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Cuenta</title>
-          <meta name="author" content="Jake Rocheleau">
           <link rel="stylesheet" type="text/css" media="all" href="CSS/style.css">
           <link rel="stylesheet" type="text/css" media="all" href="fancybox/jquery.fancybox.css">
           <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
@@ -73,17 +72,15 @@
 <!-- hidden INGRESAR form -->
 <div id="ingresar">
 	<h2>Nuevo</h2>
-
-	<form id="ingresarform" name="ingresarform" action="CuentaIngresarServlet" method="post">
-
+	<form id="ingresarform" name="ingresarform" action="CuentaIngresarServlet" method="post" >
 		<label for="NumeroCuenta">Numero Cuenta  </label>
-		<input type="NumeroCuenta" id="NumeroCuenta" name="numeroCuenta" class="txtingresar" required="required" onkeypress="return Numeros(event)">
+		<input align='right' type="NumeroCuenta" id="NumeroCuenta" name="numeroCuenta" class="txtingresar" required="required" onkeypress="return Numeros(event)">
 		<br>	
 	    <label for="DescripcionCuenta">Descripcion Cuenta</label>
 		<input type="DescripcionCuenta" id="DescripcionCuenta" name="descripcionCuenta" class="txtingresar" required="required">
                 <br>
 	    <label for="TipoCuenta">Tipo Cuenta</label>
-                <select name="Tipo_idTipo" align="right">  
+                <select name="Tipo_idTipo" class="combo">  
                 <option value="0" selected>SELECCIONAR</option>  
                 <%
                     LinkedList<TipoClass> lista1 =new LinkedList<TipoClass>();
@@ -94,8 +91,7 @@
                     }
                 %>
                 </select> 
-		<br>	
-                <br>                
+		<br>	               
 	    <label for="SaldoInicialCuenta">Saldo Inicial</label>
 		<input type="SaldoInicialCuenta" id="SaldoInicialCuenta" name="saldoInicialCuenta" class="txtingresar" required="required">
 		<br>
@@ -105,13 +101,24 @@
 	    <label for="Cuenta_idCuenta">Cuenta padre</label>
 		<input type="Cuenta_idCuenta" id="Cuenta_idCuenta" name="Cuenta_idCuenta" class="txtingresar" required="required">
 		<br>		
-		<button id="send">Ingresar</button>
+		<input type="submit" value="Ingresar" id="send">
 	</form>
 </div>
+                
+<!-- hidden ELIMINAR form -->
+<div id="eliminar">
+	<h2>Eliminar</h2>
+	<form id="eliminarform" name="eliminarform" action="CuentaEliminarServlet" method="post">
+		<label for="idCuenta">Desea eliminar la cuenta con la siguienta id:</label>
+		<input type="idCuenta" id="idCuenta" name="idCuenta" class="txteliminar" readonly="readonly" >
+                <br>
+                <input type="submit" value="Eliminar" id="send">
+	</form>
+</div>                  
+                
 <!-- hidden MODIFICAR form -->
 <div id="modificar">
 	<h2>Modificar</h2>
-
 	<form id="modificarform" name="modificarform" action="CuentaModificarServlet" method="post">
 		<label for="idCuenta">Id Cuenta</label>
 		<input type="idCuenta" id="idCuenta" name="idCuenta" class="txtmodificar" required="required" readonly="readonly" >
@@ -143,21 +150,11 @@
 		<br>
 	    <label for="Cuenta_idCuenta">Cuenta padre</label>
 		<input type="Cuenta_idCuenta" id="Cuenta_idCuenta" name="Cuenta_idCuenta" class="txtmodificar" required="required">
-		<br>		
-                <button id="send">Modificar</button>
+		<br>	
+                <input type="submit" value="Modificar" id="send">
 	</form>
 </div>
-<!-- hidden MODIFICAR form -->
-<div id="eliminar">
-	<h2>Eliminar</h2>
-
-	<form id="eliminarform" name="eliminarform" action="CuentaEliminarServlet" method="post">
-		<label for="idCuenta">Desea eliminar la cuenta con la siguienta id:</label>
-		<input type="idCuenta" id="idCuenta" name="idCuenta" class="txteliminar" required="required" readonly="readonly" >
-                <br>
-                <button id="send">Eliminar</button>
-	</form>
-</div>                
+              
 <!-- basic fancybox setup -->
 <script type="text/javascript">
 
@@ -187,8 +184,6 @@
             });
         });        
                         
-</script>        
-        
-        
+</script>          
     </body>
 </html>

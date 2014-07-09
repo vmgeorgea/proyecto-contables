@@ -24,7 +24,7 @@ import javax.servlet.http.HttpSession;
  *
  * @author User
  */
-@WebServlet(name = "CuentaServlet", urlPatterns = {"/CuentaServlet"})
+@WebServlet(name = "CuentaEliminarServlet", urlPatterns = {"/CuentaEliminarServlet"})
 public class CuentaEliminarServlet extends HttpServlet {
 private static final long serialVersionUID = 1L;
 CuentaDAO ud = new CuentaDAO();
@@ -81,7 +81,6 @@ CuentaDAO ud = new CuentaDAO();
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
     try {
-        HttpSession session = request.getSession(true);
         CuentaClass u=new CuentaClass();
         u.setIdCuenta(request.getParameter("idCuenta"));
         boolean sw=ud.eliminar(u);

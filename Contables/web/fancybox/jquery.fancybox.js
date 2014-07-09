@@ -47,8 +47,8 @@
 			height: 600,
 			minWidth: 100,
 			minHeight: 100,
-			maxWidth: 9999,
-			maxHeight: 9999,
+			maxWidth: 1000,
+			maxHeight: 1000,
 
 			autoSize: true,
 			autoResize: !isTouch,

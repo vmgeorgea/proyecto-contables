@@ -24,7 +24,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author User
  */
-@WebServlet(name = "CuentaServlet", urlPatterns = {"/CuentaServlet"})
+@WebServlet(name = "CuentaModificarServlet", urlPatterns = {"/CuentaModificarServlet"})
 public class CuentaModificarServlet extends HttpServlet {
 private static final long serialVersionUID = 1L;
 CuentaDAO ud = new CuentaDAO();

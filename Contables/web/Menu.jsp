@@ -30,6 +30,7 @@
         <div id="sse2">
           <div id="sses2">
             <ul>
+              <li><a href="Tipo.jsp" onclick="?menu=2&skin=1&p=Horizontal-Menus" target="contenido">Tipo</a></li>
               <li><a href="Cuenta.jsp" onclick="?menu=2&skin=1&p=Horizontal-Menus" target="contenido">Cuenta</a></li>              
               <li><a href="Asiento.jsp" onclick="?menu=2&skin=1&p=Horizontal-Menus" target="contenido">Asiento</a></li>              
             </ul>
