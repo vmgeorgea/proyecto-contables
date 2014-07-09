@@ -4,24 +4,21 @@
  * and open the template in the editor.
  */
     
-    function ValNumeros(variable){
-        Numer=parseInt(variable);
-        if (isNaN(Numer)){
-            return "";
-        }
-        return Numer;
-    }
-    function ValidarNumeros(Control){
-        Control.value=ValNumerico(Control.value);
-    }
+function Letras(e) { 
+    tecla = (document.all) ? e.keyCode : e.which;
+    if (tecla==8) return true; 
+    patron =/[A-Za-z\s]/; 
+    te = String.fromCharCode(tecla);
+    return patron.test(te);
+} 
 
-    function ValidarLetras(idcampo) {
-    var cadena = document.getElementById(idcampo).value;
-    var exp_reg  = /^[a-z\u00C0-\u00ff]+$/i;
-    var verifica = exp_reg.test(cadena);
-        if (verifica == true){
-        return cadena
-        }else {
-        return "";
-        }
-    }
+function Numeros(e) { 
+    tecla = (document.all) ? e.keyCode : e.which;
+    if (tecla==8) return true; 
+    patron =/^[0-9]*[.]?[0-9]*$/; 
+    te = String.fromCharCode(tecla);
+    return patron.test(te);
+} 
+
+
+    

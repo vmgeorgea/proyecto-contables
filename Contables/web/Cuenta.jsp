@@ -53,14 +53,14 @@
         lista = CuentaDAO.consultar();
         for (int i=0;i<lista.size();i++)
         {
-           out.println("<tr>");
-           out.println("<td>"+lista.get(i).getIdCuenta()+"</a></td>");
-           out.println("<td>"+lista.get(i).getNumeroCuenta()+"</a></td>");
-           out.println("<td>"+lista.get(i).getTipo_idTipo()+"</td>");
-           out.println("<td>"+lista.get(i).getDescripcionCuenta()+"</td>");
-           out.println("<td>"+lista.get(i).getSaldoInicialCuenta()+"</td>");
-           out.println("<td>"+lista.get(i).getSaldoFinalCuenta()+"</td>");
-           out.println("<td>"+lista.get(i).getCuenta_idCuenta()+"</td>");
+           out.println("<tr data-valor='"+i+"' class='click'>" );
+           out.println("<td id='a"+i+"'>"+lista.get(i).getIdCuenta()+"</a></td>");
+           out.println("<td id='b"+i+"'>"+lista.get(i).getNumeroCuenta()+"</a></td>");
+           out.println("<td id='c"+i+"'>"+lista.get(i).getTipo_idTipo()+"</td>");
+           out.println("<td id='d"+i+"'>"+lista.get(i).getDescripcionCuenta()+"</td>");
+           out.println("<td id='e"+i+"'>"+lista.get(i).getSaldoInicialCuenta()+"</td>");
+           out.println("<td id='f"+i+"'>"+lista.get(i).getSaldoFinalCuenta()+"</td>");
+           out.println("<td id='g"+i+"'>"+lista.get(i).getCuenta_idCuenta()+"</td>");
            out.println("<td></td>");
            out.println("<td><a class='modalbox' href='#modificar'><img SRC='Imagen/Modificar.png'></a></td>");
            out.println("<td><a><img SRC='Imagen/Eliminar.png'></a></td>");
@@ -74,14 +74,14 @@
 <div id="ingresar">
 	<h2>Nuevo</h2>
 
-	<form id="contact" name="contact" action="CuentaServlet" method="post">
+	<form id="ingresarform" name="ingresarform" action="CuentaServlet" method="post">
 
 		<label for="NumeroCuenta">Numero Cuenta  </label>
-		<input type="NumeroCuenta" id="NumeroCuenta" name="numeroCuenta" class="txt" required="required" onkeyUp="return ValidarNumeros(this);" align="right">
+		<input type="NumeroCuenta" id="NumeroCuenta" name="numeroCuenta" class="txtingresar" required="required" onkeypress="return Numeros(event)">
 		<br>	
 	    <label for="DescripcionCuenta">Descripcion Cuenta</label>
-		<input type="DescripcionCuenta" id="DescripcionCuenta" name="descripcionCuenta" class="txt" required="required" align="right">
-		<br>
+		<input type="DescripcionCuenta" id="DescripcionCuenta" name="descripcionCuenta" class="txtingresar" required="required">
+                <br>
 	    <label for="TipoCuenta">Tipo Cuenta</label>
                 <select name="Tipo_idTipo" align="right">  
                 <option value="0" selected>SELECCIONAR</option>  
@@ -94,30 +94,31 @@
                     }
                 %>
                 </select> 
-		<br>		
+		<br>	
+                <br>                
 	    <label for="SaldoInicialCuenta">Saldo Inicial</label>
-		<input type="SaldoInicialCuenta" id="SaldoInicialCuenta" name="saldoInicialCuenta" class="txt" required="required" onkeyUp="return ValidarNumeros(this);" align="right">
+		<input type="SaldoInicialCuenta" id="SaldoInicialCuenta" name="saldoInicialCuenta" class="txtingresar" required="required">
 		<br>
 	    <label for="SaldoFinalCuenta">Saldo Final</label>
-		<input type="SaldoFinalCuenta" id="SaldoFinalCuenta" name="saldoFinalCuenta" class="txt" required="required" onkeyUp="return ValidarNumeros(this);" align="right">
+		<input type="SaldoFinalCuenta" id="SaldoFinalCuenta" name="saldoFinalCuenta" class="txtingresar" required="required">
 		<br>
 	    <label for="Cuenta_idCuenta">Cuenta padre</label>
-		<input type="Cuenta_idCuenta" id="Cuenta_idCuenta" name="Cuenta_idCuenta" class="txt" required="required" onkeyUp="return ValidarNumeros(this);" align="right">
+		<input type="Cuenta_idCuenta" id="Cuenta_idCuenta" name="Cuenta_idCuenta" class="txtingresar" required="required">
 		<br>		
 		<button id="send">Ingresar</button>
 	</form>
 </div>
-<!-- hidden INGRESAR form -->
+<!-- hidden MODIFICAR form -->
 <div id="modificar">
 	<h2>Modificar</h2>
 
-	<form id="contact" name="contact" action="CuentaServlet" method="get">
+	<form id="modificarform" name="modificarform" action="CuentaServlet" method="get">
 
 		<label for="NumeroCuenta">Numero Cuenta</label>
-		<input type="NumeroCuenta" id="NumeroCuenta" name="numeroCuenta" class="txt" required="required">
+		<input type="NumeroCuenta1" id="NumeroCuenta1" name="numeroCuenta" class="txtmodificar" required="required">
 		<br>	
 	    <label for="DescripcionCuenta">Descripcion Cuenta</label>
-		<input type="DescripcionCuenta" id="DescripcionCuenta" name="descripcionCuenta" class="txt" required="required">
+		<input type="DescripcionCuenta" id="DescripcionCuenta" name="descripcionCuenta" class="txtmodificar" required="required">
 		<br>
 	    <label for="TipoCuenta">Tipo Cuenta</label>
                 <select name="Tipo_idTipo" class="combo">  
@@ -133,13 +134,13 @@
                 </select>  
 		<br>		
 	    <label for="SaldoInicialCuenta">Saldo Inicial</label>
-		<input type="SaldoInicialCuenta" id="SaldoInicialCuenta" name="saldoInicialCuenta" class="txt" required="required">
+		<input type="SaldoInicialCuenta" id="SaldoInicialCuenta" name="saldoInicialCuenta" class="txtmodificar" required="required" >
 		<br>
 	    <label for="SaldoFinalCuenta">Saldo Final</label>
-		<input type="SaldoFinalCuenta" id="SaldoFinalCuenta" name="saldoInicialCuenta" class="txt" required="required">
+		<input type="SaldoFinalCuenta" id="SaldoFinalCuenta" name="saldoFinalCuenta" class="txtmodificar" required="required">
 		<br>
 	    <label for="Cuenta_idCuenta">Cuenta padre</label>
-		<input type="Cuenta_idCuenta" id="Cuenta_idCuenta" name="cuenta_idCuenta" class="txt" required="required">
+		<input type="Cuenta_idCuenta" id="Cuenta_idCuenta" name="cuenta_idCuenta" class="txtmodificar" required="required">
 		<br>		
 		<input type="submit"   name="Ingresar" />
 	</form>
@@ -150,6 +151,29 @@
 	$(document).ready(function() {
 		$(".modalbox").fancybox();
 	});
+        
+        $(function(){
+    
+    $(".click").click(function(e) {
+        e.preventDefault();
+        var data = $(this).attr("data-valor");
+        $numeroCuenta=document.getElementById("b"+data.toString()).innerHTML;
+        $descripcionCuenta=document.getElementById("c"+data.toString()).innerHTML;
+        $Tipo_idTipo=document.getElementById("d"+data.toString()).innerHTML;
+        $saldoInicialCuenta=document.getElementById("e"+data.toString()).innerHTML;
+        $saldoFinalCuenta=document.getElementById("f"+data.toString()).innerHTML;
+        $cuenta_idCuenta=document.getElementById("g"+data.toString()).innerHTML;
+        document.modificarform.numeroCuenta.value=$numeroCuenta;        
+        document.modificarform.descripcionCuenta.value=$descripcionCuenta;
+        document.modificarform.Tipo_idTipo.value=$Tipo_idTipo;
+        document.modificarform.saldoInicialCuenta.value=$saldoInicialCuenta;
+        document.modificarform.saldoFinalCuenta.value=$saldoFinalCuenta;
+        document.modificarform.cuenta_idCuenta.value=$cuenta_idCuenta;        
+        alert($contenido);
+           
+    });
+ 
+});
 </script>        
         
         
