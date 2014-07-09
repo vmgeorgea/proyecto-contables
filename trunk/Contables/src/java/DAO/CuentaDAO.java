@@ -75,14 +75,15 @@ public class CuentaDAO {
        Connection conn=c.getConexion();
        if(conn!=null){
         PreparedStatement pst = null;
-        String sql="update Cuenta set (?, ?, ?, ?, ?, ?) where idTipo=?";
+        String sql="update Cuenta set numeroCuenta=?, descripcionCuenta=?, saldoInicialCuenta=?, saldoFinalCuenta=?, Cuenta_idCuenta=?, Tipo_idTipo=? where idCuenta=?";
         pst = conn.prepareStatement(sql);
-        pst.setString(1, u.getNumeroCuenta());
+        pst.setInt(1, Integer.parseInt(u.getNumeroCuenta()));
         pst.setString(2, u.getDescripcionCuenta());
         pst.setString(3, u.getSaldoInicialCuenta());
         pst.setString(4, u.getSaldoFinalCuenta());
         pst.setString(5, u.getCuenta_idCuenta());
-        pst.setString(6, u.getTipo_idTipo());
+        pst.setInt(6, Integer.parseInt(u.getTipo_idTipo()));
+        pst.setInt(7, Integer.parseInt(u.getIdCuenta()));
         pst.execute();
         agregado=true;
         pst.close();

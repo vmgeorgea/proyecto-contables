@@ -113,14 +113,16 @@
 	<h2>Modificar</h2>
 
 	<form id="modificarform" name="modificarform" action="CuentaServlet" method="get">
-
+		<label for="idCuenta">Id Cuenta</label>
+		<input type="idCuenta" id="idCuenta" name="idCuenta" class="txtmodificar" required="required" readonly="readonly" >
+		<br>
 		<label for="NumeroCuenta">Numero Cuenta</label>
-		<input type="NumeroCuenta1" id="NumeroCuenta1" name="numeroCuenta" class="txtmodificar" required="required">
+		<input type="NumeroCuenta" id="NumeroCuenta1" name="numeroCuenta" class="txtmodificar" required="required">
 		<br>	
-	    <label for="DescripcionCuenta">Descripcion Cuenta</label>
+                <label for="DescripcionCuenta">Descripcion Cuenta</label>
 		<input type="DescripcionCuenta" id="DescripcionCuenta" name="descripcionCuenta" class="txtmodificar" required="required">
 		<br>
-	    <label for="TipoCuenta">Tipo Cuenta</label>
+                <label for="TipoCuenta">Tipo Cuenta</label>
                 <select name="Tipo_idTipo" class="combo">  
                 <option value="0" selected>SELECCIONAR</option>  
                 <%
@@ -140,9 +142,10 @@
 		<input type="SaldoFinalCuenta" id="SaldoFinalCuenta" name="saldoFinalCuenta" class="txtmodificar" required="required">
 		<br>
 	    <label for="Cuenta_idCuenta">Cuenta padre</label>
-		<input type="Cuenta_idCuenta" id="Cuenta_idCuenta" name="cuenta_idCuenta" class="txtmodificar" required="required">
+		<input type="Cuenta_idCuenta" id="Cuenta_idCuenta" name="Cuenta_idCuenta" class="txtmodificar" required="required">
 		<br>		
-		<input type="submit"   name="Ingresar" />
+		<!input type="submit"   name="Modificar" />
+                <button id="send">Modificar</button>
 	</form>
 </div>
 <!-- basic fancybox setup -->
@@ -157,20 +160,20 @@
     $(".click").click(function(e) {
         e.preventDefault();
         var data = $(this).attr("data-valor");
+        $idCuenta=document.getElementById("a"+data.toString()).innerHTML;
         $numeroCuenta=document.getElementById("b"+data.toString()).innerHTML;
         $descripcionCuenta=document.getElementById("c"+data.toString()).innerHTML;
         $Tipo_idTipo=document.getElementById("d"+data.toString()).innerHTML;
         $saldoInicialCuenta=document.getElementById("e"+data.toString()).innerHTML;
         $saldoFinalCuenta=document.getElementById("f"+data.toString()).innerHTML;
-        $cuenta_idCuenta=document.getElementById("g"+data.toString()).innerHTML;
+        $Cuenta_idCuenta=document.getElementById("g"+data.toString()).innerHTML;
+        document.modificarform.idCuenta.value=$idCuenta;  
         document.modificarform.numeroCuenta.value=$numeroCuenta;        
         document.modificarform.descripcionCuenta.value=$descripcionCuenta;
         document.modificarform.Tipo_idTipo.value=$Tipo_idTipo;
         document.modificarform.saldoInicialCuenta.value=$saldoInicialCuenta;
         document.modificarform.saldoFinalCuenta.value=$saldoFinalCuenta;
-        document.modificarform.cuenta_idCuenta.value=$cuenta_idCuenta;        
-        alert($contenido);
-           
+        document.modificarform.Cuenta_idCuenta.value=$Cuenta_idCuenta;             
     });
  
 });
