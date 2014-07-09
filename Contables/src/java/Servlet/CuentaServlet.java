@@ -66,7 +66,31 @@ CuentaDAO ud = new CuentaDAO();
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+    try {
+        String idCuenta = request.getParameter("idCuenta").toUpperCase();
+        String numeroCuenta = request.getParameter("numeroCuenta").toUpperCase();
+        String descripcionCuenta = request.getParameter("descripcionCuenta").toUpperCase();
+        String saldoInicialCuenta = request.getParameter("saldoInicialCuenta").toUpperCase();
+        String saldoFinalCuenta = request.getParameter("saldoFinalCuenta").toUpperCase();
+        String Cuenta_idCuenta = request.getParameter("Cuenta_idCuenta").toUpperCase();
+        String Tipo_idTipo = request.getParameter("Tipo_idTipo").toUpperCase();
+        CuentaClass u=new CuentaClass(idCuenta, numeroCuenta, descripcionCuenta, saldoInicialCuenta, saldoFinalCuenta, Cuenta_idCuenta, Tipo_idTipo);
+        boolean sw=ud.modificar(u);
+        if(sw){
+            request.getRequestDispatcher("Cuenta.jsp").forward(request, response);
+        }else{
+            PrintWriter out=response.getWriter();
+            out.println("Fail registration.");
+        } 
+    } catch (SQLException ex) {
+        Logger.getLogger(CuentaServlet.class.getName()).log(Level.SEVERE, null, ex);
+    } catch (ClassNotFoundException ex) {
+        Logger.getLogger(CuentaServlet.class.getName()).log(Level.SEVERE, null, ex);
+    } catch (InstantiationException ex) {
+        Logger.getLogger(CuentaServlet.class.getName()).log(Level.SEVERE, null, ex);
+    } catch (IllegalAccessException ex) {
+        Logger.getLogger(CuentaServlet.class.getName()).log(Level.SEVERE, null, ex);
+    }
     }
 
     /**
