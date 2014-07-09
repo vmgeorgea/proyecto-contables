@@ -63,7 +63,7 @@
            out.println("<td id='g"+i+"'>"+lista.get(i).getCuenta_idCuenta()+"</td>");
            out.println("<td></td>");
            out.println("<td><a class='modalbox' href='#modificar'><img SRC='Imagen/Modificar.png'></a></td>");
-           out.println("<td><a><img SRC='Imagen/Eliminar.png'></a></td>");
+           out.println("<td><a class='modalbox' href='#eliminar'><img SRC='Imagen/Eliminar.png'></a></td>");
            out.println("</tr>");
         }
         %>
@@ -74,7 +74,7 @@
 <div id="ingresar">
 	<h2>Nuevo</h2>
 
-	<form id="ingresarform" name="ingresarform" action="CuentaServlet" method="post">
+	<form id="ingresarform" name="ingresarform" action="CuentaIngresarServlet" method="post">
 
 		<label for="NumeroCuenta">Numero Cuenta  </label>
 		<input type="NumeroCuenta" id="NumeroCuenta" name="numeroCuenta" class="txtingresar" required="required" onkeypress="return Numeros(event)">
@@ -112,7 +112,7 @@
 <div id="modificar">
 	<h2>Modificar</h2>
 
-	<form id="modificarform" name="modificarform" action="CuentaServlet" method="get">
+	<form id="modificarform" name="modificarform" action="CuentaModificarServlet" method="post">
 		<label for="idCuenta">Id Cuenta</label>
 		<input type="idCuenta" id="idCuenta" name="idCuenta" class="txtmodificar" required="required" readonly="readonly" >
 		<br>
@@ -144,10 +144,20 @@
 	    <label for="Cuenta_idCuenta">Cuenta padre</label>
 		<input type="Cuenta_idCuenta" id="Cuenta_idCuenta" name="Cuenta_idCuenta" class="txtmodificar" required="required">
 		<br>		
-		<!input type="submit"   name="Modificar" />
                 <button id="send">Modificar</button>
 	</form>
 </div>
+<!-- hidden MODIFICAR form -->
+<div id="eliminar">
+	<h2>Eliminar</h2>
+
+	<form id="eliminarform" name="eliminarform" action="CuentaEliminarServlet" method="post">
+		<label for="idCuenta">Desea eliminar la cuenta con la siguienta id:</label>
+		<input type="idCuenta" id="idCuenta" name="idCuenta" class="txteliminar" required="required" readonly="readonly" >
+                <br>
+                <button id="send">Eliminar</button>
+	</form>
+</div>                
 <!-- basic fancybox setup -->
 <script type="text/javascript">
 
@@ -156,27 +166,27 @@
 	});
         
         $(function(){
-    
-    $(".click").click(function(e) {
-        e.preventDefault();
-        var data = $(this).attr("data-valor");
-        $idCuenta=document.getElementById("a"+data.toString()).innerHTML;
-        $numeroCuenta=document.getElementById("b"+data.toString()).innerHTML;
-        $descripcionCuenta=document.getElementById("c"+data.toString()).innerHTML;
-        $Tipo_idTipo=document.getElementById("d"+data.toString()).innerHTML;
-        $saldoInicialCuenta=document.getElementById("e"+data.toString()).innerHTML;
-        $saldoFinalCuenta=document.getElementById("f"+data.toString()).innerHTML;
-        $Cuenta_idCuenta=document.getElementById("g"+data.toString()).innerHTML;
-        document.modificarform.idCuenta.value=$idCuenta;  
-        document.modificarform.numeroCuenta.value=$numeroCuenta;        
-        document.modificarform.descripcionCuenta.value=$descripcionCuenta;
-        document.modificarform.Tipo_idTipo.value=$Tipo_idTipo;
-        document.modificarform.saldoInicialCuenta.value=$saldoInicialCuenta;
-        document.modificarform.saldoFinalCuenta.value=$saldoFinalCuenta;
-        document.modificarform.Cuenta_idCuenta.value=$Cuenta_idCuenta;             
-    });
- 
-});
+            $(".click").click(function(e) {
+                e.preventDefault();
+                var data = $(this).attr("data-valor");
+                $idCuenta=document.getElementById("a"+data.toString()).innerHTML;
+                $numeroCuenta=document.getElementById("b"+data.toString()).innerHTML;
+                $descripcionCuenta=document.getElementById("c"+data.toString()).innerHTML;
+                $Tipo_idTipo=document.getElementById("d"+data.toString()).innerHTML;
+                $saldoInicialCuenta=document.getElementById("e"+data.toString()).innerHTML;
+                $saldoFinalCuenta=document.getElementById("f"+data.toString()).innerHTML;
+                $Cuenta_idCuenta=document.getElementById("g"+data.toString()).innerHTML;
+                document.modificarform.idCuenta.value=$idCuenta;  
+                document.eliminarform.idCuenta.value=$idCuenta; 
+                document.modificarform.numeroCuenta.value=$numeroCuenta;        
+                document.modificarform.descripcionCuenta.value=$descripcionCuenta;
+                document.modificarform.Tipo_idTipo.value=$Tipo_idTipo;
+                document.modificarform.saldoInicialCuenta.value=$saldoInicialCuenta;
+                document.modificarform.saldoFinalCuenta.value=$saldoFinalCuenta;
+                document.modificarform.Cuenta_idCuenta.value=$Cuenta_idCuenta;
+            });
+        });        
+                        
 </script>        
         
         
