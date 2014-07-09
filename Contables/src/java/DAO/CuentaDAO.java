@@ -102,7 +102,7 @@ public class CuentaDAO {
        Connection conn=c.getConexion();
        if(conn!=null){
         PreparedStatement pst = null;
-        String sql="delete from  Cuenta where idTipo=?";
+        String sql="delete from cuenta where idTipo=?";
         pst = conn.prepareStatement(sql);
         pst.setString(1, u.getIdCuenta());
         pst.execute();
