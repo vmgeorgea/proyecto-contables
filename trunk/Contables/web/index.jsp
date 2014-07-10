@@ -10,15 +10,11 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Inicio</title>
-    </head>
-                <frameset rows="17%,*">
-                <frame src="Loggo.jsp" name="loggo">
-                
+    </head>         
                     <frameset rows="17%,*">
                     <frame src="Menu.jsp" name="menu">
                             <frameset cols="100%,*" border="0" frameborder="0">
                             <frame name="contenido">
                             </frameset>
                     </frameset>
-                </frameset>
 </html>
