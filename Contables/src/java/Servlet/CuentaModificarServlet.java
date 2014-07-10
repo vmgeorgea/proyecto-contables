@@ -85,11 +85,12 @@ CuentaDAO ud = new CuentaDAO();
         String idCuenta = request.getParameter("idCuenta").toUpperCase();
         String numeroCuenta = request.getParameter("numeroCuenta").toUpperCase();
         String descripcionCuenta = request.getParameter("descripcionCuenta").toUpperCase();
+        String categoriaCuenta = request.getParameter("categoriaCuenta").toUpperCase();
         String saldoInicialCuenta = request.getParameter("saldoInicialCuenta").toUpperCase();
         String saldoFinalCuenta = request.getParameter("saldoFinalCuenta").toUpperCase();
         String Cuenta_idCuenta = request.getParameter("Cuenta_idCuenta").toUpperCase();
         String Tipo_idTipo = request.getParameter("Tipo_idTipo").toUpperCase();
-        CuentaClass u=new CuentaClass(idCuenta, numeroCuenta, descripcionCuenta, saldoInicialCuenta, saldoFinalCuenta, Cuenta_idCuenta, Tipo_idTipo);
+        CuentaClass u=new CuentaClass(idCuenta, numeroCuenta, descripcionCuenta, categoriaCuenta, saldoInicialCuenta, saldoFinalCuenta, Cuenta_idCuenta, Tipo_idTipo);
         boolean sw=ud.modificar(u);
         if(sw){
             request.getRequestDispatcher("Cuenta.jsp").forward(request, response);

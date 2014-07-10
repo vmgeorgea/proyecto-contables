@@ -41,7 +41,7 @@
                 <td class="estilo1"></td>
                 <td class="estilo1"></td>
                 <td class="estilo1"></td>
-                <td><a class='modalbox' href='#ingresar'><img SRC="Imagen/Nuevo.png"></a></td>
+                <!td><!a class='modalbox' href='#ingresar'><!img SRC="Imagen/Nuevo.png"><!/a><!/td>
                 <td></td>
                 <td></td>
             </tr>        
@@ -60,8 +60,8 @@
                out.println("<td id='g"+i+"'>"+lista.get(i).getDebeAsiento()+"</td>");
                out.println("<td id='h"+i+"'>"+lista.get(i).getHaberAsiento()+"</td>");
                out.println("<td></td>");
-               out.println("<td><a class='modalbox' href='#modificar'><img SRC='Imagen/Modificar.png'></a></td>");
-               out.println("<td><a class='modalbox' href='#eliminar'><img SRC='Imagen/Eliminar.png'></a></td>");
+               //out.println("<td><a class='modalbox' href='#modificar'><img SRC='Imagen/Modificar.png'></a></td>");
+               //out.println("<td><a class='modalbox' href='#eliminar'><img SRC='Imagen/Eliminar.png'></a></td>");
                out.println("</tr>");
             }
             %>

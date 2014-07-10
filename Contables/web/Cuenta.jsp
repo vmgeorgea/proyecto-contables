@@ -29,13 +29,15 @@
         <tr>
         <td class="estilo1">Id Cuenta</td>
         <td class="estilo1">Numero Cuenta</td>
-        <td class="estilo1">Tipo Cuenta</td>
         <td class="estilo1">Descripcion Cuenta</td>
+        <td class="estilo1">Tipo Cuenta</td>
+        <td class="estilo1">Categoria Cuenta</td>
         <td class="estilo1">Saldo Inicial Cuenta</td>
         <td class="estilo1">Saldo Final Cuenta</td>
         <td class="estilo1">Cuenta Padre</td>
         </tr>
         <tr>
+        <td class="estilo1"></td>
         <td class="estilo1"></td>
         <td class="estilo1"></td>
         <td class="estilo1"></td>
@@ -55,11 +57,12 @@
            out.println("<tr data-valor='"+i+"' class='click'>" );
            out.println("<td id='a"+i+"'>"+lista.get(i).getIdCuenta()+"</a></td>");
            out.println("<td id='b"+i+"'>"+lista.get(i).getNumeroCuenta()+"</a></td>");
-           out.println("<td id='c"+i+"'>"+lista.get(i).getTipo_idTipo()+"</td>");
-           out.println("<td id='d"+i+"'>"+lista.get(i).getDescripcionCuenta()+"</td>");
-           out.println("<td id='e"+i+"'>"+lista.get(i).getSaldoInicialCuenta()+"</td>");
-           out.println("<td id='f"+i+"'>"+lista.get(i).getSaldoFinalCuenta()+"</td>");
-           out.println("<td id='g"+i+"'>"+lista.get(i).getCuenta_idCuenta()+"</td>");
+           out.println("<td id='c"+i+"'>"+lista.get(i).getDescripcionCuenta()+"</td>");
+           out.println("<td id='d"+i+"'>"+lista.get(i).getTipo_idTipo()+"</td>");
+           out.println("<td id='e"+i+"'>"+lista.get(i).getCategoriaCuenta()+"</td>");
+           out.println("<td id='f"+i+"'>"+lista.get(i).getSaldoInicialCuenta()+"</td>");
+           out.println("<td id='g"+i+"'>"+lista.get(i).getSaldoFinalCuenta()+"</td>");
+           out.println("<td id='h"+i+"'>"+lista.get(i).getCuenta_idCuenta()+"</td>");
            out.println("<td></td>");
            out.println("<td><a class='modalbox' href='#modificar'><img SRC='Imagen/Modificar.png'></a></td>");
            out.println("<td><a class='modalbox' href='#eliminar'><img SRC='Imagen/Eliminar.png'></a></td>");
@@ -77,7 +80,7 @@
 		<input align='right' type="NumeroCuenta" id="NumeroCuenta" name="numeroCuenta" class="txtingresar" required="required" onkeypress="return Numeros(event)">
 		<br>	
 	    <label for="DescripcionCuenta">Descripcion Cuenta</label>
-		<input type="DescripcionCuenta" id="DescripcionCuenta" name="descripcionCuenta" class="txtingresar" required="required">
+		<input type="DescripcionCuenta" id="DescripcionCuenta" name="descripcionCuenta" class="txtingresar" required="required" onkeypress="return Letras(event)">
                 <br>
 	    <label for="TipoCuenta">Tipo Cuenta</label>
                 <select name="Tipo_idTipo" class="combo">  
@@ -91,15 +94,22 @@
                     }
                 %>
                 </select> 
+                <br>	
+                <label for="categoriaCuenta">Categoria Cuenta</label>
+                <select name="categoriaCuenta" class="combo">  
+                <option value="0" selected>SELECCIONAR</option> 
+                <option value="GRUPO" selected>GRUPO</option> 
+                <option value="DETALLE" selected>DETALLE</option> 
+                </select> 
 		<br>	               
 	    <label for="SaldoInicialCuenta">Saldo Inicial</label>
-		<input type="SaldoInicialCuenta" id="SaldoInicialCuenta" name="saldoInicialCuenta" class="txtingresar" required="required">
+		<input type="SaldoInicialCuenta" id="SaldoInicialCuenta" name="saldoInicialCuenta" class="txtingresar" required="required" onkeypress="return Numeros(event)">
 		<br>
 	    <label for="SaldoFinalCuenta">Saldo Final</label>
-		<input type="SaldoFinalCuenta" id="SaldoFinalCuenta" name="saldoFinalCuenta" class="txtingresar" required="required">
+		<input type="SaldoFinalCuenta" id="SaldoFinalCuenta" name="saldoFinalCuenta" class="txtingresar" required="required" onkeypress="return Numeros(event)">
 		<br>
 	    <label for="Cuenta_idCuenta">Cuenta padre</label>
-		<input type="Cuenta_idCuenta" id="Cuenta_idCuenta" name="Cuenta_idCuenta" class="txtingresar" required="required">
+		<input type="Cuenta_idCuenta" id="Cuenta_idCuenta" name="Cuenta_idCuenta" class="txtingresar" required="required"onkeypress="return Numeros(event)">
 		<br>		
 		<input type="submit" value="Ingresar" id="send">
 	</form>
@@ -141,7 +151,14 @@
                     }
                 %>
                 </select>  
-		<br>		
+		<br>	
+                <label for="categoriaCuenta">Categoria Cuenta</label>
+                <select name="categoriaCuenta" class="combo">  
+                <option value="0" selected>SELECCIONAR</option> 
+                <option value="GRUPO" selected>GRUPO</option> 
+                <option value="DETALLE" selected>DETALLE</option> 
+                </select> 
+                <br>	
 	    <label for="SaldoInicialCuenta">Saldo Inicial</label>
 		<input type="SaldoInicialCuenta" id="SaldoInicialCuenta" name="saldoInicialCuenta" class="txtmodificar" required="required" >
 		<br>
@@ -170,14 +187,16 @@
                 $numeroCuenta=document.getElementById("b"+data.toString()).innerHTML;
                 $descripcionCuenta=document.getElementById("c"+data.toString()).innerHTML;
                 $Tipo_idTipo=document.getElementById("d"+data.toString()).innerHTML;
-                $saldoInicialCuenta=document.getElementById("e"+data.toString()).innerHTML;
-                $saldoFinalCuenta=document.getElementById("f"+data.toString()).innerHTML;
-                $Cuenta_idCuenta=document.getElementById("g"+data.toString()).innerHTML;
+                $categoriaCuenta=document.getElementById("e"+data.toString()).innerHTML;
+                $saldoInicialCuenta=document.getElementById("f"+data.toString()).innerHTML;
+                $saldoFinalCuenta=document.getElementById("g"+data.toString()).innerHTML;
+                $Cuenta_idCuenta=document.getElementById("h"+data.toString()).innerHTML;
                 document.modificarform.idCuenta.value=$idCuenta;  
                 document.eliminarform.idCuenta.value=$idCuenta; 
                 document.modificarform.numeroCuenta.value=$numeroCuenta;        
                 document.modificarform.descripcionCuenta.value=$descripcionCuenta;
                 document.modificarform.Tipo_idTipo.value=$Tipo_idTipo;
+                document.modificarform.categoriaCuenta.value=$categoriaCuenta;
                 document.modificarform.saldoInicialCuenta.value=$saldoInicialCuenta;
                 document.modificarform.saldoFinalCuenta.value=$saldoFinalCuenta;
                 document.modificarform.Cuenta_idCuenta.value=$Cuenta_idCuenta;

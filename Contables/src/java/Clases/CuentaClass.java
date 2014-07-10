@@ -14,6 +14,7 @@ public class CuentaClass {
 String idCuenta;
 String numeroCuenta;
 String descripcionCuenta;
+String categoriaCuenta;
 String saldoInicialCuenta;
 String saldoFinalCuenta;
 String Cuenta_idCuenta;
@@ -22,23 +23,32 @@ String Tipo_idTipo;
     public CuentaClass() {
     }
 
-    public CuentaClass(String idCuenta, String numeroCuenta, String descripcionCuenta, String saldoInicialCuenta, String saldoFinalCuenta, String Cuenta_idCuenta, String Tipo_idTipo) {
+    public CuentaClass(String idCuenta, String numeroCuenta, String descripcionCuenta, String categoriaCuenta, String saldoInicialCuenta, String saldoFinalCuenta, String Cuenta_idCuenta, String Tipo_idTipo) {
         this.idCuenta = idCuenta;
         this.numeroCuenta = numeroCuenta;
         this.descripcionCuenta = descripcionCuenta;
+        this.categoriaCuenta = categoriaCuenta;
         this.saldoInicialCuenta = saldoInicialCuenta;
         this.saldoFinalCuenta = saldoFinalCuenta;
         this.Cuenta_idCuenta = Cuenta_idCuenta;
         this.Tipo_idTipo = Tipo_idTipo;
     }
-    public CuentaClass(String numeroCuenta, String descripcionCuenta, String saldoInicialCuenta, String saldoFinalCuenta, String Cuenta_idCuenta, String Tipo_idTipo) {
-        this.idCuenta = idCuenta;
+    public CuentaClass(String numeroCuenta, String descripcionCuenta, String categoriaCuenta, String saldoInicialCuenta, String saldoFinalCuenta, String Cuenta_idCuenta, String Tipo_idTipo) {
         this.numeroCuenta = numeroCuenta;
         this.descripcionCuenta = descripcionCuenta;
+        this.categoriaCuenta = categoriaCuenta;
         this.saldoInicialCuenta = saldoInicialCuenta;
         this.saldoFinalCuenta = saldoFinalCuenta;
         this.Cuenta_idCuenta = Cuenta_idCuenta;
         this.Tipo_idTipo = Tipo_idTipo;
+    }
+
+    public String getCategoriaCuenta() {
+        return categoriaCuenta;
+    }
+
+    public void setCategoriaCuenta(String categoriaCuenta) {
+        this.categoriaCuenta = categoriaCuenta;
     }
     public String getIdCuenta() {
         return idCuenta;
