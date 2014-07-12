@@ -50,7 +50,7 @@ public class CuentaDAO {
         PreparedStatement pst = null;
         String sql="insert into cuenta (numeroCuenta, descripcionCuenta, categoriaCuenta, saldoInicialCuenta, saldoFinalCuenta, Cuenta_idCuenta, Tipo_idTipo) values (?, ?, ?, ?, ?, ?, ?)";
         pst = conn.prepareStatement(sql);
-        pst.setInt(1, Integer.parseInt(u.getNumeroCuenta()));
+        pst.setString(1, u.getNumeroCuenta());
         pst.setString(2, u.getDescripcionCuenta());
         pst.setString(3, u.getCategoriaCuenta());
         pst.setString(4, u.getSaldoInicialCuenta());
@@ -78,7 +78,7 @@ public class CuentaDAO {
         PreparedStatement pst = null;
         String sql="update Cuenta set numeroCuenta=?, descripcionCuenta=?, categoriaCuenta=?, saldoInicialCuenta=?, saldoFinalCuenta=?, Cuenta_idCuenta=?, Tipo_idTipo=? where idCuenta=?";
         pst = conn.prepareStatement(sql);
-        pst.setInt(1, Integer.parseInt(u.getNumeroCuenta()));
+        pst.setString(1, u.getNumeroCuenta());
         pst.setString(2, u.getDescripcionCuenta());
         pst.setString(3, u.getCategoriaCuenta());
         pst.setString(4, u.getSaldoInicialCuenta());

@@ -17,7 +17,10 @@
         <link rel="stylesheet" type="text/css" media="all" href="fancybox/jquery.fancybox.css">
         <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
         <script type="text/javascript" src="fancybox/jquery.fancybox.js?v=2.0.6"></script>
-        <script type="text/javascript" src="JS/ValidarJS.js"></script>
+        <script type="text/javascript" src="JS/ValidarJS.js"></script>>
+        
+        <link rel="stylesheet" type="text/css" href="CSS/tcal.css" />
+	<script type="text/javascript" src="JS/tcal.js"></script>
     </head>
     <body>
         <center>
@@ -41,7 +44,7 @@
                 <td class="estilo1"></td>
                 <td class="estilo1"></td>
                 <td class="estilo1"></td>
-                <!td><!a class='modalbox' href='#ingresar'><!img SRC="Imagen/Nuevo.png"><!/a><!/td>
+                <td><a class='modalbox' href='#ingresar'><img SRC="Imagen/Nuevo.png"></a></td>
                 <td></td>
                 <td></td>
             </tr>        
@@ -60,7 +63,7 @@
                out.println("<td id='g"+i+"'>"+lista.get(i).getDebeAsiento()+"</td>");
                out.println("<td id='h"+i+"'>"+lista.get(i).getHaberAsiento()+"</td>");
                out.println("<td></td>");
-               //out.println("<td><a class='modalbox' href='#modificar'><img SRC='Imagen/Modificar.png'></a></td>");
+               out.println("<td><a class='modalbox' href='#modificar'><img SRC='Imagen/Modificar.png'></a></td>");
                //out.println("<td><a class='modalbox' href='#eliminar'><img SRC='Imagen/Eliminar.png'></a></td>");
                out.println("</tr>");
             }
@@ -73,45 +76,45 @@
 	<h2>Nuevo</h2>
 	<form id="ingresarform" name="ingresarform" action="AsientoIngresarServlet" method="post" >
             
-            <label for="NumeroCuenta">Numero Diario  </label>
-		<input align='right' type="NumeroCuenta" id="numeroCuenta" name="numeroDiario" class="txtingresar" required="required" onkeypress="return Numeros(event)">
-		<br>	
-	    
-	    <label for="PeriodoAsiento">Periodo Asiento</label>
+                <label for="NumeroCuenta">Numero Diario  </label>
+                <input align='right' type="NumeroCuenta" id="numeroCuenta" name="numeroDiario" class="txtingresar" required="required" onkeypress="return Numeros(event)">
+                <br>	
+
+                <label for="PeriodoAsiento">Periodo Asiento</label>
                 <select name="periodoAsiento" class="combo">  
-                <option  selected>SELECCIONAR</option>  
-                <%
-                    
-                    for (int i=0;i<20;i++)
-                    {
-                        int p=2014-i;
-                        out.println("<option value='"+p+"' selected>"+p+"</option>");
-                        
-                    }
-                %>
-                </select> 
-		<br>
+                    <option  selected>SELECCIONAR</option>  
+                    <%
+                        for (int i=0;i<20;i++)
+                            {
+                            int p=2014-i;
+                            out.println("<option value='"+p+"' selected>"+p+"</option>");
+                            }
+                    %>
+                </select>
+                <br>
+
+                <label for="FechaAsiento">Fecha Asiento</label>
+                <input type="FechaAsiento" id="SaldoInicialCuenta" name="fechaAsiento" class="txtingresar" required="required">
                 
-	    <label for="FechaAsiento">Fecha Asiento</label>
-		<input type="FechaAsiento" id="SaldoInicialCuenta" name="fechaAsiento" class="txtingresar" required="required">
-		<br>
+                <br>
+
+                <label for="NumeroAsiento">Numero Asiento</label>
+                <input type="NumeroAsiento" id="SaldoFinalCuenta" name="numeroAsiento" class="txtingresar" required="required" onkeypress="return Numeros(event)">
+                <br>
+
+                <label for="ConceptoAsiento">Concepto Asiento</label>
+                <input type="ConceptoAsiento" id="Cuenta_idCuenta" name="conceptoAsiento" class="txtingresar" required="required">
+                <br>	
+
+                <label for="DebeAsiento">Debe Asiento</label>
+                <input type="DebeAsiento" id="Cuenta_idCuenta" name="debeAsiento" class="txtingresar" required="required" onkeypress="return Numeros(event)">
+                <br>
+
+                <label for="HaberAsiento">Haber Asiento</label>
+                <input type="HaberAsiento" id="Cuenta_idCuenta" name="haberAsiento" class="txtingresar" required="required" onkeypress="return Numeros(event)">
+                <br>
                 
-	    <label for="NumeroAsiento">Numero Asiento</label>
-		<input type="NumeroAsiento" id="SaldoFinalCuenta" name="numeroAsiento" class="txtingresar" required="required" onkeypress="return Numeros(event)">
-		<br>
-                
-	    <label for="ConceptoAsiento">Concepto Asiento</label>
-		<input type="ConceptoAsiento" id="Cuenta_idCuenta" name="conceptoAsiento" class="txtingresar" required="required">
-		<br>	
-                
-            <label for="DebeAsiento">Debe Asiento</label>
-		<input type="DebeAsiento" id="Cuenta_idCuenta" name="debeAsiento" class="txtingresar" required="required" onkeypress="return Numeros(event)">
-		<br>
-                
-            <label for="HaberAsiento">Haber Asiento</label>
-		<input type="HaberAsiento" id="Cuenta_idCuenta" name="haberAsiento" class="txtingresar" required="required" onkeypress="return Numeros(event)">
-		<br>
-		<input type="submit" value="Ingresar" id="send">
+                <input type="submit" value="Ingresar" id="send">
 	</form>
 </div>  
                 
