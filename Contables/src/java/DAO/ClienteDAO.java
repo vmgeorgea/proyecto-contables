@@ -7,7 +7,6 @@
 package DAO;
 
 import Clases.ClienteClass;
-import Clases.TransaccionClass;
 import Conexion.Conexion;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -74,16 +73,15 @@ public class ClienteDAO {
        Connection conn=c.getConexion();
        if(conn!=null){
         PreparedStatement pst = null;
-        String sql="update transaccion set cedula=?, nombre=?, apellido=?, direccion=?, telefono=?, tipo=? where idCliente=?";
+        String sql="update cliente set cedula=?, nombre=?, apellido=?, direccion=?, telefono=?, tipo=? where idCliente=?";
         pst = conn.prepareStatement(sql);
-        
-        
         pst.setString(1, u.getCedula());
         pst.setString(2, u.getNombre());
         pst.setString(3, u.getApellido());
         pst.setString(4, u.getDireccion());
         pst.setString(5, u.getTelefono());
         pst.setString(6, u.getTipo());
+        pst.setString(7, u.getIdCliente());
         pst.execute();
         agregado=true;
         pst.close();
@@ -96,7 +94,7 @@ public class ClienteDAO {
       return agregado;
      } 
     
-    public static LinkedList<ClienteClass>  consultar() throws InstantiationException, IllegalAccessException, SQLException{
+   public static LinkedList<ClienteClass>  consultar() throws InstantiationException, IllegalAccessException, SQLException{
    LinkedList<ClienteClass> listahistorial=new LinkedList<ClienteClass>();
    Conexion c=new Conexion();
    Connection conn=c.getConexion();
@@ -105,7 +103,6 @@ public class ClienteDAO {
    ResultSet rs = st.executeQuery(sql);
        while(rs.next()){
         ClienteClass r= new ClienteClass();
-        
         r.setIdCliente(rs.getString(1));
         r.setCedula(rs.getString(2));
         r.setNombre(rs.getString(3));
@@ -113,7 +110,6 @@ public class ClienteDAO {
         r.setDireccion(rs.getString(5));
         r.setTelefono(rs.getString(6));
         r.setTipo(rs.getString(7));
-       
         listahistorial.add(r);
        }
    rs.close();

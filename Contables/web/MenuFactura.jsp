@@ -137,6 +137,8 @@ color:#464646;
         <div id="sidebar">
         <ul id="menu">
         <li><a href="#"> <span> / </span></a></li>
+        <li><a href="Proveedor.jsp" target="contenidofactura">Proveedor</a></li>
+        <li><a href="#"> </a></li>
         <li><a href="Producto.jsp" target="contenidofactura">Producto</a></li>
         <li><a href="#"> </a></li>
         <li><a href="Cliente.jsp" target="contenidofactura">Cliente</a></li>

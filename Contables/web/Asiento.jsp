@@ -132,7 +132,7 @@
 	<h2>Modificar</h2>
 	<form id="modificarform" name="modificarform" action="AsientoModificarServlet" method="post">
             <label for="idAsiento">Numero Diario  </label>
-		<input align='right' type="idAsiento" id="idAsiento" name="idAsiento" class="txtingresar" required="required" onkeypress="return Numeros(event)">
+		<input align='right' type="idAsiento" id="idAsiento" name="idAsiento" class="txtingresar" required="required" readonly="readonly">
 		<br>		
             <label for="numeroDiario">Numero Diario  </label>
 		<input align='right' type="numeroDiario" id="numeroDiario" name="numeroDiario" class="txtingresar" required="required" onkeypress="return Numeros(event)">
