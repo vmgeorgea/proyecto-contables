@@ -203,7 +203,6 @@
             $(".click").click(function(e) {
                 e.preventDefault();
                 var data = $(this).attr("data-valor");
-                
                 $idTransaccion=document.getElementById("a"+data.toString()).innerHTML;
                 $Asiento_idAsiento=document.getElementById("b"+data.toString()).innerHTML;
                 $Cuenta_idCuenta=document.getElementById("c"+data.toString()).innerHTML;
@@ -212,7 +211,6 @@
                 $referenciaTransaccion=document.getElementById("f"+data.toString()).innerHTML;
                 $documentoTransaccion=document.getElementById("g"+data.toString()).innerHTML;
                 document.modificarform.idTransaccion.value=$idTransaccion;
-                document.eliminarform.idTransaccion.value=$idTransaccion;
                 document.modificarform.Asiento_idAsiento.value=$Asiento_idAsiento;
                 document.modificarform.Cuenta_idCuenta.value=$Cuenta_idCuenta;
                 document.modificarform.debeTransaccion.value=$debeTransaccion;
