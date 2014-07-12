@@ -48,11 +48,10 @@ public class ProductoDAO {
         pst = conn.prepareStatement(sql);
         
         pst.setString(1, u.getNombreProducto());
-        pst.setString(2, u.getCostoProducto());
-        pst.setDouble(3, Double.parseDouble(u.getCostoProducto()));
-        pst.setDouble(4, Double.parseDouble(u.getPrecioProducto()));
-        pst.setInt(5, Integer.parseInt(u.getStockProducto()));
-        pst.setString(6, u.getImpuestoProducto());
+        pst.setDouble(2, Double.parseDouble(u.getCostoProducto()));
+        pst.setDouble(3, Double.parseDouble(u.getPrecioProducto()));
+        pst.setInt(4, Integer.parseInt(u.getStockProducto()));
+        pst.setString(5, u.getImpuestoProducto());
         pst.execute();
         agregado=true;
         pst.close();
@@ -77,11 +76,11 @@ public class ProductoDAO {
         
         
         pst.setString(1, u.getNombreProducto());
-        pst.setString(2, u.getCostoProducto());
-        pst.setDouble(3, Double.parseDouble(u.getCostoProducto()));
-        pst.setDouble(4, Double.parseDouble(u.getPrecioProducto()));
-        pst.setInt(5, Integer.parseInt(u.getStockProducto()));
-        pst.setString(6, u.getImpuestoProducto());
+        pst.setDouble(2, Double.parseDouble(u.getCostoProducto()));
+        pst.setDouble(3, Double.parseDouble(u.getPrecioProducto()));
+        pst.setInt(4, Integer.parseInt(u.getStockProducto()));
+        pst.setString(5, u.getImpuestoProducto());
+        pst.setString(6, u.getIdProducto());
         
         pst.execute();
         agregado=true;
