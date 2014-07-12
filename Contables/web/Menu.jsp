@@ -31,7 +31,7 @@
           <div id="sses2">
             <ul>
               <li><a href="Registro.jsp" onclick="?menu=2&skin=1&p=Horizontal-Menus" target="contenido">Registro</a></li>
-              <li><a href="Facturacion.jsp" onclick="?menu=2&skin=1&p=Horizontal-Menus" target="contenido">Facturacion</a></li>              
+              <li><a href="Factura.jsp" onclick="?menu=2&skin=1&p=Horizontal-Menus" target="contenido">Facturacion</a></li>              
               <li><a href="Inventario.jsp" onclick="?menu=2&skin=1&p=Horizontal-Menus" target="contenido">Inventario</a></li>              
             </ul>
           </div>
