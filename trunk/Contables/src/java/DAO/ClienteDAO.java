@@ -8,6 +8,7 @@ package DAO;
 
 import Clases.ClienteClass;
 import Conexion.Conexion;
+import static com.sun.corba.se.spi.presentation.rmi.StubAdapter.request;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -116,5 +117,27 @@ public class ClienteDAO {
    st.close();
   return listahistorial;
 }
-    
+    public ClienteClass consultarcliente(String idTipo) throws InstantiationException, IllegalAccessException, SQLException, SQLException {        
+    ClienteClass r= new ClienteClass();
+    PreparedStatement pst = null;
+    ResultSet rs = null;
+       Conexion c=new Conexion();
+       Connection conn=c.getConexion();
+        String sql="select * from cliente where cedula=?";
+        pst = conn.prepareStatement(sql);
+        pst.setString(1, idTipo);
+        rs = pst.executeQuery();
+        
+
+            while(rs.next()){
+            r.setIdCliente(rs.getString(1));
+            r.setCedula(rs.getString(2));
+            r.setNombre(rs.getString(3));
+            r.setApellido(rs.getString(4));
+            r.setDireccion(rs.getString(5));
+            r.setTelefono(rs.getString(6));
+            r.setTipo(rs.getString(7));
+            }    
+      return r;   
+    }
 }

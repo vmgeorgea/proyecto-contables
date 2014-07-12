@@ -130,6 +130,7 @@ color:#464646;
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
+             
     </head>
     <body>
         <div id="debugging_mouse_axis"></div>
@@ -143,10 +144,12 @@ color:#464646;
         <li><a href="#"> </a></li>
         <li><a href="Cliente.jsp" target="contenidofactura">Cliente</a></li>
         <li><a href="#"> </a></li>
+        <li><a href="Factura.jsp" target="contenidofactura">Factura</a></li>        
+        <li><a href="#"> </a></li>        
+        <li><a href="FacturaVenta.jsp" target="contenidofactura">Factura Venta</a></li>        
+        <li><a href="#"> </a></li>
         <li><a href="FacturaCompra.jsp" target="contenidofactura">Factura Compra</a></li>
-        <li><a href="#"></a></li>
-        <li><a href="Libromayor.jsp" target="contenidofactura">Factura Venta</a></li>
-        <li><a href="#"> </a></li>       
+        <li><a href="#"></a></li>     
         </ul>
         </div>
     </body>
