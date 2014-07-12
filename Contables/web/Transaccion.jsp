@@ -132,7 +132,7 @@
 		<input type="submit" value="Ingresar" id="send">
 	</form>
                 
-                
+    </div>             
         <!-- hidden MODIFICAR form -->
 <div id="modificar">
 	<h2>Modificar</h2>

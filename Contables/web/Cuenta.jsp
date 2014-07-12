@@ -80,7 +80,7 @@
 		<input align='right' type="NumeroCuenta" id="NumeroCuenta" name="numeroCuenta" class="txtingresar" required="required" onkeypress="return Numeros(event)">
 		<br>	
 	    <label for="DescripcionCuenta">Descripcion Cuenta</label>
-		<input type="DescripcionCuenta" id="DescripcionCuenta" name="descripcionCuenta" class="txtingresar" required="required" onkeypress="return Letras(event)">
+		<input type="DescripcionCuenta" id="DescripcionCuenta" name="descripcionCuenta" class="txtingresar" required="required" >
                 <br>
 	    <label for="TipoCuenta">Tipo Cuenta</label>
                 <select name="Tipo_idTipo" class="combo">  
