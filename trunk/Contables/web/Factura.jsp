@@ -1,6 +1,6 @@
 <%-- 
-    Document   : Salud
-    Created on : 03/07/2014, 11:02:31 PM
+    Document   : Factura
+    Created on : Jul 11, 2014, 8:17:43 PM
     Author     : User
 --%>
 
@@ -9,7 +9,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Registro</title>
+        <title>JSP Page</title>
     </head>
         <style>
             frameset{
@@ -17,8 +17,7 @@
             }
         </style>      
         <FRAMESET cols="20%,80%" border="0" frameborder="0" y framespacing="0">
-        <FRAME src="MenuRegistro.jsp" name="menuregistro">
-        <FRAME name="contenidoregistro">
+        <FRAME src="MenuFactura.jsp" name="menufactura">
+        <FRAME name="contenidofactura">
         </FRAMESET>
-
 </html>
