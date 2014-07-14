@@ -45,7 +45,7 @@ public class AsientoDAO {
         PreparedStatement pst = null;
         String sql="insert into asiento (numeroDiario, periodoAsiento, fechaAsiento, numeroAsiento, conceptoAsiento, debeAsiento, haberAsiento) values (?, ?, ?, ?, ?, ?, ?)";
         pst = conn.prepareStatement(sql);
-        pst.setInt(1, Integer.parseInt(u.getNumeroDiario()));
+        pst.setString(1, u.getNumeroDiario());
         pst.setString(2, u.getPeriodoAsiento());
         pst.setString(3, u.getFechaAsiento());
         pst.setInt(4, Integer.parseInt(u.getNumeroAsiento()));
@@ -74,7 +74,7 @@ public class AsientoDAO {
         String sql="update asiento set numeroDiario=?, periodoAsiento=?, fechaAsiento=?, numeroAsiento=?, conceptoAsiento=?, debeAsiento=?, haberAsiento=? where idAsiento=?";
         pst = conn.prepareStatement(sql);
         
-        pst.setInt(1, Integer.parseInt(u.getNumeroDiario()));
+        pst.setString(1, u.getNumeroDiario());
         pst.setString(2, u.getPeriodoAsiento());
         pst.setString(3, u.getFechaAsiento());
         pst.setInt(4, Integer.parseInt(u.getNumeroAsiento()));
@@ -138,4 +138,30 @@ public class AsientoDAO {
   return listahistorial;
  }
     
+  public static AsientoClass  consultarAsiento(String id) throws InstantiationException, IllegalAccessException, SQLException{
+   LinkedList<AsientoClass> listahistorial=new LinkedList<AsientoClass>();
+   AsientoClass aux= new AsientoClass();
+   Conexion c=new Conexion();
+   Connection conn=c.getConexion();
+   Statement st = conn.createStatement();
+   String sql="select * from  asiento where idAsiento="+id;
+   ResultSet rs = st.executeQuery(sql);
+       while(rs.next()){
+        AsientoClass r= new AsientoClass();
+        r.setIdAsiento(rs.getString(1));
+        r.setNumeroDiario(rs.getString(2));
+        r.setPeriodoAsiento(rs.getString(3));
+        r.setFechaAsiento(rs.getString(4));
+        r.setNumeroAsiento(rs.getString(5));
+        r.setConceptoAsiento(rs.getString(6));
+        r.setDebeAsiento(rs.getString(7));
+        r.setHaberAsiento(rs.getString(8));
+        aux=r;
+        listahistorial.add(r);
+       }
+   rs.close();
+   st.close();
+  return aux;
+ }
+  
 }
