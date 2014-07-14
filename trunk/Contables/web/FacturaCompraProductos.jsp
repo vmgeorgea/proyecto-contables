@@ -1,18 +1,18 @@
 <%-- 
-    Document   : FacturaVentaProductos
+    Document   : FacturaCompraProductos
     Created on : Jul 12, 2014, 9:07:30 AM
     Author     : User
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ page import="java.io.*,java.util.*,java.net.*,java.sql.*" %>
-<%@ page import = "DAO.FormaspagoDAO"%> 
-<%@ page import = "Clases.FormaspagoClass"%>
 <%@ page import = "DAO.ProductoDAO"%> 
 <%@ page import = "Clases.ProductoClass"%>
+<%@ page import = "DAO.FormaspagoDAO"%> 
+<%@ page import = "Clases.FormaspagoClass"%>
 <%@ page import = "DAO.IVADAO"%> 
 <%@ page import = "Clases.IVAClass"%> 
-<%@ page import = "Clases.ProductoVentaClass"%> 
+<%@ page import = "Clases.ProductoCompraClass"%> 
 <%@ page import = "java.util.LinkedList"%> 
 <%@ page import = "java.util.ArrayList"%> 
 <!DOCTYPE html>
@@ -33,7 +33,7 @@
     %>    
     <body>
        <center>
-        <form action="FacturaVentaServlet" method="post" name="FacturaVentaProducto">
+        <form action="FacturaCompraServlet" method="post" name="FacturaCompraProducto">
         <table id="miTabla">
         <tr>
         Registro de Producto
@@ -59,7 +59,7 @@
         <td></td>
         </tr>        
         <%
-         LinkedList<ProductoVentaClass> lista =new LinkedList<ProductoVentaClass>();
+         LinkedList<ProductoCompraClass> lista =new LinkedList<ProductoCompraClass>();
          HttpSession session1 = request.getSession();
                if(session1.getAttribute("productos")!=null){
                    lista = (LinkedList) session1.getAttribute("productos");
@@ -110,7 +110,7 @@
             <option value="0.8" selected>0.8</option>
             <option value="0.9" selected>0.9</option>
             <option value="1.0" selected>1.0</option>                               
-           </select>            
+           </select>
         </td>
         <td class='estilo1'></td>        
         <td class='estilo1'></td>
@@ -127,7 +127,7 @@
         <td class='estilo1' id="cedldasubtotaldescuento"><%=subtotaldescuento%></td>
         <td class='estilo1'> </td>        
         <td class='estilo1'></td>
-        <td class='estilo1'></td>        
+        <td class='estilo1'></td>       
         <tr>            
         <td class='estilo1'></td>
         <td class='estilo1'></td>
@@ -178,28 +178,30 @@
         <td class='estilo1' id="cedldatotal"><%=total%></td>
         <td class='estilo1'></td>
         <td class='estilo1'></td>
-        <td class='estilo1'></td>                                                                         
-      </table>          
-                  <table>         
-                        <tr>  
-                        <td  class='estilo1'></td>
-                        <td  class='estilo1'></td>
-                        <td  class='estilo1'></td>
-                        <td  class='estilo1'></td>
-                        <td  class='estilo1'></td>
-                        <td class='estilo1'></td> 
-                        <td class='estilo1'></td> 
-                            <select id="formaspagoFactura" name="formaspagoFactura" >                                  
-                            <%
-                            LinkedList<FormaspagoClass> lista3 =new LinkedList<FormaspagoClass>();
-                            lista3 = FormaspagoDAO.consultar();
-                            for (int i=0;i<lista3.size();i++)
-                            {
-                            out.println("<option value='"+lista3.get(i).getIdformaspago()+"' selected>"+lista3.get(i).getDescripcionformaspago()+"</option>");
-                            }  
-                            %>
-                            </select> 
-                        </tr>                        
+        <td class='estilo1'></td>
+        </tr>
+    </table>          
+      <table >         
+                    <tr>  
+                    <td  class='estilo1'></td>
+                    <td  class='estilo1'></td>
+                    <td class='estilo1'></td>
+                    <td  class='estilo1'></td>
+                    <td  class='estilo1'></td>
+                    <td class='estilo1'></td>                     
+                    <select id="formaspagoFactura" name="formaspagoFactura" >                                  
+                    <%
+                    LinkedList<FormaspagoClass> lista3 =new LinkedList<FormaspagoClass>();
+                    lista3 = FormaspagoDAO.consultar();
+                    for (int i=0;i<lista3.size();i++)
+                    {
+                    out.println("<option value='"+lista3.get(i).getIdformaspago()+"' selected>"+lista3.get(i).getDescripcionformaspago()+"</option>");
+                    }  
+                    %>
+                    </select> 
+                    </tr>                                               
+                            
+
                         <tr>
                             <td  class='estilo1'></td>
                             <td  class='estilo1'></td>
@@ -217,7 +219,7 @@
 <!-- hidden INGRESAR form -->
     <div id="ingresar">
 	<h2>Agregar</h2>
-	<form id="ingresarform" name="ingresarform" action="FacturaVentaAgregarServlet" method="post" >
+	<form id="ingresarform" name="ingresarform" action="FacturaCompraAgregarServlet" method="post" >
 	    <label for="NombreProducto">Tipo Cuenta</label>
                 <select name="nombreProducto" class="combo"> 
                 <option value="0" selected>SELECCIONAR</option>
@@ -240,7 +242,7 @@
 <!-- hidden MODIFICAR form -->
 <div id="modificar">
 	<h2>Modificar</h2>
-	<form id="modificarform" name="modificarform" action="FacturaVentaModificarServlet" method="post">
+	<form id="modificarform" name="modificarform" action="FacturaCompraModificarServlet" method="post">
 		<label for="idProducto">Id Prodcuto</label>
 		<input type="idProducto" id="idProducto" name="idProducto" class="txtmodificar" required="required" readonly="readonly" >
 		<br>
@@ -254,7 +256,7 @@
 <!-- hidden ELIMINAR form -->
 <div id="eliminar">
 	<h2>Eliminar</h2>
-	<form id="eliminarform" name="eliminarform" action="FacturaVentaRetirarServlet" method="post">
+	<form id="eliminarform" name="eliminarform" action="FacturaCompraRetirarServlet" method="post">
 		<label for="idProducto">Desea retirar el producto con la siguienta id:</label>
 		<input type="idProducto" id="idProducto" name="idProducto" class="txteliminar" readonly="readonly" >
                 <br>

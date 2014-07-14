@@ -123,4 +123,27 @@ public class ProveedorDAO {
    st.close();
   return listahistorial;
 }
+    
+public ProveedorClass consultarproveedor(String idTipo) throws InstantiationException, IllegalAccessException, SQLException, SQLException {        
+    ProveedorClass r= new ProveedorClass();
+    PreparedStatement pst = null;
+    ResultSet rs = null;
+       Conexion c=new Conexion();
+       Connection conn=c.getConexion();
+        String sql="select * from proveedor where IdentificacionProveedor=?";
+        pst = conn.prepareStatement(sql);
+        pst.setString(1, idTipo);
+        rs = pst.executeQuery();
+            while(rs.next()){
+            r.setIdProveedor(rs.getString(1));
+            r.setIdentificacionProveedor(rs.getString(2));
+            r.setNombreProveedor(rs.getString(3));
+            r.setDireccionProveedor(rs.getString(4));
+            r.setTelefonoProveedor(rs.getString(5));
+            r.setAutorizacionProveedor(rs.getString(6));
+            r.setFechaCaducidadAutorizacionProveedor(rs.getString(7));
+            r.setTipoProveedor(rs.getString(7));
+            }    
+      return r;   
+    }    
 }

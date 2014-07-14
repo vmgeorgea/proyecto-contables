@@ -10,17 +10,19 @@ package Clases;
  *
  * @author User
  */
-public class FacturaVentaProductoClass {
+public class ProductoCompraClass {
 String idProducto;
-String idFactura;
+String nombreProducto;
+String precioProducto;
 String cantidadProducto;
 
-    public FacturaVentaProductoClass() {
+    public ProductoCompraClass() {
     }
 
-    public FacturaVentaProductoClass(String idFactura, String idProducto, String cantidadProducto) {
+    public ProductoCompraClass(String idProducto, String nombreProducto, String precioProducto, String cantidadProducto) {
         this.idProducto = idProducto;
-        this.idFactura = idFactura;
+        this.nombreProducto = nombreProducto;
+        this.precioProducto = precioProducto;
         this.cantidadProducto = cantidadProducto;
     }
 
@@ -32,12 +34,20 @@ String cantidadProducto;
         this.idProducto = idProducto;
     }
 
-    public String getIdFactura() {
-        return idFactura;
+    public String getNombreProducto() {
+        return nombreProducto;
     }
 
-    public void setIdFactura(String idFactura) {
-        this.idFactura = idFactura;
+    public void setNombreProducto(String nombreProducto) {
+        this.nombreProducto = nombreProducto;
+    }
+
+    public String getPrecioProducto() {
+        return precioProducto;
+    }
+
+    public void setPrecioProducto(String precioProducto) {
+        this.precioProducto = precioProducto;
     }
 
     public String getCantidadProducto() {

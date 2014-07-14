@@ -17,6 +17,10 @@ String valorIva;
     public IVAClass() {
     }
 
+    public IVAClass(String valorIva) {
+        this.valorIva = valorIva;
+    }
+
     public IVAClass(String idIva, String valorIva) {
         this.idIva = idIva;
         this.valorIva = valorIva;

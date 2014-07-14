@@ -6,15 +6,13 @@
 
 package Servlet;
 
-import Clases.ClienteClass;
+import Clases.ProveedorClass;
 import Clases.ProductoClass;
-import Clases.FacturaVentaProductoClass;
-import Clases.ProductoVentaClass;
-import Clases.FacturaVentaClass;
-import Clases.TransaccionClass;
-import DAO.TransaccionDAO;
-import DAO.FacturaVentaProductoDAO;
-import DAO.FacturaVentaDAO;
+import Clases.FacturaCompraProductoClass;
+import Clases.ProductoCompraClass;
+import Clases.FacturaCompraClass;
+import DAO.FacturaCompraProductoDAO;
+import DAO.FacturaCompraDAO;
 import DAO.ProductoDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -34,7 +32,7 @@ import javax.servlet.http.HttpSession;
  * @author User
  */
 @WebServlet(name = "FacturaVentaServlet", urlPatterns = {"/FacturaVentaServlet"})
-public class FacturaVentaServlet extends HttpServlet {
+public class FacturaCompraServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -91,19 +89,18 @@ public class FacturaVentaServlet extends HttpServlet {
         try {
             HttpSession session = request.getSession(true);
             boolean sw1=false;
-            LinkedList<ProductoVentaClass> lista =(LinkedList) session.getAttribute("productos");
-            FacturaVentaProductoDAO fvpd = new  FacturaVentaProductoDAO();
-            FacturaVentaDAO fvd = new  FacturaVentaDAO();
+            LinkedList<ProductoCompraClass> lista =(LinkedList) session.getAttribute("productos");
+            FacturaCompraProductoDAO fvpd = new  FacturaCompraProductoDAO();
+            FacturaCompraDAO fvd = new  FacturaCompraDAO();
             ProductoDAO pd =new ProductoDAO();
-            TransaccionDAO td= new TransaccionDAO();
-            ClienteClass cc= new ClienteClass();
-            cc= (ClienteClass)session.getAttribute("cliente");
+            ProveedorClass cc= new ProveedorClass();
+            cc= (ProveedorClass)session.getAttribute("proveedor");
             String a=session.getAttribute("idFactura").toString();
             String b=session.getAttribute("fechaFactura").toString();
             String c=request.getParameter("descuentoFactura").toString();
-            String d=cc.getIdCliente();
+            String d=cc.getIdProveedor();
             String e=request.getParameter("ivaFactura");
-            FacturaVentaClass fvc=new FacturaVentaClass(a, b,"986789456734", "PARQUE INDUSTRIAL", "001", c, d,e);
+            FacturaCompraClass fvc=new FacturaCompraClass(a, b,"986789456734", "PARQUE INDUSTRIAL", "001", c, d,e);
             boolean sw0=fvd.insertar(fvc);
             if(sw0){
                 for(int i=0; i<lista.size();i++){
@@ -111,72 +108,40 @@ public class FacturaVentaServlet extends HttpServlet {
                         String idFactura = session.getAttribute("idFactura").toString();
                         String idProducto = lista.get(i).getIdProducto().toUpperCase();
                         String cantidadProducto = lista.get(i).getCantidadProducto().toUpperCase();
-                        FacturaVentaProductoClass u=new FacturaVentaProductoClass(idFactura, idProducto, cantidadProducto);
+                        FacturaCompraProductoClass u=new FacturaCompraProductoClass(idFactura, idProducto, cantidadProducto);
                         boolean sw=fvpd.insertar(u);
                         if(sw){
-                        String cuenta1=null;
-                        String cuenta2=null;
-                              if(request.getParameter("formaspagoFactura").toString().equals("1")){ 
-                                  //caja
-                              cuenta1="4";
-                              cuenta2="21";
-                              }
-                              if(request.getParameter("formaspagoFactura").equals("2")){  
-                                  //banco
-                              cuenta1="7";
-                              cuenta2="21";
-                              }
-                              if(request.getParameter("formaspagoFactura").equals("3")){ 
-                                  //deudas por cobrar
-                              cuenta1="11";
-                              cuenta2="21";
-                              }
-                         String debe=request.getParameter("cedldatotal");
-                         String haber=request.getParameter("cedldatotal");
-                         String referencia="Factura Venta";
-                         String documento=session.getAttribute("idFactura").toString();
-                         String asiento=cc.getIdCliente();
-                         TransaccionClass u1=new TransaccionClass(debe, "0", referencia, documento, cuenta1, asiento);
-                         TransaccionClass u2=new TransaccionClass("0", haber, referencia, documento, cuenta2, asiento);
-                         boolean sw3=td.insertar(u1);
-                          boolean sw4=td.insertar(u2);
-                            if(sw3 && sw4){    
-                                    try {
-                                    sw1=sw;                                
-                                    boolean sw2=pd.modificarcantidadventa((String)lista.get(i).getIdProducto().toString(), (String) lista.get(i).getCantidadProducto().toString());
-                                    lista.remove(i);
-                                    if(sw2){
-
-                                    }else{
-                                        PrintWriter out=response.getWriter();
-                                        out.println("Fail registration.");
-                                     }
-                                    } catch (SQLException ex) {
-                                        Logger.getLogger(FacturaVentaServlet.class.getName()).log(Level.SEVERE, null, ex);
-                                    } catch (ClassNotFoundException ex) {
-                                        Logger.getLogger(FacturaVentaServlet.class.getName()).log(Level.SEVERE, null, ex);
-                                    } catch (InstantiationException ex) {
-                                        Logger.getLogger(FacturaVentaServlet.class.getName()).log(Level.SEVERE, null, ex);
-                                    } catch (IllegalAccessException ex) {
-                                        Logger.getLogger(FacturaVentaServlet.class.getName()).log(Level.SEVERE, null, ex);
-                                    }
+                            try {
+                                sw1=sw;                                
+                                boolean sw2=pd.modificarcantidadcompra((String)lista.get(i).getIdProducto().toString(), (String) lista.get(i).getCantidadProducto().toString());
+                                lista.remove(i);
+                                if(sw2){
+                                                                        
                                 }else{
                                     PrintWriter out=response.getWriter();
                                     out.println("Fail registration.");
                                 }
-                            }else{
+                            } catch (SQLException ex) {
+                                Logger.getLogger(FacturaCompraServlet.class.getName()).log(Level.SEVERE, null, ex);
+                            } catch (ClassNotFoundException ex) {
+                                Logger.getLogger(FacturaCompraServlet.class.getName()).log(Level.SEVERE, null, ex);
+                            } catch (InstantiationException ex) {
+                                Logger.getLogger(FacturaCompraServlet.class.getName()).log(Level.SEVERE, null, ex);
+                            } catch (IllegalAccessException ex) {
+                                Logger.getLogger(FacturaCompraServlet.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                        }else{
                             PrintWriter out=response.getWriter();
                             out.println("Fail registration.");
-                                
-                            }
+                        }
                     } catch (SQLException ex) {
-                        Logger.getLogger(FacturaVentaServlet.class.getName()).log(Level.SEVERE, null, ex);
+                        Logger.getLogger(FacturaCompraServlet.class.getName()).log(Level.SEVERE, null, ex);
                     } catch (ClassNotFoundException ex) {
-                        Logger.getLogger(FacturaVentaServlet.class.getName()).log(Level.SEVERE, null, ex);
+                        Logger.getLogger(FacturaCompraServlet.class.getName()).log(Level.SEVERE, null, ex);
                     } catch (InstantiationException ex) {
-                        Logger.getLogger(FacturaVentaServlet.class.getName()).log(Level.SEVERE, null, ex);
+                        Logger.getLogger(FacturaCompraServlet.class.getName()).log(Level.SEVERE, null, ex);
                     } catch (IllegalAccessException ex) {
-                        Logger.getLogger(FacturaVentaServlet.class.getName()).log(Level.SEVERE, null, ex);
+                        Logger.getLogger(FacturaCompraServlet.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
             }else{
@@ -184,13 +149,13 @@ public class FacturaVentaServlet extends HttpServlet {
                 out.println("Fail registration.");
             }
         } catch (SQLException ex) {
-            Logger.getLogger(FacturaVentaServlet.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FacturaCompraServlet.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(FacturaVentaServlet.class.getName()).log(Level.SEVERE, null, ex);                        
+            Logger.getLogger(FacturaCompraServlet.class.getName()).log(Level.SEVERE, null, ex);                        
         } catch (InstantiationException ex) {
-            Logger.getLogger(FacturaVentaServlet.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FacturaCompraServlet.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            Logger.getLogger(FacturaVentaServlet.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FacturaCompraServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

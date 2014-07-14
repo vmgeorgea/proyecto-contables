@@ -12,7 +12,6 @@
         <title>Menu</title>
         <link href=CSS/MenuCSS.css rel="stylesheet" type="text/css"/>
         <script src=JS/MenuJS.js type="text/javascript"></script>
-    </head>
         <style>
             body{
                 background:#A0A4AB;
@@ -24,7 +23,9 @@
         self.close(this.window);
         <a href="index.jsp"/a>
          }
-      </script>
+      </script>        
+    </head>
+
 
     <body>
         <div id="sse2">
@@ -32,7 +33,8 @@
             <ul>
               <li><a href="Registro.jsp" onclick="?menu=2&skin=1&p=Horizontal-Menus" target="contenido">Registro</a></li>
               <li><a href="Factura.jsp" onclick="?menu=2&skin=1&p=Horizontal-Menus" target="contenido">Facturacion</a></li>              
-              <li><a href="Inventario.jsp" onclick="?menu=2&skin=1&p=Horizontal-Menus" target="contenido">Inventario</a></li>              
+              <li><a href="Inventario.jsp" onclick="?menu=2&skin=1&p=Horizontal-Menus" target="contenido">Inventario</a></li>      
+              <li><a href="Administracion.jsp" onclick="?menu=2&skin=1&p=Horizontal-Menus" target="contenido">Administracion</a></li> 
             </ul>
           </div>
         </div>
