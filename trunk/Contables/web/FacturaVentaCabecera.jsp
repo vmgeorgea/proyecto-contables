@@ -16,6 +16,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Cabecera</title>
+     <link rel="stylesheet" type="text/css" media="all" href="CSS/style.css">
     <script language="javascript" type="text/javascript" >
         function Datos(){
         var f = new Date();
@@ -28,29 +29,45 @@
         }      
     </script>        
     </head>
-    <body onload="Datos()">
+    <body onload="Datos()" >
+     <center>
         <div>
-                <table id="Ingresar">
+            <form id="Ingresar" name="Ingresar">
+                <table id="miTabla">
                         <tr>
-                        <th>Registro de Factura</th>
+                        Registro de Factura
                         </tr>
                         <tr>
-                                <td>Factura Nº:</td>
+                                <td class="estilo1">RUC:</td>
+                                <td class="estilo1"><input type="text" id="rucFactura" name="rucFactura" readonly="readonly" value="7839489398001"></td>                            
+                                <td class="estilo1">Autorizacion:</td>
+                                <td class="estilo1"><input type="text" id="autorizacionFactura" name="autorizacionFactura" readonly="readonly" value="986789456734"></td>
+                                 <td class="estilo1">Punto Emision:</td>
+                                <td class="estilo1" ><input type="txt" id="punoemisionFactura" name="punoemisionFactura" readonly="readonly" value="001"></td>                            
+                         </tr>
+                        <tr>                                
+                                <td class="estilo1">Establecimiento:</td>
+                                <td class="estilo1"><input type="text" id="establecimientoFactura" name="establecimientoFactura" readonly="readonly" value="PARQUE INDUSTRIAL"></td>
+                                <td class="estilo1" >Factura Nº:</td>
                                  <%
                                         LinkedList<FacturaVentaClass> lista1 =new LinkedList<FacturaVentaClass>();
                                         lista1 = FacturaVentaDAO.consultarfinal();
                                         boolean b=lista1.get(0).getIdFactura().equals("0");
-                                        if(b){
-                                            out.println("<td><input type='text' id='numeroFactura' name='numeroFactura' readonly='readonly' value='"+0+"'/></td>");
+                                        int a=0;
+                                        if(b){                                           
+                                            out.println("<td class='estilo1'><input type='text' id='numeroFactura' name='numeroFactura' readonly='readonly' value='"+a+"'/></td>");
                                         }else{
-                                            int a=Integer.parseInt(lista1.get(0).getIdFactura())+1;
-                                            out.println("<td><input type='text' id='numeroFactura' name='numeroFactura' readonly='readonly' value='"+a+"'/></td>");
+                                             a=Integer.parseInt(lista1.get(0).getIdFactura())+1;
+                                            out.println("<td class='estilo1'><input type='text' id='numeroFactura' name='numeroFactura' readonly='readonly' value='"+a+"'/></td>");
                                         }
+                                        session.setAttribute("idFactura", a);
                                 %>                                       
-                                <td>Fecha:</td>
-                                <td><input type="text" id="fechaFactura" name="fechaFactura" readonly="readonly"/></td>
+                                <td class="estilo1">Fecha:</td>
+                                <td class="estilo1"><input type="text" id="fechaFactura" name="fechaFactura" readonly="readonly"/></td>
                         </tr>
                </table>
+              </form>                                   
            </div>
+        </center>
     </body>
 </html>

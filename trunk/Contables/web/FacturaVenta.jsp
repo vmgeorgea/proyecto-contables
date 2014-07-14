@@ -24,11 +24,13 @@
 
 
      <center>                                       
-         <frameset rows="20%,20%,*">
+         <frameset rows="25%,20%,80%" border="0" frameborder="0" y framespacing="0">
                 <frame src="FacturaVentaCabecera.jsp">
                 <frame src="FacturaVentaCliente.jsp">             
                 <frame src="FacturaVentaProductos.jsp">
-         </frameset>
+                <!frame src="FacturaVentaGuardar.jsp">
+         </frameset>        
+
     </center>
 
 </html>
