@@ -19,6 +19,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -44,29 +45,53 @@ public class BuscarClienteServlet extends HttpServlet {
             ClienteClass cc= new ClienteClass();
             ClienteDAO cd= new ClienteDAO(); 
             cc=cd.consultarcliente(request.getParameter("cedulaCliente"));
+            HttpSession session = request.getSession(true);
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet BuscarClienteServlet</title>");            
+            out.println("<title>Servlet BuscarClienteServlet</title>");  
+            out.println("<link rel=\"stylesheet\" type=\"text/css\" media=\"all\" href=\"CSS/style.css\">"); 
             out.println("</head>");
-            out.println("<body>");
+            out.println("<body>");            
+                if(cc.getCedula()==null){
+                     out.println("<center>");
+                      out.println("<div>");                                                                             
+                            out.println("<form name='Ingresar' id='Ingresar' action='BuscarClienteServlet'>"); 
+                               out.println("<table id='miTabla'>");
+                                     out.println("<tr>Registro de Cliente</tr>");
+                                     out.println("<tr>");
+                                             out.println("<td class='estilo1'>Cliente:</td>");
+                                             out.println("<td class='estilo1'><input type='text' id='cedulaCliente' name='cedulaCliente' required='required'></td> ");                               
+                                             out.println("<td class='estilo1'><button name='boton' type='submit' style='background-color:white; border:none'><img src='Imagen/Agregar.png' align='left'></button><td>");
+                                    out.println("</tr>");                                               
+                             out.println("</table>");
+                         out.println("</form>");            
+                     out.println("</div>");
+                  out.println("</center>");
+                }else{
+
             out.println("<center>");
-            out.println("<table>");        
-               out.println("<td>Cedula Cliente:</td>"); 
-               out.println("<td><input type='text' id='cedulaCliente' name='cedulaCliente' readonly='readonly' value='"+cc.getCedula()+"'></td>"); 
-               out.println("<td>Nombre Cliente:</td>"); 
-               out.println("<td><input type='text' id='nombreCliente' name='nombreCliente' readonly='readonly' value='"+cc.getNombre()+"'></td>"); 
-               out.println("<td>Apellido Cliente:</td>");   
-               out.println("<td><input type='text' id='apellidoCliente' name='apellidoCliente' readonly='readonly' value='"+cc.getApellido()+"'/></td>");                                    
+            out.println("<table id='miTabla'>");        
+               out.println("<td class='estilo1'>Cedula Cliente:</td>"); 
+               out.println("<td class='estilo1'><input type='text' id='cedulaCliente' name='cedulaCliente' readonly='readonly' value='"+cc.getCedula()+"'></td>"); 
+               out.println("<td class='estilo1'>Nombre Cliente:</td>"); 
+               out.println("<td class='estilo1'><input type='text' id='nombreCliente' name='nombreCliente' readonly='readonly' value='"+cc.getNombre()+"'></td>"); 
+               out.println("<td class='estilo1'>Apellido Cliente:</td>");   
+               out.println("<td class='estilo1'><input type='text' id='apellidoCliente' name='apellidoCliente' readonly='readonly' value='"+cc.getApellido()+"'/></td>");                                    
                out.println("<tr>"); 
-               out.println("<td>Direccion Cliente:</td>"); 
-               out.println("<td><input type='text' id='direccionCliente' name='direccionCliente' readonly='readonly' value='"+cc.getDireccion()+"'/></td>");                                   
-               out.println("<td>Telefono Cliente:</td>");
-               out.println("<td><input type='text' id='telefonoCliente' name='telefonoCliente' readonly='readonly' value='"+cc.getTelefono()+"'/></td>"); 
+               out.println("<td class='estilo1'>Direccion Cliente:</td>"); 
+               out.println("<td class='estilo1'><input type='text' id='direccionCliente' name='direccionCliente' readonly='readonly' value='"+cc.getDireccion()+"'/></td>");                                   
+               out.println("<td class='estilo1'>Telefono Cliente:</td>");
+               out.println("<td class='estilo1'><input type='text' id='telefonoCliente' name='telefonoCliente' readonly='readonly' value='"+cc.getTelefono()+"'/></td>"); 
+               out.println("<td class='estilo1'></td>");
+               out.println("<td class='estilo1'></td>");
             out.println("</table>");
             out.println("</center>");
             out.println("</body>");
             out.println("</html>");
+            session.setAttribute("cliente", cc);
+                }
+            
         }
     }
 

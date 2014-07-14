@@ -35,7 +35,17 @@ String IVA_idIVA;
         this.Cliente_idCliente = Cliente_idCliente;
         this.IVA_idIVA = IVA_idIVA;
     }
-
+    public FacturaVentaClass( String numeroFactura, String fechaFactura, String autorizacionFactura, String establecimientoFactura, String puntoemisionFactura, String descuentoFactura, String Cliente_idCliente, String IVA_idIVA) {
+        this.numeroFactura = numeroFactura;
+        this.fechaFactura = fechaFactura;
+        this.autorizacionFactura = autorizacionFactura;
+        this.establecimientoFactura = establecimientoFactura;
+        this.puntoemisionFactura = puntoemisionFactura;
+        this.descuentoFactura = descuentoFactura;
+        this.Cliente_idCliente = Cliente_idCliente;
+        this.IVA_idIVA = IVA_idIVA;
+    }
+   
     public String getIdFactura() {
         return idFactura;
     }

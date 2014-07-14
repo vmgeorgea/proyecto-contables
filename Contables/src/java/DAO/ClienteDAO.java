@@ -127,8 +127,6 @@ public class ClienteDAO {
         pst = conn.prepareStatement(sql);
         pst.setString(1, idTipo);
         rs = pst.executeQuery();
-        
-
             while(rs.next()){
             r.setIdCliente(rs.getString(1));
             r.setCedula(rs.getString(2));
