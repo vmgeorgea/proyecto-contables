@@ -4,6 +4,7 @@
     Author     : Leitos
 --%>
 
+<%@page import="java.util.Date"%>
 <%@page import="DAO.AsientoDAO"%>
 <%@page import="Clases.AsientoClass"%>
 <%@page import="DAO.CuentaDAO"%>
@@ -22,79 +23,77 @@
         <script type="text/javascript" src="JS/ValidarJS.js"></script>
     </head>
     <body>
-        
-        <center>
+        <%
+                  
+            java.util.Date fecha = new Date();
+            String anio=Integer.toString(fecha.getYear());
+            String mes=Integer.toString(fecha.getMonth());
+            String dia=Integer.toString(fecha.getDay());
+            String fech= dia+"/"+mes+"/"+anio;
+         %>
+         <center>
             <table id="miTabla">
             <tr>
-   
-                <td class="estilo1">Fecha</td>
-                <td class="estilo1">Detalle</td>
-                <td class="estilo1">Debe</td>
-                <td class="estilo1">Haber</td>
-                
+                <td class="estilo1">Id Asiento</td>
+                <td class="estilo1">Número Diario</td>
+                <td class="estilo1">Periodo Asiento</td>
+                <td class="estilo1">Fecha Asiento</td>
+                <td class="estilo1">Número de Asiento</td>
+                <td class="estilo1">Concepto Asiento</td>
+                <td class="estilo1">Debe Asiento</td>
+                <td class="estilo1">Haber Asiento</td>
             </tr>
             <tr>
                 <td class="estilo1"></td>
                 <td class="estilo1"></td>
                 <td class="estilo1"></td>
                 <td class="estilo1"></td>
-                
+                <td class="estilo1"></td>
+                <td class="estilo1"></td>
+                <td class="estilo1"></td>
+                <td class="estilo1"></td>
                 <td><a class='modalbox' href='#ingresar'><img SRC="Imagen/Nuevo.png"></a></td>
                 <td></td>
-                
-            </tr>     
- 
-            
-            
+                <td></td>
+            </tr>        
+            <%
+            LinkedList<AsientoClass> lista =new LinkedList<AsientoClass>();
+            lista = AsientoDAO.consultar();
+            for (int i=0;i<lista.size();i++)
+            {
+               if(fech.toString().equals(lista.get(i).getNumeroDiario())){
+                   out.println("<tr data-valor='"+i+"' class='click'>" );
+                   out.println("<td id='a"+i+"'>"+lista.get(i).getIdAsiento()+"</a></td>");
+                   out.println("<td id='b"+i+"'>"+lista.get(i).getNumeroDiario()+"</a></td>");
+                   out.println("<td id='c"+i+"'>"+lista.get(i).getPeriodoAsiento()+"</td>");
+                   out.println("<td id='d"+i+"'>"+lista.get(i).getFechaAsiento()+"</td>");
+                   out.println("<td id='e"+i+"'>"+lista.get(i).getNumeroAsiento()+"</td>");
+                   out.println("<td id='f"+i+"'>"+lista.get(i).getConceptoAsiento()+"</td>");
+                   out.println("<td id='g"+i+"'>"+lista.get(i).getDebeAsiento()+"</td>");
+                   out.println("<td id='h"+i+"'>"+lista.get(i).getHaberAsiento()+"</td>");
+                   out.println("<td></td>");
+                   out.println("<td><a class='modalbox' href='#modificar'><img SRC='Imagen/Modificar.png'></a></td>");
+                   //out.println("<td><a class='modalbox' href='#eliminar'><img SRC='Imagen/Eliminar.png'></a></td>");
+                   out.println("</tr>");}
+            }
+            %>
             </table>
       </center>
-        
-          <!-- hidden INGRESAR form -->
-<div id="ingresar">
+            
+            
+      <!Boton de libro diario*********************************>      
+  
+      
+      <a class='modalbox' href='#ingresar'><img SRC="Imagen/LibroDiario.png" width="50" height="50"></a>  
+      
+      
+      <div id="ingresar">
 	<h2>Nuevo</h2>
-        <form id="ingresarform" name="ingresarform" action="AsientoIngresarServlet" method="post" >
-            
-            <center>
-            <table>
-            <tr>
-                <td><label for="NumeroCuenta">Numero Diario  </label></td>
-                <td><label for="periodoAsiento">Periodo Asiento</label></td>
-                <td><label for="FechaAsiento">Fecha Asiento</label></td>
-                     
-            </tr>
-            <tr>
-                <td><input type="NumeroCuenta" id="numeroCuenta" name="numeroDiario" class="txtingresar1" required="required" onkeypress="return Numeros(event)"></td>
-                <td>
-                    
-                    <select name="periodoAsiento" class="combo1">  
-                    <option  selected>SELECCIONAR</option>  
-                        <%
-                            for (int i=0;i<20;i++)
-                                {
-                                int p=2014-i;
-                                out.println("<option value='"+p+"' selected>"+p+"</option>");
-                                }
-                        %>
-                    </select>    
-                </td>
-                <td><label for="FechaAsiento">Fecha Asiento</label></td>
-                
-            </tr>     
- 
-            
-            
-            </table>
-      </center>
-            
-            
-            
-            
-            
-            
+	<form id="ingresarform" name="ingresarform" action="AsientoIngresarServlet1" method="post" >
             
             
                 <label for="NumeroCuenta">Numero Diario  </label>
-                <input align='right' type="NumeroCuenta" id="numeroCuenta" name="numeroDiario" class="txtingresar" required="required" onkeypress="return Numeros(event)">
+                <input align='right' type="NumeroCuenta" id="numeroCuenta" name="numeroDiario" class="txtingresar" required="required" value="<% out.print(fech); %>" onkeypress="return Numeros(event)">
                 <br>	
 
                 <label for="PeriodoAsiento">Periodo Asiento</label>
@@ -124,22 +123,92 @@
                 <br>	
 
                 <label for="DebeAsiento">Debe Asiento</label>
-                <input type="DebeAsiento" id="Cuenta_idCuenta" name="debeAsiento" class="txtingresar" required="required" onkeypress="return Numeros(event)">
+                <input type="DebeAsiento" id="Cuenta_idCuenta" name="debeAsiento" value="0" class="txtingresar" required="required" onkeypress="return Numeros(event)"  readonly="readonly">                      >
                 <br>
 
                 <label for="HaberAsiento">Haber Asiento</label>
-                <input type="HaberAsiento" id="Cuenta_idCuenta" name="haberAsiento" class="txtingresar" required="required" onkeypress="return Numeros(event)">
+                <input type="HaberAsiento" id="Cuenta_idCuenta" name="haberAsiento" value="0" class="txtingresar" required="required" onkeypress="return Numeros(event)" readonly="readonly">
                 <br>
                 
                 <input type="submit" value="Ingresar" id="send">
+                
 	</form>
-</div>                     
+</div>  
+       
+                
+        <!-- hidden INGRESAR form -->
+<div id="modificar">
+	<h2>Nuevo</h2>
+	<form id="modificarform" name="modificarform" action="TransaccionIngresarServlet1" method="post" >
+            
+            <label for="Asiento_idAsiento">Id Asiento</label>
+                <input align='right' type="asiento_idAsiento" id="asiento_idAsiento" name="Asiento_idAsiento" class="txtingresar" required="required" onkeypress="return Numeros(event)">
+                 
+		<br>
+            
+                <label for="Cuanta_idCuenta">Id Cuenta</label>
+                <select name="Cuenta_idCuenta" class="combo">  
+                <option  selected>SELECCIONAR</option>  
+                <%
+                    LinkedList <CuentaClass> lista2=new LinkedList<CuentaClass>();
+                    lista2 = CuentaDAO.consultar();
+                    
+                    for (int i=0;i<lista2.size();i++)
+                    {
+                        CuentaClass aux=lista2.get(i);
+                        
+                        out.println("<option value='"+aux.getIdCuenta()+"' selected>"+aux.getNumeroCuenta()+" "+aux.getDescripcionCuenta()+"</option>");            
+                    }
+                %>
+                </select> 
+		<br>
+            
+            <label for="DebeTransaccion">Debe Transaccion</label>
+		<input align='right' type="debeTransaccion" id="debeTransaccion" name="debeTransaccion" class="txtingresar" required="required" onkeypress="return Numeros(event)">
+		<br>	
+	    
+	    <label for="HaberTransaccion">Haber Transaccion</label>
+		<input align='right' type="haberTransaccion" id="haberTransaccion" name="haberTransaccion" class="txtingresar" required="required" onkeypress="return Numeros(event)">
+		<br>
+                
+            <label for="ReferenciaTransaccion">Referencia Transaccion</label>
+		<input align='right' type="referenciaTransaccion" id="referenciaTransaccion" name="referenciaTransaccion" class="txtingresar" required="required">
+		<br>
+            
+            <label for="DocumentoTransaccion">Documento Transaccion</label>
+		<input align='right' type="documentoTransaccion" id="documentoTransaccion" name="documentoTransaccion" class="txtingresar" required="required">
+		<br>    
+		<input type="submit" value="Ingresar" id="send">
+	</form>
+                
+    </div>
     
+                
+    <div id="eliminar">
+	<h2>Libro Diario</h2>
+        <form id="modificarform" name="eliminarform"  method="post" >
+            
+            
+            
+        </form>
+    </div>  
+                   
+                
+                
     <script type="text/javascript">
 
 	$(document).ready(function() {
 		$(".modalbox").fancybox();
-	});            
+	});  
+        
+        $(function(){
+            $(".click").click(function(e) {
+                e.preventDefault();
+                var data = $(this).attr("data-valor");
+                $asiento_idAsiento=document.getElementById("a"+data.toString()).innerHTML;
+                document.modificarform.asiento_idAsiento.value=$asiento_idAsiento;
+            });
+        });
     </script>
     </body>
 </html>
