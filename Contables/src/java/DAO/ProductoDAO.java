@@ -94,7 +94,7 @@ public class ProductoDAO {
       return agregado;
      } 
 
-    public boolean modificarcantidad(String idProducto, String cantidadProducto) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException{       
+    public boolean modificarcantidadventa(String idProducto, String cantidadProducto) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException{       
     boolean agregado=false;
       try {
        Conexion c=new Conexion();
@@ -115,7 +115,30 @@ public class ProductoDAO {
        e.printStackTrace();
       }
       return agregado;
-     }     
+     }
+    
+    public boolean modificarcantidadcompra(String idProducto, String cantidadProducto) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException{       
+    boolean agregado=false;
+      try {
+       Conexion c=new Conexion();
+       Connection conn=c.getConexion();
+       if(conn!=null){
+        PreparedStatement pst = null;
+        String sql="update producto set stockProducto=stockProducto+? where idProducto=?";
+        pst = conn.prepareStatement(sql);
+        pst.setString(1, cantidadProducto);
+        pst.setString(2, idProducto);
+        pst.execute();
+        agregado=true;
+        pst.close();
+       }
+       c.cerrarConexion();
+      } catch (SQLException e) {
+       agregado=false;
+       e.printStackTrace();
+      }
+      return agregado;
+     }    
     
     public static LinkedList<ProductoClass>  consultar() throws InstantiationException, IllegalAccessException, SQLException{
    LinkedList<ProductoClass> listahistorial=new LinkedList<ProductoClass>();

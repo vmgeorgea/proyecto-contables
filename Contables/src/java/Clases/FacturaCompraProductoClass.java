@@ -10,15 +10,15 @@ package Clases;
  *
  * @author User
  */
-public class FacturaVentaProductoClass {
+public class FacturaCompraProductoClass {
 String idProducto;
 String idFactura;
 String cantidadProducto;
 
-    public FacturaVentaProductoClass() {
+    public FacturaCompraProductoClass() {
     }
 
-    public FacturaVentaProductoClass(String idFactura, String idProducto, String cantidadProducto) {
+    public FacturaCompraProductoClass(String idFactura, String idProducto, String cantidadProducto) {
         this.idProducto = idProducto;
         this.idFactura = idFactura;
         this.cantidadProducto = cantidadProducto;

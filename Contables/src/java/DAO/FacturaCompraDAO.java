@@ -5,7 +5,7 @@
  */
 
 package DAO;
-import Clases.FacturaVentaClass;
+import Clases.FacturaCompraClass;
 import Conexion.Conexion;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -17,7 +17,7 @@ import java.util.LinkedList;
  *
  * @author User
  */
-public class FacturaVentaDAO {
+public class FacturaCompraDAO {
     
     public static boolean Validar(String idTipo) throws InstantiationException, IllegalAccessException, SQLException, SQLException {        
     boolean status = false;
@@ -25,7 +25,7 @@ public class FacturaVentaDAO {
     ResultSet rs = null;
        Conexion c=new Conexion();
        Connection conn=c.getConexion();
-        String sql="select * from facturaventa where idFactura=?";
+        String sql="select * from facturacompra where idFactura=?";
         pst = conn.prepareStatement(sql);
         pst.setString(1, idTipo);
         rs = pst.executeQuery();
@@ -33,14 +33,14 @@ public class FacturaVentaDAO {
     return status;
     }
     
-    public boolean insertar(FacturaVentaClass u) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException{       
+    public boolean insertar(FacturaCompraClass u) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException{       
     boolean agregado=false;
       try {
        Conexion c=new Conexion();
        Connection conn=c.getConexion();
        if(conn!=null){
         PreparedStatement pst = null;                
-        String sql="insert into facturaventa (numeroFactura, fechaFactura, autorizacionFactura, establecimientoFactura, puntoemisionFactura, descuentoFactura, Cliente_idCliente , IVA_idIVA) values (?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql="insert into facturacompra (numeroFactura, fechaFactura, autorizacionFactura, establecimientoFactura, puntoemisionFactura, descuentoFactura, Proveedor_idProveedor , IVA_idIVA) values (?, ?, ?, ?, ?, ?, ?, ?)";
         pst = conn.prepareStatement(sql);        
         pst.setString(1, u.getNumeroFactura());
         pst.setString(2, u.getFechaFactura());
@@ -62,14 +62,14 @@ public class FacturaVentaDAO {
       return agregado;
      }
     
-    public boolean modificar(FacturaVentaClass u) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException{       
+    public boolean modificar(FacturaCompraClass u) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException{       
     boolean agregado=false;
       try {
        Conexion c=new Conexion();
        Connection conn=c.getConexion();
        if(conn!=null){
         PreparedStatement pst = null;
-        String sql="update facturaventa set numeroFactura=?, fechaFactura=?, autorizacionFactura=?, establecimientoFactura=?, puntoemisionFactura=?, descuentoFactura=?, Cliente_idCliente=?, IVA_idIVA=?where idFactura=?";
+        String sql="update facturacompra set numeroFactura=?, fechaFactura=?, autorizacionFactura=?, establecimientoFactura=?, puntoemisionFactura=?, descuentoFactura=?, Cliente_idCliente=?, IVA_idIVA=?where idFactura=?";
         pst = conn.prepareStatement(sql);
         
         
@@ -93,16 +93,15 @@ public class FacturaVentaDAO {
       return agregado;
      } 
     
-    public static LinkedList<FacturaVentaClass>  consultar() throws InstantiationException, IllegalAccessException, SQLException{
-   LinkedList<FacturaVentaClass> listahistorial=new LinkedList<FacturaVentaClass>();
+    public static LinkedList<FacturaCompraClass>  consultar() throws InstantiationException, IllegalAccessException, SQLException{
+   LinkedList<FacturaCompraClass> listahistorial=new LinkedList<FacturaCompraClass>();
    Conexion c=new Conexion();
    Connection conn=c.getConexion();
    Statement st = conn.createStatement();
-   String sql="select * from  facturaventa";
+   String sql="select * from  facturacompra";
    ResultSet rs = st.executeQuery(sql);
        while(rs.next()){
-        FacturaVentaClass r= new FacturaVentaClass();
-        
+        FacturaCompraClass r= new FacturaCompraClass();        
         r.setIdFactura(rs.getString(1));
         r.setNumeroFactura(rs.getString(2));
         r.setFechaFactura(rs.getString(3));
@@ -118,13 +117,13 @@ public class FacturaVentaDAO {
    st.close();
   return listahistorial;
 }   
-public static LinkedList<FacturaVentaClass>  consultarfinal() throws InstantiationException, IllegalAccessException, SQLException{
-   LinkedList<FacturaVentaClass> listahistorial=new LinkedList<FacturaVentaClass>();
-   FacturaVentaClass r= new FacturaVentaClass();
+public static LinkedList<FacturaCompraClass>  consultarfinal() throws InstantiationException, IllegalAccessException, SQLException{
+   LinkedList<FacturaCompraClass> listahistorial=new LinkedList<FacturaCompraClass>();
+   FacturaCompraClass r= new FacturaCompraClass();
    Conexion c=new Conexion();
    Connection conn=c.getConexion();
    Statement st = conn.createStatement();
-   String sql="SELECT MAX(idFactura) FROM facturaventa";
+   String sql="SELECT MAX(idFactura) FROM facturacompra";
    ResultSet rs = st.executeQuery(sql);
         if (rs != null && rs.next()){
             r.setIdFactura(rs.getString(1));
@@ -137,8 +136,7 @@ public static LinkedList<FacturaVentaClass>  consultarfinal() throws Instantiati
        }
    rs.close();
    st.close();
-
-  return listahistorial;
+return listahistorial;
 }  
 
 

@@ -138,16 +138,12 @@ color:#464646;
         <div id="sidebar">
         <ul id="menu">
         <li><a href="#"> <span> / </span></a></li>
-        <li><a href="Proveedor.jsp" target="contenidofactura">Proveedor</a></li>
+        <li><a href="IVA.jsp" target="contenidoadministracion">IVA</a></li>
         <li><a href="#"> </a></li>
-        <li><a href="Producto.jsp" target="contenidofactura">Producto</a></li>
+        <li><a href="Formaspago.jsp" target="contenidoadministracion">Formas de Pago</a></li>
         <li><a href="#"> </a></li>
-        <li><a href="Cliente.jsp" target="contenidofactura">Cliente</a></li>
-        <li><a href="#"> </a></li>       
-        <li><a href="FacturaVenta.jsp" target="contenidofactura">Factura Venta</a></li>        
-        <li><a href="#"> </a></li>
-        <li><a href="FacturaCompra.jsp" target="contenidofactura">Factura Compra</a></li>
-        <li><a href="#"></a></li>     
+        <li><a href="Documento.jsp" target="contenidoadministracion">Documento</a></li>
+        <li><a href="#"> </a></li>        
         </ul>
         </div>
     </body>

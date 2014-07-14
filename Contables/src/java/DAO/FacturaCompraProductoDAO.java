@@ -6,7 +6,7 @@
 
 package DAO;
 
-import Clases.FacturaVentaProductoClass;
+import Clases.FacturaCompraProductoClass;
 import Conexion.Conexion;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -19,14 +19,14 @@ import java.util.LinkedList;
  *
  * @author User
  */
-public class FacturaVentaProductoDAO {
+public class FacturaCompraProductoDAO {
  public static boolean Validar(String idFactura) throws InstantiationException, IllegalAccessException, SQLException, SQLException {        
     boolean status = false;
     PreparedStatement pst = null;
     ResultSet rs = null;
        Conexion c=new Conexion();
        Connection conn=c.getConexion();
-        String sql="select * from facturaventaproducto where idFactura=?";
+        String sql="select * from facturacompraproducto where idFactura=?";
         pst = conn.prepareStatement(sql);
         pst.setString(1, idFactura);
         rs = pst.executeQuery();
@@ -34,14 +34,14 @@ public class FacturaVentaProductoDAO {
     return status;
     }
     
-    public boolean insertar(FacturaVentaProductoClass u) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException{       
+    public boolean insertar(FacturaCompraProductoClass u) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException{       
     boolean agregado=false;
       try {
        Conexion c=new Conexion();
        Connection conn=c.getConexion();
        if(conn!=null){
         PreparedStatement pst = null;                
-        String sql="insert into facturaventaproducto (idproducto, idfactura, cantidadproducto) values (?, ?, ?)";
+        String sql="insert into facturacompraproducto (idproducto, idfactura, cantidadproducto) values (?, ?, ?)";
         pst = conn.prepareStatement(sql);        
         pst.setInt(1, Integer.parseInt(u.getIdProducto()));
         pst.setInt(2, Integer.parseInt(u.getIdFactura()));
@@ -58,16 +58,15 @@ public class FacturaVentaProductoDAO {
       return agregado;
      }
     
-    public static LinkedList<FacturaVentaProductoClass>  consultar() throws InstantiationException, IllegalAccessException, SQLException{
-   LinkedList<FacturaVentaProductoClass> listahistorial=new LinkedList<FacturaVentaProductoClass>();
+    public static LinkedList<FacturaCompraProductoClass>  consultar() throws InstantiationException, IllegalAccessException, SQLException{
+   LinkedList<FacturaCompraProductoClass> listahistorial=new LinkedList<FacturaCompraProductoClass>();
    Conexion c=new Conexion();
    Connection conn=c.getConexion();
    Statement st = conn.createStatement();
-   String sql="select * from  facturaventaproducto";
+   String sql="select * from  facturacompraproducto";
    ResultSet rs = st.executeQuery(sql);
        while(rs.next()){
-        FacturaVentaProductoClass r= new FacturaVentaProductoClass();
-        
+        FacturaCompraProductoClass r= new FacturaCompraProductoClass();        
         r.setIdProducto(rs.getString(1));
         r.setIdFactura(rs.getString(2));
         r.setCantidadProducto(rs.getString(3));
@@ -77,18 +76,16 @@ public class FacturaVentaProductoDAO {
    st.close();
   return listahistorial;
 }   
-public static LinkedList<FacturaVentaProductoClass>  consultarfinal() throws InstantiationException, IllegalAccessException, SQLException{
-   LinkedList<FacturaVentaProductoClass> listahistorial=new LinkedList<FacturaVentaProductoClass>();
-   FacturaVentaProductoClass r= new FacturaVentaProductoClass();
+public static LinkedList<FacturaCompraProductoClass>  consultarfinal() throws InstantiationException, IllegalAccessException, SQLException{
+   LinkedList<FacturaCompraProductoClass> listahistorial=new LinkedList<FacturaCompraProductoClass>();
+   FacturaCompraProductoClass r= new FacturaCompraProductoClass();
    Conexion c=new Conexion();
    Connection conn=c.getConexion();
    Statement st = conn.createStatement();
-   String sql="SELECT MAX(idFactura) FROM facturaventaproducto";
+   String sql="SELECT MAX(idFactura) FROM facturacompraproducto";
    ResultSet rs = st.executeQuery(sql);
-           if ( rs.getRow() == 0 ) 
-        { 
-
-        
+       if ( rs.getRow() == 0 ) 
+        {         
         r.setIdFactura("0");
         r.setIdProducto("0");
         r.setCantidadProducto("0");
