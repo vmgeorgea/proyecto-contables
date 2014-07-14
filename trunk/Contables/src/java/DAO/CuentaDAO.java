@@ -142,5 +142,29 @@ public class CuentaDAO {
   return listahistorial;
  }
     
+  public static String consultarNombre(String nombre) throws InstantiationException, IllegalAccessException, SQLException{
+   LinkedList<CuentaClass> listahistorial=new LinkedList<CuentaClass>();
+   Conexion c=new Conexion();
+   Connection conn=c.getConexion();
+   Statement st = conn.createStatement();
+   String sql="select * from  Cuenta where idCuenta="+nombre;
+   ResultSet rs = st.executeQuery(sql);
+       while(rs.next()){
+        CuentaClass r= new CuentaClass();
+        r.setIdCuenta(rs.getString(1));
+        r.setNumeroCuenta(rs.getString(2));
+        r.setDescripcionCuenta(rs.getString(3));
+        r.setCategoriaCuenta(rs.getString(4));
+        r.setSaldoInicialCuenta(rs.getString(5));
+        r.setSaldoFinalCuenta(rs.getString(6));
+        r.setCuenta_idCuenta(rs.getString(7));  
+        r.setTipo_idTipo(rs.getString(8));        
+        listahistorial.add(r);
+        nombre=r.getDescripcionCuenta();
+       }
+   rs.close();
+   st.close();
+  return nombre;
+ }
 }
 

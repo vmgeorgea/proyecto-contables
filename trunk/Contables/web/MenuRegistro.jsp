@@ -147,7 +147,7 @@ color:#464646;
         <li><a href="#"> </a></li>
         <li><a href="LibroDiario.jsp" target="contenidoregistro">Libro Diario</a></li>
         <li><a href="#"> </a></li>
-        <li><a href="Libromayor.jsp" target="contenidoregistro">Libro Mayor</a></li>
+        <li><a href="LibroMayor.jsp" target="contenidoregistro">Libro Mayor</a></li>
         <li><a href="#"> </a></li>
         <li><a href="Balancecomprobacion.jsp" target="contenidoregistro">Balance Comprobacion </a></li>
         <li><a href="#"> </a></li>

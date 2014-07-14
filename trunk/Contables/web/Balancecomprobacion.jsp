@@ -1,0 +1,189 @@
+<%-- 
+    Document   : Balancecomprobacion
+    Created on : 14/07/2014, 09:05:39 AM
+    Author     : Leitos
+--%>
+
+<%@page import="java.util.Date"%>
+<%@page import="DAO.TransaccionDAO"%>
+<%@page import="DAO.CuentaDAO"%>
+<%@page import="Clases.CuentaClass"%>
+<%@page import="Clases.TransaccionClass"%>
+<%@page import="DAO.AsientoDAO"%>
+<%@page import="Clases.AsientoClass"%>
+<%@page import="java.util.LinkedList"%>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>Balance de Comprobacion</title>
+        <link rel="stylesheet" type="text/css" media="all" href="CSS/style.css">
+        <link rel="stylesheet" type="text/css" media="all" href="fancybox/jquery.fancybox.css">
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+        <script type="text/javascript" src="fancybox/jquery.fancybox.js?v=2.0.6"></script>
+        <script type="text/javascript" src="JS/ValidarJS.js"></script>
+    </head>
+    <body>
+        <%                
+            java.util.Date fecha = new Date();
+            String anio=Integer.toString(fecha.getYear());
+            String mes=Integer.toString(fecha.getMonth());
+            String dia=Integer.toString(fecha.getDay());
+            String fech= dia+"/"+mes+"/"+anio;
+         %>
+         <center>
+            <table id="miTabla">
+            <tr>
+                <td class="estilo1">Id Asiento</td>
+                <td class="estilo1">Número Diario</td>
+                <td class="estilo1">Periodo Asiento</td>
+                <td class="estilo1">Fecha Asiento</td>
+                <td class="estilo1">Número de Asiento</td>
+                <td class="estilo1">Concepto Asiento</td>
+                <td class="estilo1">Debe Asiento</td>
+                <td class="estilo1">Haber Asiento</td>
+            </tr>
+            <tr>
+                <td class="estilo1"></td>
+                <td class="estilo1"></td>
+                <td class="estilo1"></td>
+                <td class="estilo1"></td>
+                <td class="estilo1"></td>
+                <td class="estilo1"></td>
+                <td class="estilo1"></td>
+                <td class="estilo1"></td>
+                
+            </tr>        
+            <%
+            LinkedList<AsientoClass> lista =new LinkedList<AsientoClass>();
+            lista = AsientoDAO.consultar();
+            for (int i=0;i<lista.size();i++)
+            {
+               if(fech.toString().equals(lista.get(i).getNumeroDiario())){
+                   out.println("<tr data-valor='"+i+"' class='click'>" );
+                   out.println("<td id='a"+i+"'>"+lista.get(i).getIdAsiento()+"</a></td>");
+                   out.println("<td id='b"+i+"'>"+lista.get(i).getNumeroDiario()+"</a></td>");
+                   out.println("<td id='c"+i+"'>"+lista.get(i).getPeriodoAsiento()+"</td>");
+                   out.println("<td id='d"+i+"'>"+lista.get(i).getFechaAsiento()+"</td>");
+                   out.println("<td id='e"+i+"'>"+lista.get(i).getNumeroAsiento()+"</td>");
+                   out.println("<td id='f"+i+"'>"+lista.get(i).getConceptoAsiento()+"</td>");
+                   out.println("<td id='g"+i+"'>"+lista.get(i).getDebeAsiento()+"</td>");
+                   out.println("<td id='h"+i+"'>"+lista.get(i).getHaberAsiento()+"</td>");
+                   out.println("<td></td>");
+                   //out.println("<td><a class='modalbox' href='#modificar'><img SRC='Imagen/Modificar.png'></a></td>");
+                   //out.println("<td><a class='modalbox' href='#eliminar'><img SRC='Imagen/Eliminar.png'></a></td>");
+                   out.println("</tr>");}
+            }
+            %>
+            </table>
+      </center>
+            
+            <!Boton de libro diario*********************************>      
+  
+      
+      <a class='modalbox' href='#ingresar'><img SRC="Imagen/LibroDiario.png" width="50" height="50"></a>
+      
+      <div id="ingresar">
+	<h2>Balance de Comprobacion</h2>
+	<form id="ingresarform" name="ingresarform" action="AsientoIngresarServlet1" method="post" >
+            <center><table id="miTabla">
+            
+                    <tr>
+                        <td class="estilo1"></td>
+                        <td class="estilo1"></td>
+                        <td class="estilo1">Sumas</td>
+                        <td class="estilo1"></td>
+                        <td class="estilo1">Saldos</td>
+                        <td class="estilo1"></td>
+                    </tr>
+                    <tr>
+                        <td class="estilo1">Codigo</td>
+                        <td class="estilo1">Cuenta</td>
+                        <td class="estilo1">Debe</td>
+                        <td class="estilo1">Haber</td>
+                        <td class="estilo1">Debe</td>
+                        <td class="estilo1">Haber</td>
+                    </tr>
+                <% 
+                    LinkedList<AsientoClass> listaAsi =new LinkedList<AsientoClass>();
+                    LinkedList<TransaccionClass> listaTra =new LinkedList<TransaccionClass>();
+                    LinkedList<CuentaClass> listaCue =new LinkedList<CuentaClass>();
+                    CuentaDAO cue=new CuentaDAO();
+                    listaCue=cue.consultar();
+                    TransaccionDAO tra=new TransaccionDAO();
+                    listaTra=tra.consultar();
+                    double totalD=0;
+                    double totalH=0;
+                    double saldoD=0;
+                    double saldoA=0;
+                    for(int i=0;i<listaCue.size();i++){
+                        CuentaClass c= new CuentaClass();
+                        c=listaCue.get(i);
+                        LinkedList<TransaccionClass> aux =new LinkedList<TransaccionClass>();
+                        String nombre="";
+                        String codigo="";
+                        double td=0;
+                        double th=0;
+                        
+                        for(int j=0;j<listaTra.size();j++){
+                            if(listaTra.get(j).getCuenta_idCuenta().equals(c.getIdCuenta())){
+                                aux.add(listaTra.get(j));
+                                nombre=cue.consultarNombre(c.getIdCuenta());
+                                codigo=c.getNumeroCuenta();
+                            }
+                        }
+                        if(aux.size()>0){
+                            
+                            for(int k=0;k<aux.size();k++){
+
+                                if(aux.get(k).getHaberTransaccion().equals("0.0")){
+                                    
+                                    td=td+Double.parseDouble(aux.get(k).getDebeTransaccion());
+                                }
+                                if(aux.get(k).getDebeTransaccion().equals("0.0")){
+                                    
+                                    th=th+Double.parseDouble(aux.get(k).getHaberTransaccion());
+                                }
+                                
+                            }
+                            totalD=totalD+td;
+                            totalH=totalH+th;
+                            double sd=0;
+                            double sa=0;
+                            if(td>th){
+                                sd=td-th;
+                            }
+                            if(th>td){
+                                sa=th-td;
+                            }
+                            saldoD=saldoD+sd;
+                            saldoA=saldoA+sa;
+                            out.println("<tr><td>"+codigo+"</td><td>"+nombre+"</td><td>"+td+"</td><td>"+th+"</td><td>"+sd+"</td><td>"+sa+"</td></tr>");
+
+                        }
+                    }
+                    out.println("<tr><td></td><td>TOTALES</td><td>"+totalD+"</td><td>"+totalH+"</td><td>"+saldoD+"</td><td>"+saldoA+"</td></tr>");
+                %>
+
+             </table></center>   
+	</form>
+</div>  
+     
+        <script type="text/javascript">
+
+            $(document).ready(function() {
+                    $(".modalbox").fancybox();
+            });  
+
+            $(function(){
+                $(".click").click(function(e) {
+                    e.preventDefault();
+                    var data = $(this).attr("data-valor");
+                    $asiento_idAsiento=document.getElementById("a"+data.toString()).innerHTML;
+                    document.modificarform.asiento_idAsiento.value=$asiento_idAsiento;
+                });
+            });
+            </script>
+    </body>
+</html>
