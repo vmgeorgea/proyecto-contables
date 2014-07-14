@@ -11,11 +11,11 @@ h2 {font-size:1.2em; line-height:1.5em; margin-bottom:10px; }
 
 p {color:#656565; font-size:1.2em; margin-bottom:10px;}
 
-#eliminar{display: none; width:500px;}
+#eliminar{display: none; width:600px;}
 
-#modificar{display: none; width:500px}
+#modificar{display: none; width:600px}
 
-#ingresar{display: none; width:500px;}
+#ingresar{display: none; width:600px;}
 
 label {margin-right:5px; margin-bottom:5px; font-family:"Calibri", Arial, sans-serif; color:#646464; font-size:70%;}
 

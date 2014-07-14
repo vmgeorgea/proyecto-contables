@@ -119,4 +119,29 @@ public class TransaccionDAO {
    st.close();
   return listahistorial;
 }
+    
+    public static LinkedList<TransaccionClass>  consultarTransaccion(String id) throws InstantiationException, IllegalAccessException, SQLException{
+   LinkedList<TransaccionClass> listahistorial=new LinkedList<TransaccionClass>();
+   TransaccionClass aux= new TransaccionClass();
+   Conexion c=new Conexion();
+   Connection conn=c.getConexion();
+   Statement st = conn.createStatement();
+   String sql="select * from  transaccion where Asiento_idAsiento="+id;
+   ResultSet rs = st.executeQuery(sql);
+       while(rs.next()){
+        TransaccionClass r= new TransaccionClass();
+       r.setIdTransaccion(rs.getString(1));
+        r.setDebeTransaccion(rs.getString(2));
+        r.setHaberTransaccion(rs.getString(3));
+        r.setReferenciaTransaccion(rs.getString(4));
+        r.setDocumentoTransaccion(rs.getString(5));
+        r.setCuenta_idCuenta(rs.getString(6));
+        r.setAsiento_idAsiento(rs.getString(7));
+        aux=r;
+        listahistorial.add(r);
+       }
+   rs.close();
+   st.close();
+  return listahistorial;
+ }
 }
