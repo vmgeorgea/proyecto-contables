@@ -35,9 +35,6 @@
             <form id="Ingresar" name="Ingresar">
                 <table id="miTabla">
                         <tr>
-                        Registro de Factura
-                        </tr>
-                        <tr>
                                 <td class="estilo1">RUC:</td>
                                 <td class="estilo1"><input type="text" id="rucFactura" name="rucFactura" readonly="readonly" value="7839489398001"></td>                            
                                 <td class="estilo1">Autorizacion:</td>

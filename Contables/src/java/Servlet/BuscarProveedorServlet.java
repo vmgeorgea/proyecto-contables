@@ -72,28 +72,24 @@ public class BuscarProveedorServlet extends HttpServlet {
 
             out.println("<center>");
             out.println("<table id='miTabla'>");        
-               out.println("<td class='estilo1'>Identificacion Proveedor:</td>"); 
+               out.println("<td class='estilo1'>Identificacion:</td>"); 
                out.println("<td class='estilo1'><input type='text' id='identificacionProveedor' name='identificacionProveedor' readonly='readonly' value='"+cc.getIdentificacionProveedor()+"'></td>"); 
-               out.println("<td class='estilo1'>Nombre Proveedor:</td>"); 
+               out.println("<td class='estilo1'>Nombre:</td>"); 
                out.println("<td class='estilo1'><input type='text' id='nombreProveedor' name='nombreProveedor' readonly='readonly' value='"+cc.getNombreProveedor()+"'></td>"); 
-               out.println("<td class='estilo1'>Direccion Proveedor:</td>");   
+               out.println("<td class='estilo1'>Direccion:</td>");   
                out.println("<td class='estilo1'><input type='text' id='direccionProveedor' name='direccionProveedor' readonly='readonly' value='"+cc.getDireccionProveedor()+"'/></td>");                                    
                out.println("<tr>"); 
-               out.println("<td class='estilo1'>Telefono Proveedor:</td>"); 
+               out.println("<td class='estilo1'>Telefono:</td>"); 
                out.println("<td class='estilo1'><input type='text' id='telefonoProveedor' name='telefonoProveedor' readonly='readonly' value='"+cc.getTelefonoProveedor()+"'/></td>");                                   
-               out.println("<td class='estilo1'>Autorizacion Proveedor:</td>");
+               out.println("<td class='estilo1'>Autorizacion:</td>");
                out.println("<td class='estilo1'><input type='text' id='autorizacionProveedor' name='autorizacionProveedor' readonly='readonly' value='"+cc.getAutorizacionProveedor()+"'/></td>"); 
-               out.println("<td class='estilo1'>Fecha Caducidad Autorizacion Proveedor:</td>");
+               out.println("<td class='estilo1'>Fecha Caducidad Autorizacion:</td>");
                out.println("<td class='estilo1'><input type='text' id='fechaCaducidadAutorizacionProveedor' name='fechaCaducidadAutorizacionProveedor' readonly='readonly' value='"+cc.getFechaCaducidadAutorizacionProveedor()+"'/></td>");                
-               out.println("<td class='estilo1'>Tipo Proveedor:</td>");
-               out.println("<td class='estilo1'><input type='text' id='tipoProveedor' name='tipoProveedor' readonly='readonly' value='"+cc.getTipoProveedor()+"'/></td>");                
-               out.println("<td class='estilo1'></td>");
-               out.println("<td class='estilo1'></td>");
             out.println("</table>");
             out.println("</center>");
             out.println("</body>");
             out.println("</html>");
-            session.setAttribute("cliente", cc);
+            session.setAttribute("proveedor", cc);
                 }
             
         }

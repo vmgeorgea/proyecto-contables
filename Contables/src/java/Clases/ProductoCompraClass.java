@@ -13,7 +13,7 @@ package Clases;
 public class ProductoCompraClass {
 String idProducto;
 String nombreProducto;
-String precioProducto;
+String costoProducto;
 String cantidadProducto;
 
     public ProductoCompraClass() {
@@ -22,7 +22,7 @@ String cantidadProducto;
     public ProductoCompraClass(String idProducto, String nombreProducto, String precioProducto, String cantidadProducto) {
         this.idProducto = idProducto;
         this.nombreProducto = nombreProducto;
-        this.precioProducto = precioProducto;
+        this.costoProducto = precioProducto;
         this.cantidadProducto = cantidadProducto;
     }
 
@@ -42,12 +42,12 @@ String cantidadProducto;
         this.nombreProducto = nombreProducto;
     }
 
-    public String getPrecioProducto() {
-        return precioProducto;
+    public String getCostoProducto() {
+        return costoProducto;
     }
 
-    public void setPrecioProducto(String precioProducto) {
-        this.precioProducto = precioProducto;
+    public void setCostoProducto(String precioProducto) {
+        this.costoProducto = precioProducto;
     }
 
     public String getCantidadProducto() {

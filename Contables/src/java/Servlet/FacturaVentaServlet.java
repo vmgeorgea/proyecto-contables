@@ -107,6 +107,7 @@ public class FacturaVentaServlet extends HttpServlet {
             String b=session.getAttribute("fechaFactura").toString();
             ac =ad.consultarfecha(b);
             if(ac.getIdAsiento()!=null){
+                
             String c=request.getParameter("descuentoFactura").toString();
             String d=cc.getIdCliente();
             String e=request.getParameter("ivaFactura");
@@ -147,42 +148,43 @@ public class FacturaVentaServlet extends HttpServlet {
                                  String referencia="Factura Venta";                         
                                  String documento=session.getAttribute("idFactura").toString();
                                  String idAsiento=ac.getIdAsiento();
-                                 String numeroDiario=String.valueOf(Integer.parseInt(ac.getNumeroDiario())+1);
+                                 String numeroDiario=String.valueOf(Integer.parseInt(ac.getNumeroDiario()));
                                  String periodoAsiento=ac.getPeriodoAsiento();
                                  String fechaAsiento=ac.getFechaAsiento();
                                  String numeroAsiento=ac.getNumeroAsiento();
                                  String conceptoAsiento=ac.getConceptoAsiento();
                                  String debeAsiento=String.valueOf(Float.parseFloat(ac.getDebeAsiento())+Float.parseFloat(debe));
-                                 String haberAsiento=String.valueOf(Float.parseFloat(ac.getHaberAsiento())+Float.parseFloat(haber));                         
-                                 AsientoClass ac1= new AsientoClass(idAsiento, numeroDiario, periodoAsiento, fechaAsiento, numeroAsiento,conceptoAsiento, debeAsiento, haberAsiento);
+                                 String haberAsiento=String.valueOf(Float.parseFloat(ac.getHaberAsiento())+Float.parseFloat(haber));
+                                 AsientoClass ac1, ac2;
+                                 ac1= new AsientoClass(idAsiento, numeroDiario, periodoAsiento, fechaAsiento, numeroAsiento,conceptoAsiento, debeAsiento, haberAsiento);
                                  boolean sw5=ad.modificar(ac1);
-                                 if (sw5){
-                                     //AsientoClass ac3= new AsientoClass();
-                                     //ac3 =ad.consultarnumerodiario(numeroDiario, fechaAsiento);
+                                 ac2= new AsientoClass(String.valueOf(Integer.parseInt(numeroDiario)+1), periodoAsiento, fechaAsiento, numeroAsiento, "", "0", "0");
+                                 boolean sw6=ad.insertar(ac2);
+                                     if (sw5 && sw6){
                                      TransaccionClass u1=new TransaccionClass(debe, "0", referencia, documento, cuenta1, ac1.getIdAsiento());
                                      TransaccionClass u2=new TransaccionClass("0", haber, referencia, documento, cuenta2, ac1.getIdAsiento());
                                      boolean sw3=td.insertar(u1);
                                      boolean sw4=td.insertar(u2);
-                                        if(sw3 && sw4){    
+                                                if(sw3 && sw4){    
                                                 try {
                                                 sw1=sw;                                
                                                 boolean sw2=pd.modificarcantidadventa((String)lista.get(i).getIdProducto().toString(), (String) lista.get(i).getCantidadProducto().toString());
                                                 lista.remove(i);
-                                                if(sw2){
+                                                    if(sw2){
 
-                                                }else{
-                                                    PrintWriter out=response.getWriter();
-                                                    out.println("Fail registration.");
-                                                 }
-                                                } catch (SQLException ex) {
-                                                    Logger.getLogger(FacturaVentaServlet.class.getName()).log(Level.SEVERE, null, ex);
-                                                } catch (ClassNotFoundException ex) {
-                                                    Logger.getLogger(FacturaVentaServlet.class.getName()).log(Level.SEVERE, null, ex);
-                                                } catch (InstantiationException ex) {
-                                                    Logger.getLogger(FacturaVentaServlet.class.getName()).log(Level.SEVERE, null, ex);
-                                                } catch (IllegalAccessException ex) {
-                                                    Logger.getLogger(FacturaVentaServlet.class.getName()).log(Level.SEVERE, null, ex);
-                                                }
+                                                    }else{
+                                                        PrintWriter out=response.getWriter();
+                                                        out.println("Fail registration.");
+                                                     }
+                                                    } catch (SQLException ex) {
+                                                        Logger.getLogger(FacturaVentaServlet.class.getName()).log(Level.SEVERE, null, ex);
+                                                    } catch (ClassNotFoundException ex) {
+                                                        Logger.getLogger(FacturaVentaServlet.class.getName()).log(Level.SEVERE, null, ex);
+                                                    } catch (InstantiationException ex) {
+                                                        Logger.getLogger(FacturaVentaServlet.class.getName()).log(Level.SEVERE, null, ex);
+                                                    } catch (IllegalAccessException ex) {
+                                                        Logger.getLogger(FacturaVentaServlet.class.getName()).log(Level.SEVERE, null, ex);
+                                                    }
                                             }else{
                                                 PrintWriter out=response.getWriter();
                                                 out.println("Fail registration.");

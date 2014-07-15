@@ -28,15 +28,7 @@
         <tr>
         <td class="estilo1">Id IVA</td>
         <td class="estilo1">Valor IVA</td>
-
-        </tr>
-        <tr>
-        <td class="estilo1"></td>
-        <td class="estilo1"></td>
-        <td><a class='modalbox' href='#ingresar'><img SRC="Imagen/Nuevo.png"></a></td>
-        <td></td>
-        <td></td>
-        </tr>        
+        </tr>      
         <%
          LinkedList<IVAClass> lista =new LinkedList<IVAClass>();
         lista = IVADAO.consultar();
@@ -59,7 +51,7 @@
 	<h2>Nuevo</h2>
 	<form id="ingresarform" name="ingresarform" action="IVAIngresarServlet" method="post" >
 		<label for="valorIVA">Valor IVA</label>
-		<input align='right' type="valorIVA" id="valorIVA" name="valorIVA" class="txtingresar" required="required" onkeypress="return Letras(event)">
+		<input align='right' type="valorIVA" id="valorIVA" name="valorIVA" class="txtingresar" required="required" onkeypress="return Numeros(event)">
 		<br>		
 		<input type="submit" value="Ingresar" id="send">
 	</form>
@@ -84,7 +76,7 @@
 		<input type="idIVA" id="idIVA" name="idIVA" class="txtmodificar" required="required" readonly="readonly" >
 		<br>
 		<label for="valorIVA">ValorIVA</label>
-		<input type="valorIVA" id="valorIVA" name="valorIVA" class="txtmodificar" required="required" onkeypress="return Letras(event)>
+		<input type="valorIVA" id="valorIVA" name="valorIVA" class="txtmodificar" required="required" onkeypress="return Numeros(event)">
 		<br>	
                 <input type="submit" value="Modificar" id="send">
 	</form>

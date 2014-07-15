@@ -11,5 +11,50 @@ package Clases;
  * @author User
  */
 public class KardexClass {
-    
+String fecha;
+String idfactura;
+String detalle;
+String cantidad;
+String precio;
+
+    public String getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(String fecha) {
+        this.fecha = fecha;
+    }
+
+    public String getIdfactura() {
+        return idfactura;
+    }
+
+    public void setIdfactura(String idfactura) {
+        this.idfactura = idfactura;
+    }
+
+    public String getDetalle() {
+        return detalle;
+    }
+
+    public void setDetalle(String detalle) {
+        this.detalle = detalle;
+    }
+
+    public String getCantidad() {
+        return cantidad;
+    }
+
+    public void setCantidad(String cantidad) {
+        this.cantidad = cantidad;
+    }
+
+    public String getPrecio() {
+        return precio;
+    }
+
+    public void setPrecio(String precio) {
+        this.precio = precio;
+    }
+
 }

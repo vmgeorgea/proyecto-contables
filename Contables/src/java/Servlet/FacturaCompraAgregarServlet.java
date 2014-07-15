@@ -81,21 +81,21 @@ public class FacturaCompraAgregarServlet extends HttpServlet {
          PrintWriter out=response.getWriter();
          out.println("Ingrese Proveedor");   
         }else{
-            if(session.getAttribute("productos")!=null){
+            if(session.getAttribute("productoscompra")!=null){
                  int a1=request.getParameter("nombreProducto").toString().indexOf("-");
                  int a2=request.getParameter("nombreProducto").toString().indexOf("/");
                  int a3=request.getParameter("nombreProducto").toString().length();
                  String id=request.getParameter("nombreProducto").toString().substring(0, a1);
                  String nombre=request.getParameter("nombreProducto").toString().substring(a1+1, a2);
                  String precio=request.getParameter("nombreProducto").toString().substring(a2+1, a3);
-                LinkedList<ProductoCompraClass> lista1 =(LinkedList) session.getAttribute("productos");
+                LinkedList<ProductoCompraClass> lista1 =(LinkedList) session.getAttribute("productoscompra");
                 String idProducto = id.toUpperCase();
                 String nombreProducto = nombre.toUpperCase();
                 String precioProducto = precio.toUpperCase();
                 String cantidadProducto = request.getParameter("cantidadProducto").toUpperCase();
                 ProductoCompraClass u=new  ProductoCompraClass(idProducto, nombreProducto, precioProducto, cantidadProducto);
                 lista1.add(u);      
-                session.setAttribute("productos", lista1);
+                session.setAttribute("productoscompra", lista1);
             }else{
                 LinkedList<ProductoCompraClass> lista2 =new LinkedList<ProductoCompraClass> ();
                  int a1=request.getParameter("nombreProducto").toString().indexOf("-");
@@ -110,7 +110,7 @@ public class FacturaCompraAgregarServlet extends HttpServlet {
                 String cantidadProducto = request.getParameter("cantidadProducto").toUpperCase();
                 ProductoCompraClass u=new  ProductoCompraClass(idProducto, nombreProducto, precioProducto, cantidadProducto);
                 lista2.add(u);      
-                session.setAttribute("productos", lista2);                
+                session.setAttribute("productoscompra", lista2);                
             }
          }
         request.getRequestDispatcher("FacturaCompraProductos.jsp").forward(request, response); 

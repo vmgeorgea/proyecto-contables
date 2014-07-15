@@ -24,7 +24,7 @@
 
 
      <center>                                       
-         <frameset rows="25%,20%,80%" border="0" frameborder="0" y framespacing="0">
+         <frameset rows="17%,17%,*" border="0" frameborder="0" y framespacing="0">
                 <frame src="FacturaCompraCabecera.jsp">
                 <frame src="FacturaCompraProveedor.jsp">             
                 <frame src="FacturaCompraProductos.jsp">

@@ -6,7 +6,7 @@
 
 package Servlet;
 
-import Clases.ProductoVentaClass;
+import Clases.ProductoCompraClass;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.LinkedList;
@@ -77,13 +77,14 @@ public class FacturaCompraRetirarServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession(true);
-        LinkedList<ProductoVentaClass> lista1 =(LinkedList) session.getAttribute("productos");
-            for(int i=0;lista1.size()<i;i++){
-                if(lista1.get(i).getIdProducto()==request.getAttribute("idProducto")){
+        LinkedList<ProductoCompraClass> lista1 =(LinkedList) session.getAttribute("productoscompra");
+        String id=request.getParameter("idProducto").toString();
+            for(int i=0;i<lista1.size();i++){
+                if(lista1.get(i).getIdProducto().toString().equals(id)){
                     lista1.remove(i);
                 }
             }
-        session.setAttribute("productos", lista1);
+        session.setAttribute("productoscompra", lista1);
         request.getRequestDispatcher("FacturaCompraProductos.jsp").forward(request, response);
     }
 
