@@ -29,10 +29,10 @@
      <%
     java.util.Calendar fecha = java.util.Calendar.getInstance();
     String f;
-        if(fecha.get(java.util.Calendar.MONTH+1)<10){
-        f=fecha.get(java.util.Calendar.DATE) + "/0"+ fecha.get(java.util.Calendar.MONTH+1)+ "/"+ fecha.get(java.util.Calendar.YEAR);
+        if((fecha.get(java.util.Calendar.MONTH)+1)<10){
+        f=fecha.get(java.util.Calendar.DATE) + "/0"+ (fecha.get(java.util.Calendar.MONTH)+1)+ "/"+ fecha.get(java.util.Calendar.YEAR);
         }else{
-        f=fecha.get(java.util.Calendar.DATE) + "/"+ fecha.get(java.util.Calendar.MONTH+1)+ "/"+ fecha.get(java.util.Calendar.YEAR);
+        f=fecha.get(java.util.Calendar.DATE) + "/"+ (fecha.get(java.util.Calendar.MONTH)+1)+ "/"+ fecha.get(java.util.Calendar.YEAR);
         }
     session.setAttribute("fechaFactura", f);
     %>    
