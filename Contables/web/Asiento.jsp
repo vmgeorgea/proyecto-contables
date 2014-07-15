@@ -21,8 +21,52 @@
         
         <link rel="stylesheet" type="text/css" href="CSS/tcal.css" />
 	<script type="text/javascript" src="JS/tcal.js"></script>
+        
+    <script type="text/javascript">
+
+	$(document).ready(function() {
+		$(".modalbox").fancybox();
+	});
+        
+        $(function(){
+            $(".click").click(function(e) {
+                e.preventDefault();
+                var data = $(this).attr("data-valor");
+                
+                $idAsiento=document.getElementById("a"+data.toString()).innerHTML;
+                $numeroDiario=document.getElementById("b"+data.toString()).innerHTML;
+                $periodoAsiento=document.getElementById("c"+data.toString()).innerHTML;
+                $fechaAsiento=document.getElementById("d"+data.toString()).innerHTML;
+                $numeroAsiento=document.getElementById("e"+data.toString()).innerHTML;
+                $conceptoAsiento=document.getElementById("f"+data.toString()).innerHTML;
+                $debeAsiento=document.getElementById("g"+data.toString()).innerHTML;
+                $haberAsiento=document.getElementById("h"+data.toString()).innerHTML;
+                document.modificarform.idAsiento.value=$idAsiento;
+                document.eliminarform.idAsiento.value=$idAsiento;
+                document.modificarform.numeroDiario.value=$numeroDiario;
+                document.modificarform.periodoAsiento.value=$periodoAsiento;
+                document.modificarform.fechaAsiento.value=$fechaAsiento;
+                document.modificarform.numeroAsiento.value=$numeroAsiento;
+                document.modificarform.conceptoAsiento.value=$conceptoAsiento;
+                document.modificarform.debeAsiento.value=$debeAsiento;
+                document.modificarform.haberAsiento.value=$haberAsiento;
+                
+            });
+        });      
+        
+       function Datos(){
+        var f = new Date();
+            if((f.getMonth() +1)<10){
+            var fecha=f.getDate() + "/0" + (f.getMonth() +1) + "/" + f.getFullYear(); 
+            }else{
+            var fecha=f.getDate() + "/" + (f.getMonth() +1) + "/" + f.getFullYear();     
+            }
+         document.ingresarform.fechaAsiento.value=fecha;
+        }  
+    </script>         
     </head>
-    <body>
+    
+    <body onload="Datos()">
         <center>
             <table id="miTabla">
             <tr>
@@ -74,7 +118,7 @@
       <!-- hidden INGRESAR form -->
 <div id="ingresar">
 	<h2>Nuevo</h2>
-	<form id="ingresarform" name="ingresarform" action="AsientoIngresarServlet" method="post" >
+	<form id="ingresarform" name="ingresarform" action="AsientoIngresarServlet" method="post">
             
                 <label for="NumeroCuenta">Numero Diario  </label>
                 <input align='right' type="NumeroCuenta" id="numeroCuenta" name="numeroDiario" class="txtingresar" required="required" onkeypress="return Numeros(event)">
@@ -94,7 +138,7 @@
                 <br>
 
                 <label for="FechaAsiento">Fecha Asiento</label>
-                <input type="FechaAsiento" id="SaldoInicialCuenta" name="fechaAsiento" class="txtingresar" required="required">
+                <input type="FechaAsiento" id="fechaAsiento" name="fechaAsiento" class="txtingresar" required="required" readonly="readonly">
                 
                 <br>
 
@@ -107,11 +151,11 @@
                 <br>	
 
                 <label for="DebeAsiento">Debe Asiento</label>
-                <input type="DebeAsiento" id="Cuenta_idCuenta" name="debeAsiento" class="txtingresar" required="required" onkeypress="return Numeros(event)">
+                <input type="DebeAsiento" id="Cuenta_idCuenta" name="debeAsiento" class="txtingresar" required="required" onkeypress="return Numeros(event)" readonly="readonly" value="0.0">
                 <br>
 
                 <label for="HaberAsiento">Haber Asiento</label>
-                <input type="HaberAsiento" id="Cuenta_idCuenta" name="haberAsiento" class="txtingresar" required="required" onkeypress="return Numeros(event)">
+                <input type="HaberAsiento" id="Cuenta_idCuenta" name="haberAsiento" class="txtingresar" required="required" onkeypress="return Numeros(event)" readonly="readonly" value="0.0">
                 <br>
                 
                 <input type="submit" value="Ingresar" id="send">
@@ -177,40 +221,9 @@
 		<br>
                 <input type="submit" value="Modificar" id="send">
 	</form>
-</div>
+    </div>
     
     
-    <script type="text/javascript">
 
-	$(document).ready(function() {
-		$(".modalbox").fancybox();
-	});
-        
-        $(function(){
-            $(".click").click(function(e) {
-                e.preventDefault();
-                var data = $(this).attr("data-valor");
-                
-                $idAsiento=document.getElementById("a"+data.toString()).innerHTML;
-                $numeroDiario=document.getElementById("b"+data.toString()).innerHTML;
-                $periodoAsiento=document.getElementById("c"+data.toString()).innerHTML;
-                $fechaAsiento=document.getElementById("d"+data.toString()).innerHTML;
-                $numeroAsiento=document.getElementById("e"+data.toString()).innerHTML;
-                $conceptoAsiento=document.getElementById("f"+data.toString()).innerHTML;
-                $debeAsiento=document.getElementById("g"+data.toString()).innerHTML;
-                $haberAsiento=document.getElementById("h"+data.toString()).innerHTML;
-                document.modificarform.idAsiento.value=$idAsiento;
-                document.eliminarform.idAsiento.value=$idAsiento;
-                document.modificarform.numeroDiario.value=$numeroDiario;
-                document.modificarform.periodoAsiento.value=$periodoAsiento;
-                document.modificarform.fechaAsiento.value=$fechaAsiento;
-                document.modificarform.numeroAsiento.value=$numeroAsiento;
-                document.modificarform.conceptoAsiento.value=$conceptoAsiento;
-                document.modificarform.debeAsiento.value=$debeAsiento;
-                document.modificarform.haberAsiento.value=$haberAsiento;
-                
-            });
-        });        
-    </script>
     </body>
 </html>

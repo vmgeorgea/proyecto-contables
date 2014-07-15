@@ -28,7 +28,12 @@
     </head> 
      <%
     java.util.Calendar fecha = java.util.Calendar.getInstance();
-    String f=fecha.get(java.util.Calendar.DATE) + "/"+ fecha.get(java.util.Calendar.MONTH)+ "/"+ fecha.get(java.util.Calendar.YEAR);
+    String f;
+        if(fecha.get(java.util.Calendar.MONTH+1)<10){
+        f=fecha.get(java.util.Calendar.DATE) + "/0"+ fecha.get(java.util.Calendar.MONTH+1)+ "/"+ fecha.get(java.util.Calendar.YEAR);
+        }else{
+        f=fecha.get(java.util.Calendar.DATE) + "/"+ fecha.get(java.util.Calendar.MONTH+1)+ "/"+ fecha.get(java.util.Calendar.YEAR);
+        }
     session.setAttribute("fechaFactura", f);
     %>    
     <body>
@@ -98,7 +103,7 @@
         <td class='estilo1'></td>
         <td class='estilo1' >Descuento</td>   
         <td class='estilo1'>
-           <select name="descuentoFactura" id="descuentoFactura" onchange="Descuento()"> 
+           <select name="descuentoFactura" id="descuentoFactura" onchange="Descuento()" style="width:45px"> 
             <option value="0.0" selected>0.0</option>
             <option value="0.1" selected>0.1</option>
             <option value="0.2" selected>0.2</option>
@@ -134,7 +139,7 @@
         <td class='estilo1'></td>
         <td class='estilo1'>IVA</td>
         <td class='estilo1'>
-       <select id="ivaFactura" name="ivaFactura" onchange="Iva()">                    
+       <select id="ivaFactura" name="ivaFactura" onchange="Iva()" style="width:45px">                    
                     <%
                     LinkedList<IVAClass> lista2 =new LinkedList<IVAClass>();
                     lista2 = IVADAO.consultar();
@@ -175,8 +180,7 @@
         <%
         total=(iva+subtotaldescuento);
         %>
-        <td class='estilo1' id="cedldatotal"><%=total%></td>
-        <td class='estilo1'></td>
+        <td class='estilo1'><input style="width:45px" type="text" id="cedldatotal" name="cedldatotal" required="required" readonly="readonly" value=<%=total%>></td>
         <td class='estilo1'></td>
         <td class='estilo1'></td>                                                                         
       </table>          
@@ -201,6 +205,7 @@
                             </select> 
                         </tr>                        
                         <tr>
+                            <td  class='estilo1'></td>
                             <td  class='estilo1'></td>
                             <td  class='estilo1'></td>
                             <td  class='estilo1'></td>
@@ -287,7 +292,7 @@
                 var subtotaliva=iva*subtotaldescuento;
                 document.getElementById("cedldasubtotaliva").innerHTML = subtotaliva;
                 var total=subtotaliva+subtotaldescuento;
-                document.getElementById("cedldatotal").innerHTML = total;                 
+                document.getElementById("cedldatotal").value  = total;                 
             }
 
             function Descuento() { 
@@ -301,7 +306,7 @@
                 var subtotaliva=iva*subtotaldescuento;
                 document.getElementById("cedldasubtotaliva").innerHTML = subtotaliva;    
                 var total=subtotaliva+subtotaldescuento;
-                document.getElementById("cedldatotal").innerHTML = total;
+                document.getElementById("cedldatotal").value = total;
             } 
            
 </script>                          

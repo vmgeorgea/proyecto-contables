@@ -164,4 +164,52 @@ public class AsientoDAO {
   return aux;
  }
   
+    public static AsientoClass  consultarfecha(String fecha) throws InstantiationException, IllegalAccessException, SQLException{
+   AsientoClass aux= new AsientoClass();
+   Conexion c=new Conexion();
+   Connection conn=c.getConexion();
+   Statement st = conn.createStatement();
+   String sql="select * from  asiento where fechaAsiento='"+fecha+"'";
+   ResultSet rs = st.executeQuery(sql);
+       while(rs.next()){
+        AsientoClass r= new AsientoClass();
+        r.setIdAsiento(rs.getString(1));
+        r.setNumeroDiario(rs.getString(2));
+        r.setPeriodoAsiento(rs.getString(3));
+        r.setFechaAsiento(rs.getString(4));
+        r.setNumeroAsiento(rs.getString(5));
+        r.setConceptoAsiento(rs.getString(6));
+        r.setDebeAsiento(rs.getString(7));
+        r.setHaberAsiento(rs.getString(8));
+        aux=r;
+       }
+   rs.close();
+   st.close();
+  return aux;
+ }
+
+    public static AsientoClass  consultarnumerodiario(String numerodiario, String fecha) throws InstantiationException, IllegalAccessException, SQLException{
+   AsientoClass aux= new AsientoClass();
+   Conexion c=new Conexion();
+   Connection conn=c.getConexion();
+   Statement st = conn.createStatement();
+   String sql="select * from  asiento where fechaAsiento='"+fecha+"' and numeroasiento='"+numerodiario+"'";
+   ResultSet rs = st.executeQuery(sql);
+       while(rs.next()){
+        AsientoClass r= new AsientoClass();
+        r.setIdAsiento(rs.getString(1));
+        r.setNumeroDiario(rs.getString(2));
+        r.setPeriodoAsiento(rs.getString(3));
+        r.setFechaAsiento(rs.getString(4));
+        r.setNumeroAsiento(rs.getString(5));
+        r.setConceptoAsiento(rs.getString(6));
+        r.setDebeAsiento(rs.getString(7));
+        r.setHaberAsiento(rs.getString(8));
+        aux=r;
+       }
+   rs.close();
+   st.close();
+  return aux;
+ }    
+  
 }
