@@ -80,7 +80,7 @@ ClienteDAO ud = new ClienteDAO();
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
     try {
-        String cedula = request.getParameter("cedula").toUpperCase();
+        String cedula = request.getParameter("cedulax").toUpperCase();
         String nombre = request.getParameter("nombre").toUpperCase();
         String apellido = request.getParameter("apellido").toUpperCase();
         String direccion = request.getParameter("direccion").toUpperCase();

@@ -6,10 +6,15 @@
 
 package Servlet;
 
+import Clases.ProductoClass;
 import Clases.ProductoVentaClass;
+import DAO.ProductoDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
 import java.util.LinkedList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -77,40 +82,65 @@ public class FacturaVentaAgregarServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession(true);
+        boolean bandera;
+        ProductoDAO pd= new ProductoDAO(); 
         if(session.getAttribute("cliente")==null){
          PrintWriter out=response.getWriter();
          out.println("Ingrese Cliente");   
         }else{
             if(session.getAttribute("productos")!=null){
-                 int a1=request.getParameter("nombreProducto").toString().indexOf("-");
-                 int a2=request.getParameter("nombreProducto").toString().indexOf("/");
-                 int a3=request.getParameter("nombreProducto").toString().length();
-                 String id=request.getParameter("nombreProducto").toString().substring(0, a1);
-                 String nombre=request.getParameter("nombreProducto").toString().substring(a1+1, a2);
-                 String precio=request.getParameter("nombreProducto").toString().substring(a2+1, a3);
-                LinkedList<ProductoVentaClass> lista1 =(LinkedList) session.getAttribute("productos");
-                String idProducto = id.toUpperCase();
-                String nombreProducto = nombre.toUpperCase();
-                String precioProducto = precio.toUpperCase();
-                String cantidadProducto = request.getParameter("cantidadProducto").toUpperCase();
-                ProductoVentaClass u=new  ProductoVentaClass(idProducto, nombreProducto, precioProducto, cantidadProducto);
-                lista1.add(u);      
-                session.setAttribute("productos", lista1);
+                try {
+                    int a1=request.getParameter("nombreProducto").toString().indexOf("-");
+                    int a2=request.getParameter("nombreProducto").toString().indexOf("/");
+                    int a3=request.getParameter("nombreProducto").toString().length();
+                    String id=request.getParameter("nombreProducto").toString().substring(0, a1);
+                    String nombre=request.getParameter("nombreProducto").toString().substring(a1+1, a2);
+                    String precio=request.getParameter("nombreProducto").toString().substring(a2+1, a3);
+                    LinkedList<ProductoVentaClass> lista1 =(LinkedList) session.getAttribute("productos");
+                    String idProducto = id.toUpperCase();
+                    String nombreProducto = nombre.toUpperCase();
+                    String precioProducto = precio.toUpperCase();
+                    String cantidadProducto = request.getParameter("cantidadProducto").toUpperCase();
+                    
+                    bandera =pd.consultarstock(cantidadProducto, idProducto);
+                    if(bandera){
+                        ProductoVentaClass u=new  ProductoVentaClass(idProducto, nombreProducto, precioProducto, cantidadProducto);
+                        lista1.add(u);                
+                        session.setAttribute("productos", lista1);
+                    }
+                } catch (InstantiationException ex) {
+                    Logger.getLogger(FacturaVentaAgregarServlet.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (IllegalAccessException ex) {
+                    Logger.getLogger(FacturaVentaAgregarServlet.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (SQLException ex) {
+                    Logger.getLogger(FacturaVentaAgregarServlet.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }else{
-                LinkedList<ProductoVentaClass> lista2 =new LinkedList<ProductoVentaClass> ();
-                 int a1=request.getParameter("nombreProducto").toString().indexOf("-");
-                 int a2=request.getParameter("nombreProducto").toString().indexOf("/");
-                 int a3=request.getParameter("nombreProducto").toString().length();
-                 String id=request.getParameter("nombreProducto").toString().substring(0, a1);
-                 String nombre=request.getParameter("nombreProducto").toString().substring(a1+1, a2);
-                 String precio=request.getParameter("nombreProducto").toString().substring(a2+1, a3);                
-                String idProducto = id.toUpperCase();
-                String nombreProducto = nombre.toUpperCase();
-                String precioProducto = precio.toUpperCase();
-                String cantidadProducto = request.getParameter("cantidadProducto").toUpperCase();
-                ProductoVentaClass u=new  ProductoVentaClass(idProducto, nombreProducto, precioProducto, cantidadProducto);
-                lista2.add(u);      
-                session.setAttribute("productos", lista2);                
+                try {
+                    LinkedList<ProductoVentaClass> lista2 =new LinkedList<ProductoVentaClass> ();
+                    int a1=request.getParameter("nombreProducto").toString().indexOf("-");
+                    int a2=request.getParameter("nombreProducto").toString().indexOf("/");
+                    int a3=request.getParameter("nombreProducto").toString().length();
+                    String id=request.getParameter("nombreProducto").toString().substring(0, a1);
+                    String nombre=request.getParameter("nombreProducto").toString().substring(a1+1, a2);
+                    String precio=request.getParameter("nombreProducto").toString().substring(a2+1, a3);
+                    String idProducto = id.toUpperCase();
+                    String nombreProducto = nombre.toUpperCase();
+                    String precioProducto = precio.toUpperCase();
+                    String cantidadProducto = request.getParameter("cantidadProducto").toUpperCase();
+                    bandera =pd.consultarstock(cantidadProducto, idProducto);
+                    if(bandera){
+                        ProductoVentaClass u=new  ProductoVentaClass(idProducto, nombreProducto, precioProducto, cantidadProducto);
+                        lista2.add(u);
+                        session.setAttribute("productos", lista2);                
+                    }
+                } catch (InstantiationException ex) {
+                    Logger.getLogger(FacturaVentaAgregarServlet.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (IllegalAccessException ex) {
+                    Logger.getLogger(FacturaVentaAgregarServlet.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (SQLException ex) {
+                    Logger.getLogger(FacturaVentaAgregarServlet.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
          }
         request.getRequestDispatcher("FacturaVentaProductos.jsp").forward(request, response); 

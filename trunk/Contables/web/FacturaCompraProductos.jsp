@@ -28,7 +28,12 @@
     </head> 
      <%
     java.util.Calendar fecha = java.util.Calendar.getInstance();
-    String f=fecha.get(java.util.Calendar.DATE) + "/"+ fecha.get(java.util.Calendar.MONTH)+ "/"+ fecha.get(java.util.Calendar.YEAR);
+    String f;
+        if((fecha.get(java.util.Calendar.MONTH)+1)<10){
+        f=fecha.get(java.util.Calendar.DATE) + "/0"+ (fecha.get(java.util.Calendar.MONTH)+1)+ "/"+ fecha.get(java.util.Calendar.YEAR);
+        }else{
+        f=fecha.get(java.util.Calendar.DATE) + "/"+ (fecha.get(java.util.Calendar.MONTH)+1)+ "/"+ fecha.get(java.util.Calendar.YEAR);
+        }
     session.setAttribute("fechaFactura", f);
     %>    
     <body>
@@ -36,12 +41,9 @@
         <form action="FacturaCompraServlet" method="post" name="FacturaCompraProducto">
         <table id="miTabla">
         <tr>
-        Registro de Producto
-        </tr>
-        <tr>
         <td class="estilo1">Id Producto</td>
         <td class="estilo1">Nombre Productos</td>
-        <td class="estilo1">Precio Productos</td>
+        <td class="estilo1">Costo Productos</td>
         <td class="estilo1">Cantidad Productos</td>
         <td class="estilo1">Subtotal Productos</td>
         <td class="estilo1"></td>
@@ -61,8 +63,8 @@
         <%
          LinkedList<ProductoCompraClass> lista =new LinkedList<ProductoCompraClass>();
          HttpSession session1 = request.getSession();
-               if(session1.getAttribute("productos")!=null){
-                   lista = (LinkedList) session1.getAttribute("productos");
+               if(session1.getAttribute("productoscompra")!=null){
+                   lista = (LinkedList) session1.getAttribute("productoscompra");
                 }
           float subtotal=0;
           float total=0;
@@ -73,14 +75,14 @@
            out.println("<tr data-valor='"+i+"' class='click'>" );
            out.println("<td id='a"+i+"'>"+lista.get(i).getIdProducto()+"</a></td>");
            out.println("<td id='b"+i+"'>"+lista.get(i).getNombreProducto()+"</a></td>");
-           out.println("<td id='c"+i+"'>"+lista.get(i).getPrecioProducto()+"</td>");
+           out.println("<td id='c"+i+"'>"+lista.get(i).getCostoProducto()+"</td>");
            out.println("<td id='d"+i+"'>"+lista.get(i).getCantidadProducto()+"</td>");
-           out.println("<td id='e"+i+"'>"+Float.parseFloat(lista.get(i).getCantidadProducto())*Float.parseFloat(lista.get(i).getPrecioProducto())+"</td>");
+           out.println("<td id='e"+i+"'>"+Float.parseFloat(lista.get(i).getCantidadProducto())*Float.parseFloat(lista.get(i).getCostoProducto())+"</td>");
            out.println("<td></td>");
            out.println("<td><a class='modalbox' href='#modificar'><img SRC='Imagen/Modificar.png'></a></td>");
            out.println("<td><a class='modalbox' href='#eliminar'><img SRC='Imagen/Eliminar.png'></a></td>");
            out.println("</tr>");           
-           subtotal=subtotal+Float.parseFloat(lista.get(i).getCantidadProducto())*Float.parseFloat(lista.get(i).getPrecioProducto());
+           subtotal=subtotal+Float.parseFloat(lista.get(i).getCantidadProducto())*Float.parseFloat(lista.get(i).getCostoProducto());
         }
         %>
         <tr>
@@ -175,7 +177,7 @@
         <%
         total=(iva+subtotaldescuento);
         %>
-        <td class='estilo1' id="cedldatotal"><%=total%></td>
+        <td class='estilo1'><input style="width:45px" type="text" id="cedldatotal" name="cedldatotal" required="required" readonly="readonly" value=<%=total%> ></td>
         <td class='estilo1'></td>
         <td class='estilo1'></td>
         <td class='estilo1'></td>
@@ -220,7 +222,7 @@
     <div id="ingresar">
 	<h2>Agregar</h2>
 	<form id="ingresarform" name="ingresarform" action="FacturaCompraAgregarServlet" method="post" >
-	    <label for="NombreProducto">Tipo Cuenta</label>
+	    <label for=nombreProducto">Tipo Cuenta</label>
                 <select name="nombreProducto" class="combo"> 
                 <option value="0" selected>SELECCIONAR</option>
                 <%
@@ -228,7 +230,7 @@
                     lista1 = ProductoDAO.consultar();
                     for (int i=0;i<lista1.size();i++)
                     {
-                    out.println("<option value='"+lista1.get(i).getIdProducto()+"-"+lista1.get(i).getNombreProducto()+"/"+lista1.get(i).getPrecioProducto()+"' selected>"+lista1.get(i).getIdProducto()+"-"+lista1.get(i).getNombreProducto()+"/"+lista1.get(i).getPrecioProducto()+"</option>");
+                    out.println("<option value='"+lista1.get(i).getIdProducto()+"-"+lista1.get(i).getNombreProducto()+"/"+lista1.get(i).getCostoProducto()+"' selected>"+lista1.get(i).getIdProducto()+"-"+lista1.get(i).getNombreProducto()+"/"+lista1.get(i).getCostoProducto()+"</option>");
                     }
                 %>
                 </select> 
@@ -243,8 +245,8 @@
 <div id="modificar">
 	<h2>Modificar</h2>
 	<form id="modificarform" name="modificarform" action="FacturaCompraModificarServlet" method="post">
-		<label for="idProducto">Id Prodcuto</label>
-		<input type="idProducto" id="idProducto" name="idProducto" class="txtmodificar" required="required" readonly="readonly" >
+		<label for="idProducto">Id Producto</label>
+		<input type="idProducto" id="idProductocompra" name="idProducto" class="txtmodificar" required="required" readonly="readonly" >
 		<br>
 		<label for="cantidadProducto">Cantidad Producto</label>
 		<input type="cantidadProducto" id="cantidadProducto" name="cantidadProducto" class="txtmodificar" required="required">

@@ -41,9 +41,6 @@
         <form action="FacturaVentaServlet" method="post" name="FacturaVentaProducto">
         <table id="miTabla">
         <tr>
-        Registro de Producto
-        </tr>
-        <tr>
         <td class="estilo1">Id Producto</td>
         <td class="estilo1">Nombre Productos</td>
         <td class="estilo1">Precio Productos</td>

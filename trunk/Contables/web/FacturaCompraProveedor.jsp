@@ -19,9 +19,6 @@
                <form name="Ingresar" id="Ingresar" action="BuscarProveedorServlet"> 
                   <table id="miTabla">
                         <tr>
-                        Registro de Proveedor
-                        </tr>
-                        <tr>
                         <td class="estilo1">Proveedor:</td>
                         <td class="estilo1"><input type="text" id="identificacionProveedor" name="identificacionProveedor" required="required" onkeypress="return Numeros(event)"></td>                                
                         <td class="estilo1"><button name="boton" type="submit" style="background-color:white; border:none"><img src="Imagen/Agregar.png" align="left"></button><td>

@@ -117,17 +117,20 @@ public class ProductoDAO {
       return agregado;
      }
     
-    public boolean modificarcantidadcompra(String idProducto, String cantidadProducto) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException{       
+    public boolean modificarcantidadcompra(String idProducto, String costoProducto, String cantidadProducto) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException{       
     boolean agregado=false;
       try {
        Conexion c=new Conexion();
        Connection conn=c.getConexion();
        if(conn!=null){
         PreparedStatement pst = null;
-        String sql="update producto set stockProducto=stockProducto+? where idProducto=?";
+        String sql="update producto set stockProducto=stockProducto+?, costoProducto=?, precioProducto=? where idProducto=?";
         pst = conn.prepareStatement(sql);
         pst.setString(1, cantidadProducto);
-        pst.setString(2, idProducto);
+        pst.setString(2, costoProducto);
+        double precioProducto=Double.parseDouble(costoProducto)*0.15;
+        pst.setString(3, String.valueOf(precioProducto));
+        pst.setString(4, idProducto);
         pst.execute();
         agregado=true;
         pst.close();
@@ -163,4 +166,32 @@ public class ProductoDAO {
    st.close();
   return listahistorial;
 }
+    
+    public  boolean  consultarstock(String cantidad, String id) throws InstantiationException, IllegalAccessException, SQLException{
+   ProductoClass r= new ProductoClass();
+   boolean a;
+   Conexion c=new Conexion();
+   Connection conn=c.getConexion();
+   Statement st = conn.createStatement();
+   String sql="select * from  producto where idproducto="+id;
+   ResultSet rs = st.executeQuery(sql);
+       while(rs.next()){                
+        r.setIdProducto(rs.getString(1));
+        r.setNombreProducto(rs.getString(2));
+        r.setCostoProducto(rs.getString(3));
+        r.setPrecioProducto(rs.getString(4));
+        r.setStockProducto(rs.getString(5));
+        r.setImpuestoProducto(rs.getString(6));
+       }
+       float b = Float.parseFloat(r.getStockProducto());
+       float d = Float.parseFloat(cantidad);
+       if(b<d){
+       a=false;
+       }else{
+       a=true;
+       }
+   rs.close();
+   st.close();
+  return a;
+}    
 }

@@ -169,7 +169,7 @@ public class AsientoDAO {
    Conexion c=new Conexion();
    Connection conn=c.getConexion();
    Statement st = conn.createStatement();
-   String sql="select * from  asiento where fechaAsiento='"+fecha+"'";
+   String sql="SELECT * FROM  asiento where fechaasiento='"+fecha+"' ORDER BY numerodiario  DESC LIMIT 1";
    ResultSet rs = st.executeQuery(sql);
        while(rs.next()){
         AsientoClass r= new AsientoClass();
@@ -211,5 +211,30 @@ public class AsientoDAO {
    st.close();
   return aux;
  }    
-  
+ 
+      public AsientoClass  consultarfinal() throws InstantiationException, IllegalAccessException, SQLException{
+   Conexion c=new Conexion();
+   AsientoClass r= new AsientoClass();
+   Connection conn=c.getConexion();
+   Statement st = conn.createStatement();
+   String sql="Select * from asiento order by idasiento desc limit 1";
+   ResultSet rs = st.executeQuery(sql);
+       while(rs.next()){
+        
+        r.setIdAsiento(rs.getString(1));
+        r.setNumeroDiario(rs.getString(2));
+        r.setPeriodoAsiento(rs.getString(3));
+        r.setFechaAsiento(rs.getString(4));
+        r.setNumeroAsiento(rs.getString(5));
+        r.setConceptoAsiento(rs.getString(6));
+        r.setDebeAsiento(rs.getString(7));
+        r.setHaberAsiento(rs.getString(8));
+       }
+   rs.close();
+   st.close();
+  return r;
+ }
+          
+    
+    
 }

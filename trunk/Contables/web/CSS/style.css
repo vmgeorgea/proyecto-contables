@@ -142,7 +142,8 @@ filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#0e387d', endC
  
 #miTabla tr:nth-child(odd){background-color: #DDD; color:#777;}
 
-#miTabla td {padding: 6px;}    
+#miTabla td {padding: 6px;}  
+#miTabla1 td {padding: 3px;}
 
 tr {
 display: table-row;

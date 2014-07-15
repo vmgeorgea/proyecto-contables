@@ -19,6 +19,7 @@
         <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
         <script type="text/javascript" src="fancybox/jquery.fancybox.js?v=2.0.6"></script>
         <script type="text/javascript" src="JS/ValidarJS.js"></script>
+        <script type="text/javascript" src="JS/ValidarCedulaJS.js"></script>
     </head>
     <body>
         <center>
@@ -76,7 +77,7 @@
             
             
             <label for="Cedula">Identificación Cliente  </label>
-		<input align='right' type="Cedula" id="cedula" name="cedula" class="txtingresar" required="required" onkeypress="return Numeros(event)">
+		<input align='right' type="Cedula" id="cedulax" name="cedulax" class="txtingresar" required="required" onkeydown="return cedula(event);" maxlength="10">
 		<br>
             
             <label for="Nombre">Nombre Cliente  </label>
@@ -96,7 +97,7 @@
 		<br>
             
             <label for="Tipo">Tipo Cliente</label>
-                <select name="tipo" class="combo">  
+                <select id="tipox" name="tipox" class="combo">  
                 <option  selected>SELECCIONAR</option>  
                 <%
                     out.println("<option value='CEDULA' selected> CEDULA </option>");
@@ -119,7 +120,7 @@
             <input align='right' type="IdCliente" id="idCliente" name="idCliente" class="txtingresar" required="required" readonly="readonly">
 		<br>
             <label for="Cedula">Identificación Cliente  </label>
-		<input align='right' type="Cedula" id="cedula" name="cedula" class="txtingresar" required="required" onkeypress="return Numeros(event)">
+		<input align='right' type="Cedula" id="cedula" name="cedula" class="txtingresar" required="required" readonly="readonly" >
 		<br>
             
             <label for="Nombre">Nombre Cliente  </label>
@@ -179,7 +180,98 @@
                 document.modificarform.tipo.value=$tipo;
                 
             });
-        });        
+        });   
+        
+        function cedula(e) {
+             tecla = (document.all) ? e.keyCode : e.which;
+            if (tecla==8) return true; 
+            patron =/^[0-9]*[.]?[0-9]*$/; 
+            te = String.fromCharCode(tecla);
+                var textBox = document.getElementById("cedulax");
+                var textLength = textBox.value.length;
+                if(textLength==10){
+                a(textBox.value);                     
+                }
+            return patron.test(te);
+        }
+        
+    function a(c){
+        var cedula = c;
+ 
+     //Preguntamos si la cedula consta de 10 digitos
+     if(cedula.length == 10){
+        
+        //Obtenemos el digito de la region que sonlos dos primeros digitos
+        var digito_region = cedula.substring(0,2);
+        
+        //Pregunto si la region existe ecuador se divide en 24 regiones
+        if( digito_region >= 1 && digito_region <=24 ){
+          
+          // Extraigo el ultimo digito
+          var ultimo_digito   = cedula.substring(9,10);
+ 
+          //Agrupo todos los pares y los sumo
+          var pares = parseInt(cedula.substring(1,2)) + parseInt(cedula.substring(3,4)) + parseInt(cedula.substring(5,6)) + parseInt(cedula.substring(7,8));
+ 
+          //Agrupo los impares, los multiplico por un factor de 2, si la resultante es > que 9 le restamos el 9 a la resultante
+          var numero1 = cedula.substring(0,1);
+          var numero1 = (numero1 * 2);
+          if( numero1 > 9 ){ var numero1 = (numero1 - 9); }
+ 
+          var numero3 = cedula.substring(2,3);
+          var numero3 = (numero3 * 2);
+          if( numero3 > 9 ){ var numero3 = (numero3 - 9); }
+ 
+          var numero5 = cedula.substring(4,5);
+          var numero5 = (numero5 * 2);
+          if( numero5 > 9 ){ var numero5 = (numero5 - 9); }
+ 
+          var numero7 = cedula.substring(6,7);
+          var numero7 = (numero7 * 2);
+          if( numero7 > 9 ){ var numero7 = (numero7 - 9); }
+ 
+          var numero9 = cedula.substring(8,9);
+          var numero9 = (numero9 * 2);
+          if( numero9 > 9 ){ var numero9 = (numero9 - 9); }
+ 
+          var impares = numero1 + numero3 + numero5 + numero7 + numero9;
+ 
+          //Suma total
+          var suma_total = (pares + impares);
+ 
+          //extraemos el primero digito
+          var primer_digito_suma = String(suma_total).substring(0,1);
+ 
+          //Obtenemos la decena inmediata
+          var decena = (parseInt(primer_digito_suma) + 1)  * 10;
+ 
+          //Obtenemos la resta de la decena inmediata - la suma_total esto nos da el digito validador
+          var digito_validador = decena - suma_total;
+ 
+          //Si el digito validador es = a 10 toma el valor de 0
+          if(digito_validador == 10)
+            var digito_validador = 0;
+ 
+          //Validamos que el digito validador sea igual al de la cedula
+          if(digito_validador == ultimo_digito){
+              document.ingresarform.nombre.focus();
+              document.getElementById("tipox").value="CEDULA";
+          }else{
+            alert('Cedula incorrecta');
+            document.getElementById("cedulax").value="";
+          }
+          
+        }else{
+          // imprimimos en consola si la region no pertenece
+          alert('Cedula incorrecta');
+        }
+     }else{
+        //imprimimos en consola si la cedula tiene mas o menos de 10 digitos
+        alert('Cedula incorrecta');
+     }    
+ 
+}
+
     </script>          
                 
     </body>

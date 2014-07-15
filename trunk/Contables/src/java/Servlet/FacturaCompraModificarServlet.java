@@ -77,14 +77,14 @@ public class FacturaCompraModificarServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession(true);
-        LinkedList<ProductoVentaClass> lista1 =(LinkedList) session.getAttribute("productos");
+        LinkedList<ProductoVentaClass> lista1 =(LinkedList) session.getAttribute("productoscompra");
             for(int i=0;i<lista1.size();i++){
                 String a= (String)request.getParameter("idProducto");
                 if(lista1.get(i).getIdProducto().equals(a)){
                     lista1.get(i).setCantidadProducto(request.getParameter("cantidadProducto").toString());
                 }
             }
-        session.setAttribute("productos", lista1);
+        session.setAttribute("productoscompra", lista1);
         request.getRequestDispatcher("FacturaCompraProductos.jsp").forward(request, response); 
     }
 
