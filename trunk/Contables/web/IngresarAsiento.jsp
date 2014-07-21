@@ -212,7 +212,7 @@
                             String nom=cue.consultarNombre(listaTra.get(j).getCuenta_idCuenta());
                             out.println("<td></td><td>"+nom+"</td>");
                             out.println("<td>"+listaTra.get(j).getDebeTransaccion()+"</td> <td></td> ");
-                            out.println("<td><a class='modalbox' href='#modificar'><img SRC='Imagen/Modificar.png'></a> <a class='modalbox' href='#modificar'><img SRC='Imagen/Eliminar.png'></a></td>");
+                            out.println("<td><a class='modalbox' href='#modificar'><img SRC='Imagen/Modificar.png'></a> </td>");
                             //out.println("<td></td>");
                             out.println("<td style = 'visibility : hidden' id='a"+j+"'>"+listaTra.get(j).getIdTransaccion()+"</a></td>");
                             out.println("<td style = 'visibility : hidden' id='b"+j+"'>"+listaTra.get(j).getAsiento_idAsiento()+"</a></td>");
@@ -232,7 +232,7 @@
                             String nom=cue.consultarNombre(listaTra.get(j).getCuenta_idCuenta());
                             out.println("<td></td><td>-"+nom+"</td>");
                             out.println("<td></td><td>"+listaTra.get(j).getHaberTransaccion()+"</td>");
-                            out.println("<td><a class='modalbox' href='#modificar'><img SRC='Imagen/Modificar.png'></a> <a class='modalbox' href='#modificar'><img SRC='Imagen/Eliminar.png'></a></td>");
+                            out.println("<td><a class='modalbox' href='#modificar'><img SRC='Imagen/Modificar.png'></a> </td>");
                             //out.println("<td><a class='modalbox' href='#modificar'><img SRC='Imagen/Eliminar.png'></a></td>");
                             
                             out.println("<td style = 'visibility : hidden' id='a"+j+"'>"+listaTra.get(j).getIdTransaccion()+"</a></td>");
@@ -314,12 +314,12 @@
                 <h2>Nuevo</h2>
                 <form id="imgresarTransaccionform" name="imgresarTransaccionform" action="TransaccionIngresarServlet1" method="post" >
 
-                    <label for="Asiento_idAsiento">Id Asiento</label>
-                    <input align='right' type="asiento_idAsiento" id="asiento_idAsiento" name="Asiento_idAsiento" class="txtingresar" value="<%out.print(asiento.getIdAsiento());%>" required="required" onkeypress="return Numeros(event)">
+                    <label type='hidden' for="Asiento_idAsiento">Id Asiento</label>
+                    <input align='right' type="hidden" id="asiento_idAsiento" name="Asiento_idAsiento" class="txtingresar" value="<%out.print(asiento.getIdAsiento());%>" required="required" onkeypress="return Numeros(event)">
 
                         <br>
 
-                        <label for="Cuanta_idCuenta">Id Cuenta</label>
+                        <label for="Cuanta_idCuenta">Cuenta</label>
                         <select name="Cuenta_idCuenta" class="combo">  
                         <option  selected>SELECCIONAR</option>  
                         <%
@@ -359,14 +359,14 @@
 	
             <h2>Modificar</h2>
 	<form id="modificarform" name="modificarform" action="TransaccionModificarServlet" method="post">
-            <label for="idTransaccion">Id Transaccion</label>
-		<input align='right' type="idTransaccion" id="idTransaccion" name="idTransaccion" class="txtingresar" required="required" readonly="readonly" onkeypress="return Numeros(event)">
+            <label type="hidden" for="idTransaccion">Id Transaccion</label>
+		<input align='right' type="hidden" id="idTransaccion" name="idTransaccion" class="txtingresar" required="required" readonly="readonly" onkeypress="return Numeros(event)">
 		<br>		
-            <label for="Asiento_idAsiento">Id Asiento</label>
-                <input align='right' type="Asiento_idAsiento" id="Asiento_idAsiento" name="Asiento_idAsiento" class="txtingresar" required="required" readonly="readonly" onkeypress="return Numeros(event)">
+            <label type="hidden" for="Asiento_idAsiento">Id Asiento</label>
+                <input align='right' type="hidden" id="Asiento_idAsiento" name="Asiento_idAsiento" class="txtingresar" required="required" readonly="readonly" onkeypress="return Numeros(event)">
 		<br>
             
-                <label for="Cuenta_idCuenta">Id Cuenta</label>
+                <label for="Cuenta_idCuenta">Cuenta</label>
                 <select name="Cuenta_idCuenta" class="combo">  
                 <option  selected>SELECCIONAR</option>  
                 <%

@@ -25,16 +25,17 @@
         <script type="text/javascript" src="JS/ValidarJS.js"></script>
     </head>
     <body>
+        <h1>Libro Mayor</h1>
         <%                
             java.util.Date fecha = new Date();
             String anio=Integer.toString(fecha.getYear());
             String mes=Integer.toString(fecha.getMonth());
             String dia=Integer.toString(fecha.getDay());
-            String fech= dia+"/"+mes+"/"+anio;
+            String fech= "1";
          %>
          <center>
             <table id="miTabla">
-            <tr>
+            <tr >
                 <td class="estilo1">Id Asiento</td>
                 <td class="estilo1">Número Diario</td>
                 <td class="estilo1">Periodo Asiento</td>
@@ -111,8 +112,8 @@
                         }
                     }
                     if(aux.size()>0){
-                        out.println("<center><table>");
-                        out.println("<tr>");
+                        out.println("<center><table border='1'>");
+                        out.println("<tr bgcolor='gray'>");
                         out.println("<td>DEBE</td>"+"<td>"+nombre+"</td><td>HABER</td>");
                         out.println("</tr>");
                         for(int k=0;k<aux.size();k++){
@@ -127,8 +128,10 @@
                             }
                             out.println("</tr>");
                         }
-                        out.println("<td>"+td+"</td><td>TOTAL</td><td>"+th+"</td>");
+                        out.println("<tr bgcolor='gray' align='center'><td>"+td+"</td><td>TOTAL</td><td>"+th+"</td></tr>");
                         out.println("</table></center>");
+                        out.println("<br>");
+                        out.println("<br>");
                     }
                 }
             %>
