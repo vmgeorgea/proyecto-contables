@@ -6,11 +6,14 @@
 
 package Servlet;
 
+import Clases.AsientoClass;
 import Clases.TransaccionClass;
+import DAO.AsientoDAO;
 import DAO.TransaccionDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.util.LinkedList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -91,10 +94,25 @@ TransaccionDAO ud = new TransaccionDAO();
             String Asiento_idAsiento = request.getParameter("Asiento_idAsiento").toUpperCase();
             
             TransaccionClass u=new TransaccionClass(idTransaccion,debeTransaccion, haberTransaccion, referenciaTransaccion, documentoTransaccion, Cuenta_idCuenta, Asiento_idAsiento);
-        
+            
             boolean sw=ud.modificar(u);
         if(sw){
-            request.getRequestDispatcher("Transaccion.jsp").forward(request, response);
+            LinkedList<TransaccionClass> lista =new LinkedList<TransaccionClass>();
+            AsientoClass a=new AsientoClass();
+            AsientoDAO as= new AsientoDAO();
+            lista=TransaccionDAO.consultarTransaccion(Asiento_idAsiento);
+            double debe=0 ;
+            double haber=0;
+            for(int i=0;i<lista.size();i++){
+                debe=debe+Double.parseDouble(lista.get(i).getDebeTransaccion());
+                haber=haber+Double.parseDouble(lista.get(i).getHaberTransaccion());
+            }
+            
+            a=AsientoDAO.consultarAsiento(Asiento_idAsiento);
+            a.setDebeAsiento(String.valueOf(debe));
+            a.setHaberAsiento(String.valueOf(haber));
+            as.modificar(a);
+            request.getRequestDispatcher("IngresarAsiento.jsp").forward(request, response);
         }else{
             PrintWriter out=response.getWriter();
             out.println("Fail registration.");

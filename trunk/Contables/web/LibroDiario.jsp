@@ -24,17 +24,36 @@
         <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
         <script type="text/javascript" src="fancybox/jquery.fancybox.js?v=2.0.6"></script>
         <script type="text/javascript" src="JS/ValidarJS.js"></script>
+        
+        <!-- link calendar resources -->
+	<link rel="stylesheet" type="text/css" href="CSS/tcal.css" />
+	<script type="text/javascript" src="JS/tcal.js"></script>
     </head>
     <body>
         <%                
             java.util.Date fecha = new Date();
+            
             String anio=Integer.toString(fecha.getYear());
             String mes=Integer.toString(fecha.getMonth());
             String dia=Integer.toString(fecha.getDay());
-            String fech= dia+"/"+mes+"/"+anio;
+            //String fech= dia+"/"+mes+"/"+anio;
+            String fech= fecha.toString();
          %>
          <center>
             <table id="miTabla">
+            <tr>
+                <td class="estilo1">Ingrese rango de fechas</td>
+            </tr>
+            <tr>
+                <td class="estilo1">Fecha Inicial</td>
+                <td class="estilo1">Fecha Inicial</td>
+            </tr>
+            
+            <tr data-valor=0 class="click">
+                <td id="a0"><input type="date" name="date" class="tcal" value="01/01/2014" /></a></td>
+                <td id="b0"><input type="date" name="date1" class="tcal" value="" /></a></td>
+                <td><a class='modalbox' href='#modificar'><img SRC='Imagen/Modificar.png'></a></td>
+            </tr>
             <tr>
                 <td class="estilo1">Id Asiento</td>
                 <td class="estilo1">Número Diario</td>
@@ -74,7 +93,7 @@
                    out.println("<td id='g"+i+"'>"+lista.get(i).getDebeAsiento()+"</td>");
                    out.println("<td id='h"+i+"'>"+lista.get(i).getHaberAsiento()+"</td>");
                    out.println("<td></td>");
-                   out.println("<td><a class='modalbox' href='#modificar'><img SRC='Imagen/Modificar.png'></a></td>");
+                   //out.println("<td><a class='modalbox' href='#modificar'><img SRC='Imagen/Modificar.png'></a></td>");
                    //out.println("<td><a class='modalbox' href='#eliminar'><img SRC='Imagen/Eliminar.png'></a></td>");
                    out.println("</tr>");}
             }
@@ -82,7 +101,7 @@
             </table>
       </center>
             
-            
+           
       <!Boton de libro diario*********************************>      
   
       
@@ -220,23 +239,23 @@
                     <td class="estilo1">Haber</td>
                 </tr>         
             <%
-            LinkedList<AsientoClass> listaAsi =new LinkedList<AsientoClass>();
+            LinkedList<AsientoClass> listaAsiento =new LinkedList<AsientoClass>();
             LinkedList<TransaccionClass> listaTra =new LinkedList<TransaccionClass>();
-            listaAsi = AsientoDAO.consultar();
+            listaAsiento = AsientoDAO.consultar();
             double totalDebe=0;
             double totalHaber=0;
-            for (int i=0;i<listaAsi.size();i++)
+            for (int i=0;i<listaAsiento.size();i++)
             {
-               if(fech.toString().equals(listaAsi.get(i).getNumeroDiario())){
+               if(fech.toString().equals(listaAsiento.get(i).getNumeroDiario())){
                    out.println("<tr data-valor='"+i+"' class='click'>" );
                    out.println("</tr>"); 
                    out.println("<tr>");
-                   out.println("<td>-"+listaAsi.get(i).getNumeroAsiento()+"-</td>");
+                   out.println("<td>-"+listaAsiento.get(i).getNumeroAsiento()+"-</td>");
                    out.println("</tr>");
                    out.println("<tr>");
-                   out.println("<td id='a"+i+"'>"+listaAsi.get(i).getFechaAsiento()+"</a></td>");out.println("</tr>");
+                   out.println("<td id='a"+i+"'>"+listaAsiento.get(i).getFechaAsiento()+"</a></td>");out.println("</tr>");
                    TransaccionDAO t=new TransaccionDAO();
-                   listaTra=t.consultarTransaccion(listaAsi.get(i).getIdAsiento());
+                   listaTra=t.consultarTransaccion(listaAsiento.get(i).getIdAsiento());
                    for(int j=0;j<listaTra.size();j++){
                        if(listaTra.get(j).getHaberTransaccion().equals("0.0")){
                             out.println("<tr>");
@@ -257,9 +276,9 @@
                             out.println("</tr>");
                        }
                    }
-                    out.println("<tr><td></td><td>Ref: "+listaAsi.get(i).getConceptoAsiento()+"</td><td></td></tr>");
-                    totalDebe=totalDebe+Double.parseDouble(listaAsi.get(i).getDebeAsiento());
-                    totalHaber=totalHaber+Double.parseDouble(listaAsi.get(i).getHaberAsiento()); 
+                    out.println("<tr><td></td><td>Ref: "+listaAsiento.get(i).getConceptoAsiento()+"</td><td></td></tr>");
+                    totalDebe=totalDebe+Double.parseDouble(listaAsiento.get(i).getDebeAsiento());
+                    totalHaber=totalHaber+Double.parseDouble(listaAsiento.get(i).getHaberAsiento()); 
                }
                
                

@@ -144,4 +144,27 @@ public class TransaccionDAO {
    st.close();
   return listahistorial;
  }
+    
+    
+    public boolean eliminar(TransaccionClass u) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException{       
+    boolean agregado=false;
+      try {
+       Conexion c=new Conexion();
+       Connection conn=c.getConexion();
+       if(conn!=null){
+        PreparedStatement pst = null;
+        String sql="delete from transaccion where idTransaccion=?";
+        pst = conn.prepareStatement(sql);
+        pst.setString(1, u.getIdTransaccion());
+        pst.execute();
+        agregado=true;
+        pst.close();
+       }
+       c.cerrarConexion();
+      } catch (SQLException e) {
+       agregado=false;
+       e.printStackTrace();
+      }
+      return agregado;
+     }
 }

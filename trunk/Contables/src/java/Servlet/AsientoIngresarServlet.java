@@ -8,6 +8,7 @@ package Servlet;
 
 import Clases.AsientoClass;
 import Clases.TipoClass;
+import DAO.AsientoAuxDAO;
 import DAO.AsientoDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -91,7 +92,7 @@ AsientoDAO ud = new AsientoDAO();
         AsientoClass u=new AsientoClass(numeroDiario, periodoAsiento, fechaAsiento, numeroAsiento, conceptoAsiento, debeAsiento, haberAsiento);
         boolean sw=ud.insertar(u);
         if(sw){
-            request.getRequestDispatcher("Asiento.jsp").forward(request, response);
+            request.getRequestDispatcher("IngresarAsiento.jsp").forward(request, response);
         }else{
             PrintWriter out=response.getWriter();
             out.println("Fail registration.");

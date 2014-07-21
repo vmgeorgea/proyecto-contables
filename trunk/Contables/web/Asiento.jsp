@@ -4,12 +4,18 @@
     Author     : Leitos
 --%>
 
+
+<%@page import="DAO.AsientoAuxDAO"%>
+<%@page contentType="text/html" import="java.util.*" %>
+<%@page import="DAO.CuentaDAO"%>
+<%@page import="DAO.TransaccionDAO"%>
+<%@page import="Clases.TransaccionClass"%>
 <%@page import="DAO.AsientoDAO"%>
 <%@page import="Clases.AsientoClass"%>
 <%@page import="java.util.LinkedList"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html>
+    <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Asiento</title>
@@ -56,17 +62,26 @@
         
        function Datos(){
         var f = new Date();
-            if((f.getMonth() +1)<10){
+            if((f.getMonth() +1)<10)
+            {
             var fecha=f.getDate() + "/0" + (f.getMonth() +1) + "/" + f.getFullYear(); 
             }else{
             var fecha=f.getDate() + "/" + (f.getMonth() +1) + "/" + f.getFullYear();     
             }
          document.ingresarform.fechaAsiento.value=fecha;
+         
+         function envia(z){
+            form = document.getElementById("eliminarform");
+            form.parametro1.value = z;
+            form.submit();
+        }
+         
+         
         }  
     </script>         
     </head>
     
-    <body onload="Datos()">
+    <body>
         <center>
             <table id="miTabla">
             <tr>
@@ -88,12 +103,27 @@
                 <td class="estilo1"></td>
                 <td class="estilo1"></td>
                 <td class="estilo1"></td>
-                <td><a class='modalbox' href='#ingresar'><img SRC="Imagen/Nuevo.png"></a></td>
+                <td><a href="IngresarAsiento.jsp" target="contenidoregistro"><img SRC="Imagen/Nuevo.png"></a></td>
+                
                 <td></td>
                 <td></td>
             </tr>        
             <%
             LinkedList<AsientoClass> lista =new LinkedList<AsientoClass>();
+            lista = AsientoDAO.consultar();
+            for (int i=0;i<lista.size();i++){
+                AsientoClass asito=new AsientoClass();
+                AsientoDAO dao=new AsientoDAO();
+                asito=lista.get(i);
+                if(asito.getDebeAsiento().equals("0.0")&&asito.getHaberAsiento().equals("0.0")){
+                    dao.eliminar(asito);
+                }
+                if(!asito.getDebeAsiento().equals(asito.getHaberAsiento())){
+                    dao.eliminar(asito);
+                }
+                
+                
+            }
             lista = AsientoDAO.consultar();
             for (int i=0;i<lista.size();i++)
             {
@@ -108,7 +138,9 @@
                out.println("<td id='h"+i+"'>"+lista.get(i).getHaberAsiento()+"</td>");
                out.println("<td></td>");
                out.println("<td><a class='modalbox' href='#modificar'><img SRC='Imagen/Modificar.png'></a></td>");
-               //out.println("<td><a class='modalbox' href='#eliminar'><img SRC='Imagen/Eliminar.png'></a></td>");
+               
+               //out.println("<td><input type='button' onclick='javaScript:envia('a');' href='#eliminar'></td>");
+               //out.println("<td><a class='modalbox' href='#eliminar'><img SRC='Imagen/Eliminar.png' ></a></td>");
                out.println("</tr>");
             }
             %>
@@ -164,20 +196,93 @@
                 
     <!-- hidden ELIMINAR form -->
 <div id="eliminar">
-	<h2>Eliminar</h2>
-	<form id="eliminarform" name="eliminarform" action="AsientoEliminarServlet" method="post">
-		<label for="idAsiento">Desea eliminar el asiento con la siguienta id:</label>
-		<input type="idAsiento" id="idAsiento" name="idAsiento" class="txteliminar" readonly="readonly" >
+	<h2>Asiento</h2>
+        <form id="eliminarform" action="eliminarform" name="eliminarform" method="post">
+		<label for="IdAsiento">Asiento:</label>
+		<input type="hidden" id="idAsiento" name="idAsiento" class="txteliminar" readonly="readonly" >
                 <br>
-                <input type="submit" value="Eliminar" id="send">
-	</form>
+                <input type="button" onclick="javaScript:envia('x');">
+                <% 
+                String id=request.getParameter("a");
+                
+              
+                %>
+            <center>
+                <table>
+                <tr> </tr>
+                <tr>
+                    <td class="estilo1">Fecha</td>
+                    <td class="estilo1">Detalle</td>
+                    <td class="estilo1">Debe</td>
+                    <td class="estilo1">Haber</td>
+                </tr>         
+            <%
+            LinkedList<AsientoClass> listaAsi =new LinkedList<AsientoClass>();
+            LinkedList<TransaccionClass> listaTra =new LinkedList<TransaccionClass>();
+            listaAsi = AsientoDAO.consultar();
+            double totalDebe=0;
+            double totalHaber=0;
+            
+            
+            for (int i=0;i<listaAsi.size();i++)
+            {
+                
+               //if(fech.toString().equals(listaAsi.get(i).getNumeroDiario())){
+                if(listaAsi.get(i).getIdAsiento().equals(id)){
+                   out.println("<tr data-valor='"+i+"' class='click'>" );
+                   out.println("</tr>"); 
+                   out.println("<tr>");
+                   out.println("<td>-"+listaAsi.get(i).getNumeroAsiento()+"-</td>");
+                   out.println("</tr>");
+                   out.println("<tr>");
+                   out.println("<td id='a"+i+"'>"+listaAsi.get(i).getFechaAsiento()+"</a></td>");out.println("</tr>");
+                   TransaccionDAO t=new TransaccionDAO();
+                   listaTra=t.consultarTransaccion(listaAsi.get(i).getIdAsiento());
+                   for(int j=0;j<listaTra.size();j++){
+                       if(listaTra.get(j).getHaberTransaccion().equals("0.0")){
+                            out.println("<tr>");
+                            CuentaDAO cue=new CuentaDAO();
+                            String nom=cue.consultarNombre(listaTra.get(j).getCuenta_idCuenta());
+                            out.println("<td></td><td>"+nom+"</td>");
+                            out.println("<td>"+listaTra.get(j).getDebeTransaccion()+"</td>");
+                            out.println("</tr>");
+                       }
+                   }
+                   for(int j=0;j<listaTra.size();j++){
+                       if(listaTra.get(j).getDebeTransaccion().equals("0.0")){
+                            out.println("<tr>");
+                            CuentaDAO cue=new CuentaDAO();
+                            String nom=cue.consultarNombre(listaTra.get(j).getCuenta_idCuenta());
+                            out.println("<td></td><td>-"+nom+"</td>");
+                            out.println("<td></td><td>"+listaTra.get(j).getHaberTransaccion()+"</td>");
+                            out.println("</tr>");
+                       }
+                   }
+                    out.println("<tr><td></td><td>Ref: "+listaAsi.get(i).getConceptoAsiento()+"</td><td></td></tr>");
+                    totalDebe=totalDebe+Double.parseDouble(listaAsi.get(i).getDebeAsiento());
+                    totalHaber=totalHaber+Double.parseDouble(listaAsi.get(i).getHaberAsiento()); 
+               } 
+            }
+               out.println("<tr><td></td><td>TOTALES:</td><td>"+totalDebe+"</td><td>"+totalHaber+"</td></tr>");
+            %>
+            </table>
+      </center>   
+               
+               
+               
+            
+        </form>
+    </div>  
+                
+                
+	
 </div>               
       
     
     <!-- hidden MODIFICAR form -->
 <div id="modificar">
-	<h2>Modificar</h2>
-	<form id="modificarform" name="modificarform" action="AsientoModificarServlet" method="post">
+	<h2>Ver</h2>
+	<form id="modificarform" name="modificarform" action="AsientoModificarServlet1" method="post">
             <label for="idAsiento">Numero Diario  </label>
 		<input align='right' type="idAsiento" id="idAsiento" name="idAsiento" class="txtingresar" required="required" readonly="readonly">
 		<br>		
@@ -189,12 +294,10 @@
                 <select name="periodoAsiento" class="combo">  
                 <option  selected>SELECCIONAR</option>  
                 <%
-                    
                     for (int i=0;i<20;i++)
                     {
                         int p=2014-i;
-                        out.println("<option value='"+p+"' selected>"+p+"</option>");
-                        
+                        out.println("<option value='"+p+"' selected>"+p+"</option>");      
                     }
                 %>
                 </select> 
@@ -219,11 +322,22 @@
             <label for="haberAsiento">Haber Asiento</label>
 		<input type="haberAsiento" id="haberAsiento" name="haberAsiento" class="txtingresar" required="required" onkeypress="return Numeros(event)">
 		<br>
-                <input type="submit" value="Modificar" id="send">
+                <input type="submit" value="Ver" id="send">
 	</form>
     </div>
     
     
+                <%
+                    LinkedList <AsientoClass> listaAsiento=new LinkedList<AsientoClass>();
+                    listaAsiento=AsientoAuxDAO.consultar();
+                    
+                    for(int i=0;i<listaAsiento.size();i++){
 
+                        AsientoAuxDAO asiAux=new AsientoAuxDAO();
+                        asiAux.eliminar(listaAsiento.get(i));
+                        
+                    }
+                %>
+     
     </body>
 </html>

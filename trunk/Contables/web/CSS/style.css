@@ -17,6 +17,10 @@ p {color:#656565; font-size:1.2em; margin-bottom:10px;}
 
 #ingresar{display: none; width:600px;}
 
+#imgresarTransaccion{display: none; width:600px;}
+
+#guardarAsiento{display: none; width:600px;}
+
 label {margin-right:5px; margin-bottom:5px; font-family:"Calibri", Arial, sans-serif; color:#646464; font-size:70%;}
 
 .txtingresar { 

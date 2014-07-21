@@ -7,6 +7,7 @@
 package Servlet;
 
 import Clases.AsientoClass;
+import DAO.AsientoAuxDAO;
 import DAO.AsientoDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -26,7 +27,8 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet(name = "AsientoIngresarServlet1", urlPatterns = {"/AsientoIngresarServlet1"})
 public class AsientoIngresarServlet1 extends HttpServlet {
 private static final long serialVersionUID = 1L;
-AsientoDAO ud = new AsientoDAO();
+AsientoAuxDAO ud = new AsientoAuxDAO();
+AsientoDAO ud1 = new AsientoDAO();
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -88,9 +90,10 @@ AsientoDAO ud = new AsientoDAO();
         String debeAsiento = request.getParameter("debeAsiento").toUpperCase();
         String haberAsiento = request.getParameter("haberAsiento").toUpperCase();
         AsientoClass u=new AsientoClass(numeroDiario, periodoAsiento, fechaAsiento, numeroAsiento, conceptoAsiento, debeAsiento, haberAsiento);
+        boolean sw1=ud1.insertar(u);
         boolean sw=ud.insertar(u);
         if(sw){
-            request.getRequestDispatcher("LibroDiario.jsp").forward(request, response);
+            request.getRequestDispatcher("IngresarAsiento.jsp").forward(request, response);
         }else{
             PrintWriter out=response.getWriter();
             out.println("Fail registration.");
