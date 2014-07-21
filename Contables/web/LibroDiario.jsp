@@ -30,6 +30,7 @@
 	<script type="text/javascript" src="JS/tcal.js"></script>
     </head>
     <body>
+        <h1>Libro Diario</h1>
         <%                
             java.util.Date fecha = new Date();
             
@@ -37,23 +38,11 @@
             String mes=Integer.toString(fecha.getMonth());
             String dia=Integer.toString(fecha.getDay());
             //String fech= dia+"/"+mes+"/"+anio;
-            String fech= fecha.toString();
+            String fech= "1";
          %>
          <center>
             <table id="miTabla">
-            <tr>
-                <td class="estilo1">Ingrese rango de fechas</td>
-            </tr>
-            <tr>
-                <td class="estilo1">Fecha Inicial</td>
-                <td class="estilo1">Fecha Inicial</td>
-            </tr>
             
-            <tr data-valor=0 class="click">
-                <td id="a0"><input type="date" name="date" class="tcal" value="01/01/2014" /></a></td>
-                <td id="b0"><input type="date" name="date1" class="tcal" value="" /></a></td>
-                <td><a class='modalbox' href='#modificar'><img SRC='Imagen/Modificar.png'></a></td>
-            </tr>
             <tr>
                 <td class="estilo1">Id Asiento</td>
                 <td class="estilo1">Número Diario</td>
@@ -73,7 +62,7 @@
                 <td class="estilo1"></td>
                 <td class="estilo1"></td>
                 <td class="estilo1"></td>
-                <td><a class='modalbox' href='#ingresar'><img SRC="Imagen/Nuevo.png"></a></td>
+                
                 <td></td>
                 <td></td>
             </tr>        
@@ -230,14 +219,14 @@
             
             
             <center>
-                <table>
+                <table id="miTabla" border="1">
                 <tr> </tr>
                 <tr>
                     <td class="estilo1">Fecha</td>
                     <td class="estilo1">Detalle</td>
                     <td class="estilo1">Debe</td>
                     <td class="estilo1">Haber</td>
-                </tr>         
+                </tr>        
             <%
             LinkedList<AsientoClass> listaAsiento =new LinkedList<AsientoClass>();
             LinkedList<TransaccionClass> listaTra =new LinkedList<TransaccionClass>();
@@ -249,11 +238,12 @@
                if(fech.toString().equals(listaAsiento.get(i).getNumeroDiario())){
                    out.println("<tr data-valor='"+i+"' class='click'>" );
                    out.println("</tr>"); 
-                   out.println("<tr>");
-                   out.println("<td>-"+listaAsiento.get(i).getNumeroAsiento()+"-</td>");
+                   out.println("<tr align='center'>");
+                   out.println("<td colspan='4'>-"+listaAsiento.get(i).getNumeroAsiento()+"-</td>");
                    out.println("</tr>");
                    out.println("<tr>");
-                   out.println("<td id='a"+i+"'>"+listaAsiento.get(i).getFechaAsiento()+"</a></td>");out.println("</tr>");
+                   out.println("<td id='a"+i+"'>"+listaAsiento.get(i).getFechaAsiento()+"</a></td><td></td><td></td><td></td>");
+                   out.println("</tr>");
                    TransaccionDAO t=new TransaccionDAO();
                    listaTra=t.consultarTransaccion(listaAsiento.get(i).getIdAsiento());
                    for(int j=0;j<listaTra.size();j++){
@@ -262,7 +252,7 @@
                             CuentaDAO cue=new CuentaDAO();
                             String nom=cue.consultarNombre(listaTra.get(j).getCuenta_idCuenta());
                             out.println("<td></td><td>"+nom+"</td>");
-                            out.println("<td>"+listaTra.get(j).getDebeTransaccion()+"</td>");
+                            out.println("<td>"+listaTra.get(j).getDebeTransaccion()+"</td><td></td>");
                             out.println("</tr>");
                        }
                    }
@@ -276,9 +266,11 @@
                             out.println("</tr>");
                        }
                    }
-                    out.println("<tr><td></td><td>Ref: "+listaAsiento.get(i).getConceptoAsiento()+"</td><td></td></tr>");
+                    out.println("<tr><td></td><td>Ref: "+listaAsiento.get(i).getConceptoAsiento()+"</td><td></td><td></td></tr>");
                     totalDebe=totalDebe+Double.parseDouble(listaAsiento.get(i).getDebeAsiento());
-                    totalHaber=totalHaber+Double.parseDouble(listaAsiento.get(i).getHaberAsiento()); 
+                    totalHaber=totalHaber+Double.parseDouble(listaAsiento.get(i).getHaberAsiento());
+                    out.println("<tr><td></td><td></td><td></td><td></td></tr>");
+                    
                }
                
                

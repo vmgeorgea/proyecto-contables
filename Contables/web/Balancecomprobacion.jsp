@@ -25,12 +25,9 @@
         <script type="text/javascript" src="JS/ValidarJS.js"></script>
     </head>
     <body>
-        <%                
-            java.util.Date fecha = new Date();
-            String anio=Integer.toString(fecha.getYear());
-            String mes=Integer.toString(fecha.getMonth());
-            String dia=Integer.toString(fecha.getDay());
-            String fech= dia+"/"+mes+"/"+anio;
+        <h1>Balance de Comprobacion</h1>
+        <%  
+            String fech= "1";
          %>
          <center>
             <table id="miTabla">
@@ -87,15 +84,15 @@
       <div id="ingresar">
 	<h2>Balance de Comprobacion</h2>
 	<form id="ingresarform" name="ingresarform" action="AsientoIngresarServlet1" method="post" >
-            <center><table id="miTabla">
+            <center><table id="miTabla" border="1">
             
-                    <tr>
+                    <tr align='center'>
                         <td class="estilo1"></td>
                         <td class="estilo1"></td>
-                        <td class="estilo1">Sumas</td>
-                        <td class="estilo1"></td>
-                        <td class="estilo1">Saldos</td>
-                        <td class="estilo1"></td>
+                        <td class="estilo1" colspan='2'>Sumas</td>
+                        
+                        <td class="estilo1" colspan='2'>Saldos</td>
+                        
                     </tr>
                     <tr>
                         <td class="estilo1">Codigo</td>
