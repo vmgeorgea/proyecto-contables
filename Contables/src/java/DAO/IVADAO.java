@@ -95,7 +95,8 @@ public class IVADAO {
    rs.close();
    st.close();
   return listahistorial;
-}    
+}
+     
     
         public boolean eliminar(IVAClass u) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException{       
     boolean agregado=false;
@@ -104,7 +105,7 @@ public class IVADAO {
        Connection conn=c.getConexion();
        if(conn!=null){
         PreparedStatement pst = null;
-        String sql="delete from  iva where idiva=?";
+        String sql="delete from iva where idIva=?";
         pst = conn.prepareStatement(sql);
         pst.setString(1, u.getIdIva());
         pst.execute();
@@ -118,4 +119,20 @@ public class IVADAO {
       }
       return agregado;
      } 
+        
+   public IVAClass  consultariva(String u) throws InstantiationException, IllegalAccessException, SQLException{
+   IVAClass r= new IVAClass(); 
+   Conexion c=new Conexion();
+   Connection conn=c.getConexion();
+   Statement st = conn.createStatement();
+   String sql="select * from  Iva where idiva="+u;
+   ResultSet rs = st.executeQuery(sql);
+       while(rs.next()){               
+        r.setIdIva(rs.getString(1));
+        r.setValorIva(rs.getString(2));        
+       }
+   rs.close();
+   st.close();
+  return r;
+}        
 }

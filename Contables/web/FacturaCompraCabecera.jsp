@@ -40,7 +40,7 @@
                                 <td class="estilo1">Autorizacion:</td>
                                 <td class="estilo1"><input type="text" id="autorizacionFactura" name="autorizacionFactura" readonly="readonly" value="986789456734"></td>
                                  <td class="estilo1">Punto Emision:</td>
-                                <td class="estilo1" ><input type="txt" id="punoemisionFactura" name="punoemisionFactura" readonly="readonly" value="001"></td>                            
+                                <td class="estilo1" ><input type="text" id="punoemisionFactura" name="punoemisionFactura" readonly="readonly" value="001"></td>                            
                          </tr>
                         <tr>                                
                                 <td class="estilo1">Establecimiento:</td>

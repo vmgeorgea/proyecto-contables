@@ -77,7 +77,7 @@
             
             
             <label for="Cedula">Identificación Cliente  </label>
-		<input align='right' type="Cedula" id="cedulax" name="cedulax" class="txtingresar" required="required" onkeydown="return cedula(event);" maxlength="10">
+		<input align='right' type="text" id="cedulax" name="cedulax" class="txtingresar" required="required" onkeydown="return cedula(event);" maxlength="10">
 		<br>
             
             <label for="Nombre">Nombre Cliente  </label>
@@ -117,26 +117,26 @@
 	<form id="modificarform" name="modificarform" action="ClienteModificarServlet" method="post">
             
             <label for="IdCliente">Id Cliente  </label>
-            <input align='right' type="IdCliente" id="idCliente" name="idCliente" class="txtingresar" required="required" readonly="readonly">
+            <input align='right' type="text" id="idCliente" name="idCliente" class="txtingresar" required="required" readonly="readonly">
 		<br>
             <label for="Cedula">Identificación Cliente  </label>
-		<input align='right' type="Cedula" id="cedula" name="cedula" class="txtingresar" required="required" readonly="readonly" >
+		<input align='right' type="text" id="cedula" name="cedula" class="txtingresar" required="required" readonly="readonly" >
 		<br>
             
             <label for="Nombre">Nombre Cliente  </label>
-		<input align='right' type="Nombre" id="nombre" name="nombre" class="txtingresar" required="required">
+		<input align='right' type="text" id="nombre" name="nombre" class="txtingresar" required="required">
 		<br>
 	    
             <label for="Apellido">Apellido Cliente  </label>
-		<input align='right' type="Apellido" id="apellido" name="apellido" class="txtingresar" required="required">
+		<input align='right' type="text" id="apellido" name="apellido" class="txtingresar" required="required">
 		<br>
             
             <label for="Direccion">Dirección Cliente  </label>
-		<input align='right' type="Direccion" id="stockProducto" name="direccion" class="txtingresar" required="required" >
+		<input align='right' type="text" id="stockProducto" name="direccion" class="txtingresar" required="required" >
 		<br>
             
             <label for="Telefono">Telefono Cliente  </label>
-		<input align='right' type="Telefono" id="telefono" name="telefono" class="txtingresar" required="required" onkeypress="return Numeros(event)">
+		<input align='right' type="text" id="telefono" name="telefono" class="txtingresar" required="required" onkeypress="return Numeros(event)">
 		<br>
             
             <label for="Tipo">Tipo Cliente</label>

@@ -28,6 +28,15 @@
         <tr>
         <td class="estilo1">Id IVA</td>
         <td class="estilo1">Valor IVA</td>
+        <td class="estilo1"></td>
+        <td class="estilo1"></td>
+        <td class="estilo1"></td>
+        <tr>
+        <td class="estilo1"></td>
+        <td class="estilo1"></td>
+        <td><a class='modalbox' href='#ingresar'><img SRC="Imagen/Nuevo.png"></a></td>
+        <td class="estilo1"></td>
+        <td class="estilo1"></td>
         </tr>      
         <%
          LinkedList<IVAClass> lista =new LinkedList<IVAClass>();
@@ -51,7 +60,7 @@
 	<h2>Nuevo</h2>
 	<form id="ingresarform" name="ingresarform" action="IVAIngresarServlet" method="post" >
 		<label for="valorIVA">Valor IVA</label>
-		<input align='right' type="valorIVA" id="valorIVA" name="valorIVA" class="txtingresar" required="required" onkeypress="return Numeros(event)">
+		<input align='right' type="text" id="valorIVA" name="valorIVA" class="txtingresar" required="required" onkeypress="return Numeros(event)">
 		<br>		
 		<input type="submit" value="Ingresar" id="send">
 	</form>
@@ -62,7 +71,7 @@
 	<h2>Eliminar</h2>
 	<form id="eliminarform" name="eliminarform" action="IVAEliminarServlet" method="post">
 		<label for="idIVA">Desea eliminar el IVA con la siguienta id:</label>
-		<input type="idIVA" id="idIVA" name="idIVA" class="txteliminar" readonly="readonly" >
+		<input type="text" id="idIVA" name="idIVA" class="txteliminar" readonly="readonly" >
                 <br>
                 <input type="submit" value="Eliminar" id="send">
 	</form>

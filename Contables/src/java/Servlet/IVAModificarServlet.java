@@ -80,8 +80,9 @@ IVADAO ud = new IVADAO();
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
     try {
+        String id = request.getParameter("idIVA").toUpperCase();
         String nombre = request.getParameter("valorIVA").toUpperCase();
-        IVAClass u=new IVAClass(nombre);
+        IVAClass u=new IVAClass(id, nombre);
         boolean sw=ud.modificar(u);
         if(sw){
             request.getRequestDispatcher("IVA.jsp").forward(request, response);

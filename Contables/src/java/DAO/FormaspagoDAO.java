@@ -48,9 +48,10 @@ public class FormaspagoDAO {
        Connection conn=c.getConexion();
        if(conn!=null){
         PreparedStatement pst = null;
-        String sql="insert into formaspago (descripcionformapago) values (?)";
+        String sql="insert into formaspago (descripcionformapago, idcuenta) values (?, ?)";
         pst = conn.prepareStatement(sql);
         pst.setString(1, u.getDescripcionformaspago());
+        pst.setString(2, u.getIdcuenta());
         pst.execute();
         agregado=true;
         pst.close();
@@ -70,10 +71,11 @@ public class FormaspagoDAO {
        Connection conn=c.getConexion();
        if(conn!=null){
         PreparedStatement pst = null;
-        String sql="update formaspago set descripcionformapago=? where idformapago=?";
+        String sql="update formaspago set descripcionformapago=?, idcuenta=? where idformapago=?";
         pst = conn.prepareStatement(sql);
         pst.setString(1, u.getDescripcionformaspago());
-        pst.setString(2, u.getIdformaspago());
+        pst.setString(2, u.getIdcuenta());
+        pst.setString(3, u.getIdformaspago());
         pst.execute();
         agregado=true;
         pst.close();
@@ -117,6 +119,7 @@ public class FormaspagoDAO {
         FormaspagoClass r= new FormaspagoClass();
         r.setIdformaspago(rs.getString(1));
         r.setDescripcionformaspago(rs.getString(2));
+        r.setIdcuenta(rs.getString(3));
         listahistorial.add(r);
        }
    rs.close();

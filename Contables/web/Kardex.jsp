@@ -4,6 +4,8 @@
     Author     : User
 --%>
 
+<%@page import="DAO.ProductoDAO"%>
+<%@page import="Clases.ProductoClass"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ page import="java.io.*,java.util.*,java.net.*,java.sql.*" %>
 <%@ page import = "DAO.KardexDAO"%> 
@@ -68,18 +70,44 @@
     </head>
     <body>
 <center>
-        <table id="miTabla">
+    <form action="KardexServlet" method="post">
+       <table id="miTabla">
         <tr>
         <td class="estilo1"></td>
         <td class="estilo1"></td>
         <td class="estilo1"></td>
         <td class="estilo1"></td>        
-        <td class="estilo1">Entradas</td>
+        <td class="estilo1"></td>
+        
+        <td class="estilo1">
+           <select id="productoKardex" name="productoKardex">                    
+                        <%
+                        LinkedList<ProductoClass> lista2 =new LinkedList<ProductoClass>();
+                        lista2 = ProductoDAO.consultar();
+                        for (int i=0;i<lista2.size();i++)
+                        {
+                        out.println("<option value='"+lista2.get(i).getIdProducto()+"' selected>"+lista2.get(i).getNombreProducto()+"</option>");
+                        }  
+                        %>
+           </select>
+        </td>
+        <td class="estilo1"><input type="submit" value="Consultar"></td>
         <td class="estilo1"></td>
         <td class="estilo1"></td>
-        <td class="estilo1">Salidas</td>
+        <td class="estilo1"></td>
+        <td class="estilo1"></td>             
+        </tr>   
+
+        <tr>
+        <td class="estilo1"></td>
+        <td class="estilo1"></td>
+        <td class="estilo1"></td>
+        <td class="estilo1"></td>        
+        <td class="estilo1">Entradas/Salida</td>
+        <td class="estilo1"></td>
         <td class="estilo1"></td>
         <td class="estilo1">Saldo</td>
+        <td class="estilo1"></td>
         <td class="estilo1"></td>             
         </tr>            
         <tr>
@@ -91,112 +119,84 @@
         <td class="estilo1">Cantidad</td>
         <td class="estilo1">Valor Unitario</td>
         <td class="estilo1">Valor Total</td>
-        <td class="estilo1">Cantidad</td>
-        <td class="estilo1">Valor Unitario</td>
-        <td class="estilo1">Valor Total</td>        
+        <td class="estilo1"></td>
         </tr>
         <tr>
         </tr>        
         <%
          LinkedList<KardexClass> lista =new LinkedList<KardexClass>();
-        lista = KardexDAO.consultar();
-        for (int i=0;i<lista.size();i++)
-        {
-           out.println("<tr data-valor='"+i+"' class='click'>" );
-           out.println("<td id='a"+i+"'>"+lista.get(i).getFecha()+"</a></td>");
-           out.println("<td id='b"+i+"'>"+lista.get(i).getIdfactura()+" "+lista.get(i).getDetalle()+"</a></td>");
-           float precioventa=0;
-           float totalventa=0;
-           float cantidadventa=0;
-           float preciocompra=0;
-           float totalcompra=0;
-           float cantidadcompra=0;   
-           int bandera=0;
-                if(lista.get(i).getDetalle().toString().equals("compra"))
-                {   
-                    bandera=1;
-                    if(i==0){                    
-                    out.println("<td id='b"+i+"'>"+lista.get(i).getCantidad()+"</a></td>");
-                    out.println("<td id='b"+i+"'>"+lista.get(i).getPrecio()+"</a></td>");
-                    out.println("<td id='b"+i+"'>"+Float.parseFloat(lista.get(i).getCantidad())*Float.parseFloat(lista.get(i).getPrecio())+"</a></td>");
-                    out.println("<td></td>");
-                    out.println("<td></td>");
-                    out.println("<td></td>");
-                    out.println("<td id='b"+i+"'>"+lista.get(i).getCantidad()+"</a></td>");
-                    out.println("<td id='b"+i+"'>"+Float.parseFloat(lista.get(i).getPrecio())/Float.parseFloat(lista.get(i).getCantidad())+"</a></td>");;
-                    out.println("<td id='b"+i+"'>"+lista.get(i).getPrecio()+"</a></td>");
-                    totalventa=Float.parseFloat(lista.get(i).getPrecio())*Float.parseFloat(lista.get(i).getCantidad());
-                    cantidadventa=Float.parseFloat(lista.get(i).getCantidad());
-                    precioventa=Float.parseFloat(lista.get(i).getPrecio());
+         HttpSession session1 = request.getSession();
+         if(session1.getAttribute("productoskardex")!=null){
+         lista = (LinkedList) session1.getAttribute("productoskardex");                
+                    float precioventa = 0;
+                    float totalventa = 0;
+                    float cantidadventa = 0;     
+                    int bandera = 0;
+            for (int i = 0; i < lista.size(); i++) {
+                    out.println("<tr data-valor='" + i + "' class='click'>");
+                    out.println("<td id='a" + i + "'>" + lista.get(i).getFecha() + "</td>");
+                    out.println("<td id='b" + i + "'>Factura " + lista.get(i).getIdfactura() + " " + lista.get(i).getDetalle() + "</td>");                    
+                    
+                    if (lista.get(i).getDetalle().toString().equals("compra")) {
+                            if(bandera==1){
+                                
+                            out.println("<td id='b" + i + "'>" + lista.get(i).getCantidad() + "</td>");
+                            out.println("<td id='b" + i + "'>" + precioventa + "</td>");
+                            out.println("<td id='b" + i + "'>" + (Float.parseFloat(lista.get(i).getCantidad()) * precioventa) + "</td>");                        
+
+                            cantidadventa=cantidadventa+Float.valueOf(lista.get(i).getCantidad());
+                            totalventa=totalventa+(Float.valueOf(lista.get(i).getCantidad())*Float.valueOf(lista.get(i).getPrecio()));
+                            precioventa=totalventa/cantidadventa;
+
+                            out.println("<td id='b" + i + "'>" + cantidadventa + "</td>");                        
+                            out.println("<td id='b" + i + "'>" + precioventa + "</td>");                        
+                            out.println("<td id='b" + i + "'>" + totalventa + "</td>");
+                            out.println("<td id='b" + i + "'>Compra</td>");
+                            }  
+                            
+                            if(bandera==0){
+                            out.println("<td id='b" + i + "'>" + lista.get(i).getCantidad() + "</td>");
+                            out.println("<td id='b" + i + "'>" + lista.get(i).getPrecio() + "</td>");
+                            out.println("<td id='b" + i + "'>" + Float.parseFloat(lista.get(i).getCantidad()) * Float.parseFloat(lista.get(i).getPrecio()) + "</td>");                        
+
+                            cantidadventa=cantidadventa+Float.valueOf(lista.get(i).getCantidad());
+                            totalventa=totalventa+(Float.valueOf(lista.get(i).getCantidad())*Float.valueOf(lista.get(i).getPrecio()));
+                            precioventa=totalventa/cantidadventa;
+
+                            out.println("<td id='b" + i + "'>" + cantidadventa + "</td>");                        
+                            out.println("<td id='b" + i + "'>" + precioventa + "</td>");                        
+                            out.println("<td id='b" + i + "'>" + totalventa + "</td>");
+                            out.println("<td id='b" + i + "'>Compra</td>");
+                            bandera=1;
+                            }                          
+
                     }
-                    if (i>0 && bandera==1){
-                    totalventa=totalventa + (Float.parseFloat(lista.get(i).getPrecio())*preciocompra);
-                    cantidadventa=cantidadventa+Float.parseFloat(lista.get(i).getCantidad());
-                    precioventa=Float.parseFloat(lista.get(i).getPrecio());
-                    out.println("<td id='b"+i+"'>"+lista.get(i).getCantidad()+"</a></td>");
-                    out.println("<td id='b"+i+"'>"+lista.get(i).getPrecio()+"</a></td>");
-                    out.println("<td id='b"+i+"'>"+Float.parseFloat(lista.get(i).getCantidad())*preciocompra+"</a></td>");
-                    out.println("<td></td>");
-                    out.println("<td></td>");
-                    out.println("<td></td>");
-                    out.println("<td id='b"+i+"'>"+lista.get(i).getCantidad()+"</a></td>");
-                    out.println("<td id='b"+i+"'>"+cantidadventa+"</a></td>");;
-                    out.println("<td id='b"+i+"'>"+totalventa+"</a></td>");                    
-                    }  
-                    if (i>0 &&bandera==2){
-                    out.println("<td id='b"+i+"'>"+lista.get(i).getCantidad()+"</a></td>");
-                    out.println("<td id='b"+i+"'>"+lista.get(i).getPrecio()+"</a></td>");
-                    out.println("<td id='b"+i+"'>"+Float.parseFloat(lista.get(i).getCantidad())*preciocompra+"</a></td>");
-                    out.println("<td></td>");
-                    out.println("<td></td>");
-                    out.println("<td></td>");
-                    out.println("<td id='b"+i+"'>"+lista.get(i).getCantidad()+"</a></td>");
-                    out.println("<td id='b"+i+"'>"+Float.parseFloat(lista.get(i).getPrecio())/Float.parseFloat(lista.get(i).getCantidad())+"</a></td>");;
-                    out.println("<td id='b"+i+"'>"+lista.get(i).getPrecio()+"</a></td>");                    
-                    }                      
+                    if (lista.get(i).getDetalle().toString().equals("venta")) {
+                                                
+                            if(bandera==1){
+                                
+                            out.println("<td id='b" + i + "'>" + lista.get(i).getCantidad() + "</td>");
+                            out.println("<td id='b" + i + "'>" + precioventa + "</td>");
+                            out.println("<td id='b" + i + "'>" + (Float.parseFloat(lista.get(i).getCantidad()) * precioventa) + "</td>");                        
+
+                            cantidadventa=cantidadventa-Float.valueOf(lista.get(i).getCantidad());
+                            totalventa=totalventa-(Float.valueOf(lista.get(i).getCantidad())*Float.valueOf(lista.get(i).getPrecio()));
+                            precioventa=totalventa/cantidadventa;
+
+                            out.println("<td id='b" + i + "'>" + cantidadventa + "</td>");                        
+                            out.println("<td id='b" + i + "'>" + precioventa + "</td>");                        
+                            out.println("<td id='b" + i + "'>" + totalventa + "</td>");
+                            out.println("<td id='b" + i + "'>Venta</td>");
+                            } 
+                    }
+                    out.println("</tr>");
                 }
-                if(lista.get(i).getDetalle().toString().equals("venta"))
-                {    
-                    bandera=2;
-                    if(i==0){                    
-                    out.println("<td></td>");
-                    out.println("<td></td>");
-                    out.println("<td></td>");
-                    out.println("<td id='b"+i+"'>"+lista.get(i).getCantidad()+"</a></td>");
-                    out.println("<td id='b"+i+"'>"+lista.get(i).getPrecio()+"</a></td>");
-                    out.println("<td id='b"+i+"'>"+Float.parseFloat(lista.get(i).getCantidad())*precioventa+"</a></td>");                                    
-                    out.println("<td id='b"+i+"'>"+lista.get(i).getCantidad()+"</a></td>");
-                    out.println("<td id='b"+i+"'>"+Float.parseFloat(lista.get(i).getPrecio())/Float.parseFloat(lista.get(i).getCantidad())+"</a></td>");;
-                    out.println("<td id='b"+i+"'>"+lista.get(i).getPrecio()+"</a></td>");
-                    }
-                    if (i>0 && bandera==1){
-                    out.println("<td id='b"+i+"'>"+lista.get(i).getCantidad()+"</a></td>");
-                    out.println("<td id='b"+i+"'>"+lista.get(i).getPrecio()+"</a></td>");
-                    out.println("<td id='b"+i+"'>"+Float.parseFloat(lista.get(i).getCantidad())*preciocompra+"</a></td>");
-                    out.println("<td></td>");
-                    out.println("<td></td>");
-                    out.println("<td></td>");
-                    out.println("<td id='b"+i+"'>"+lista.get(i).getCantidad()+"</a></td>");
-                    out.println("<td id='b"+i+"'>"+Float.parseFloat(lista.get(i).getPrecio())/Float.parseFloat(lista.get(i).getCantidad())+"</a></td>");;
-                    out.println("<td id='b"+i+"'>"+lista.get(i).getPrecio()+"</a></td>");                    
-                    }  
-                    if (i>0 && bandera==2){
-                    out.println("<td id='b"+i+"'>"+lista.get(i).getCantidad()+"</a></td>");
-                    out.println("<td id='b"+i+"'>"+lista.get(i).getPrecio()+"</a></td>");
-                    out.println("<td id='b"+i+"'>"+Float.parseFloat(lista.get(i).getCantidad())*preciocompra+"</a></td>");
-                    out.println("<td></td>");
-                    out.println("<td></td>");
-                    out.println("<td></td>");
-                    out.println("<td id='b"+i+"'>"+lista.get(i).getCantidad()+"</a></td>");
-                    out.println("<td id='b"+i+"'>"+Float.parseFloat(lista.get(i).getPrecio())/Float.parseFloat(lista.get(i).getCantidad())+"</a></td>");;
-                    out.println("<td id='b"+i+"'>"+lista.get(i).getPrecio()+"</a></td>");                    
-                    }  
-                }                
-           
-           out.println("</tr>");
+        }else{
+               
         }
         %>
         </table>
+       </form>
       </center>
     </body>
 </html>

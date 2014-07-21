@@ -23,62 +23,61 @@
         <link rel="stylesheet" type="text/css" media="all" href="fancybox/jquery.fancybox.css">
         <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
         <script type="text/javascript" src="fancybox/jquery.fancybox.js?v=2.0.6"></script>
-        <script type="text/javascript" src="JS/ValidarJS.js"></script>>
-        
+        <script type="text/javascript" src="JS/ValidarJS.js"></script>>        
         <link rel="stylesheet" type="text/css" href="CSS/tcal.css" />
 	<script type="text/javascript" src="JS/tcal.js"></script>
         
-    <script type="text/javascript">
+            <script type="text/javascript">
 
-	$(document).ready(function() {
-		$(".modalbox").fancybox();
-	});
-        
-        $(function(){
-            $(".click").click(function(e) {
-                e.preventDefault();
-                var data = $(this).attr("data-valor");
-                
-                $idAsiento=document.getElementById("a"+data.toString()).innerHTML;
-                $numeroDiario=document.getElementById("b"+data.toString()).innerHTML;
-                $periodoAsiento=document.getElementById("c"+data.toString()).innerHTML;
-                $fechaAsiento=document.getElementById("d"+data.toString()).innerHTML;
-                $numeroAsiento=document.getElementById("e"+data.toString()).innerHTML;
-                $conceptoAsiento=document.getElementById("f"+data.toString()).innerHTML;
-                $debeAsiento=document.getElementById("g"+data.toString()).innerHTML;
-                $haberAsiento=document.getElementById("h"+data.toString()).innerHTML;
-                document.modificarform.idAsiento.value=$idAsiento;
-                document.eliminarform.idAsiento.value=$idAsiento;
-                document.modificarform.numeroDiario.value=$numeroDiario;
-                document.modificarform.periodoAsiento.value=$periodoAsiento;
-                document.modificarform.fechaAsiento.value=$fechaAsiento;
-                document.modificarform.numeroAsiento.value=$numeroAsiento;
-                document.modificarform.conceptoAsiento.value=$conceptoAsiento;
-                document.modificarform.debeAsiento.value=$debeAsiento;
-                document.modificarform.haberAsiento.value=$haberAsiento;
-                
-            });
-        });      
-        
-       function Datos(){
-        var f = new Date();
-            if((f.getMonth() +1)<10)
-            {
-            var fecha=f.getDate() + "/0" + (f.getMonth() +1) + "/" + f.getFullYear(); 
-            }else{
-            var fecha=f.getDate() + "/" + (f.getMonth() +1) + "/" + f.getFullYear();     
-            }
-         document.ingresarform.fechaAsiento.value=fecha;
-         
-         function envia(z){
-            form = document.getElementById("eliminarform");
-            form.parametro1.value = z;
-            form.submit();
-        }
-         
-         
-        }  
-    </script>         
+                $(document).ready(function() {
+                        $(".modalbox").fancybox();
+                });
+
+                $(function(){
+                    $(".click").click(function(e) {
+                        e.preventDefault();
+                        var data = $(this).attr("data-valor");
+
+                        $idAsiento=document.getElementById("a"+data.toString()).innerHTML;
+                        $numeroDiario=document.getElementById("b"+data.toString()).innerHTML;
+                        $periodoAsiento=document.getElementById("c"+data.toString()).innerHTML;
+                        $fechaAsiento=document.getElementById("d"+data.toString()).innerHTML;
+                        $numeroAsiento=document.getElementById("e"+data.toString()).innerHTML;
+                        $conceptoAsiento=document.getElementById("f"+data.toString()).innerHTML;
+                        $debeAsiento=document.getElementById("g"+data.toString()).innerHTML;
+                        $haberAsiento=document.getElementById("h"+data.toString()).innerHTML;
+                        document.modificarform.idAsiento.value=$idAsiento;
+                        document.eliminarform.idAsiento.value=$idAsiento;
+                        document.modificarform.numeroDiario.value=$numeroDiario;
+                        document.modificarform.periodoAsiento.value=$periodoAsiento;
+                        document.modificarform.fechaAsiento.value=$fechaAsiento;
+                        document.modificarform.numeroAsiento.value=$numeroAsiento;
+                        document.modificarform.conceptoAsiento.value=$conceptoAsiento;
+                        document.modificarform.debeAsiento.value=$debeAsiento;
+                        document.modificarform.haberAsiento.value=$haberAsiento;
+
+                    });
+                });      
+
+               function Datos(){
+                var f = new Date();
+                    if((f.getMonth() +1)<10)
+                    {
+                    var fecha=f.getDate() + "/0" + (f.getMonth() +1) + "/" + f.getFullYear(); 
+                    }else{
+                    var fecha=f.getDate() + "/" + (f.getMonth() +1) + "/" + f.getFullYear();     
+                    }
+                 document.ingresarform.fechaAsiento.value=fecha;
+
+                 function envia(z){
+                    form = document.getElementById("eliminarform");
+                    form.parametro1.value = z;
+                    form.submit();
+                }
+
+
+                }  
+            </script>         
     </head>
     
     <body>
@@ -276,7 +275,7 @@
                 
                 
 	
-</div>               
+              
       
     
     <!-- hidden MODIFICAR form -->

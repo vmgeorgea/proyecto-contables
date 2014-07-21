@@ -78,8 +78,9 @@ public class FacturaVentaRetirarServlet extends HttpServlet {
             throws ServletException, IOException {
         HttpSession session = request.getSession(true);
         LinkedList<ProductoVentaClass> lista1 =(LinkedList) session.getAttribute("productos");
-            for(int i=0;lista1.size()<i;i++){
-                if(lista1.get(i).getIdProducto()==request.getAttribute("idProducto")){
+        String id=request.getParameter("idProducto").toString();
+            for(int i=0;i<lista1.size();i++){
+                if(lista1.get(i).getIdProducto().toString().equals(id)){
                     lista1.remove(i);
                 }
             }

@@ -50,7 +50,7 @@ public class ProductoDAO {
         pst.setString(1, u.getNombreProducto());
         pst.setDouble(2, Double.parseDouble(u.getCostoProducto()));
         pst.setDouble(3, Double.parseDouble(u.getPrecioProducto()));
-        pst.setInt(4, Integer.parseInt(u.getStockProducto()));
+        pst.setString(4, u.getStockProducto());
         pst.setString(5, u.getImpuestoProducto());
         pst.execute();
         agregado=true;
@@ -78,7 +78,7 @@ public class ProductoDAO {
         pst.setString(1, u.getNombreProducto());
         pst.setDouble(2, Double.parseDouble(u.getCostoProducto()));
         pst.setDouble(3, Double.parseDouble(u.getPrecioProducto()));
-        pst.setInt(4, Integer.parseInt(u.getStockProducto()));
+        pst.setString(4, u.getStockProducto());
         pst.setString(5, u.getImpuestoProducto());
         pst.setString(6, u.getIdProducto());
         
@@ -124,13 +124,10 @@ public class ProductoDAO {
        Connection conn=c.getConexion();
        if(conn!=null){
         PreparedStatement pst = null;
-        String sql="update producto set stockProducto=stockProducto+?, costoProducto=?, precioProducto=? where idProducto=?";
+        String sql="update producto set stockProducto=stockProducto+? where idProducto=?";
         pst = conn.prepareStatement(sql);
         pst.setString(1, cantidadProducto);
-        pst.setString(2, costoProducto);
-        double precioProducto=Double.parseDouble(costoProducto)*0.15;
-        pst.setString(3, String.valueOf(precioProducto));
-        pst.setString(4, idProducto);
+        pst.setString(2, idProducto);
         pst.execute();
         agregado=true;
         pst.close();
