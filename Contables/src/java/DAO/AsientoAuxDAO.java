@@ -8,7 +8,6 @@ package DAO;
 
 import Clases.AsientoClass;
 import Clases.CuentaClass;
-import Clases.TransaccionClass;
 import Conexion.Conexion;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -21,7 +20,7 @@ import java.util.LinkedList;
  *
  * @author Leitos
  */
-public class AsientoDAO {
+public class AsientoAuxDAO {
     
       public static boolean Validar(String idTipo) throws InstantiationException, IllegalAccessException, SQLException, SQLException {        
     boolean status = false;
@@ -29,7 +28,7 @@ public class AsientoDAO {
     ResultSet rs = null;
        Conexion c=new Conexion();
        Connection conn=c.getConexion();
-        String sql="select * from asiento where idAsiento=?";
+        String sql="select * from asientoaux where idAsiento=?";
         pst = conn.prepareStatement(sql);
         pst.setString(1, idTipo);
         rs = pst.executeQuery();
@@ -44,7 +43,7 @@ public class AsientoDAO {
        Connection conn=c.getConexion();
        if(conn!=null){
         PreparedStatement pst = null;
-        String sql="insert into asiento (numeroDiario, periodoAsiento, fechaAsiento, numeroAsiento, conceptoAsiento, debeAsiento, haberAsiento) values (?, ?, ?, ?, ?, ?, ?)";
+        String sql="insert into asientoaux (numeroDiario, periodoAsiento, fechaAsiento, numeroAsiento, conceptoAsiento, debeAsiento, haberAsiento) values (?, ?, ?, ?, ?, ?, ?)";
         pst = conn.prepareStatement(sql);
         pst.setString(1, u.getNumeroDiario());
         pst.setString(2, u.getPeriodoAsiento());
@@ -72,7 +71,7 @@ public class AsientoDAO {
        Connection conn=c.getConexion();
        if(conn!=null){
         PreparedStatement pst = null;
-        String sql="update asiento set numeroDiario=?, periodoAsiento=?, fechaAsiento=?, numeroAsiento=?, conceptoAsiento=?, debeAsiento=?, haberAsiento=? where idAsiento=?";
+        String sql="update asientoaux set numeroDiario=?, periodoAsiento=?, fechaAsiento=?, numeroAsiento=?, conceptoAsiento=?, debeAsiento=?, haberAsiento=? where idAsiento=?";
         pst = conn.prepareStatement(sql);
         
         pst.setString(1, u.getNumeroDiario());
@@ -100,16 +99,8 @@ public class AsientoDAO {
        Conexion c=new Conexion();
        Connection conn=c.getConexion();
        if(conn!=null){
-           
-        LinkedList <TransaccionClass> listaTransac=new LinkedList<TransaccionClass>();    
-        listaTransac=TransaccionDAO.consultarTransaccion(u.getIdAsiento());
-        for(int i=0;i<listaTransac.size();i++){
-            TransaccionDAO t=new TransaccionDAO();
-            
-            boolean modi = t.eliminar(listaTransac.get(i));
-        }
         PreparedStatement pst = null;
-        String sql="delete from asiento where idAsiento=?";
+        String sql="delete from asientoaux where idAsiento=?";
         pst = conn.prepareStatement(sql);
         pst.setString(1, u.getIdAsiento());
         pst.execute();
@@ -128,7 +119,7 @@ public class AsientoDAO {
    Conexion c=new Conexion();
    Connection conn=c.getConexion();
    Statement st = conn.createStatement();
-   String sql="select * from  asiento";
+   String sql="select * from  asientoaux";
    ResultSet rs = st.executeQuery(sql);
        while(rs.next()){
         AsientoClass r= new AsientoClass();
@@ -153,7 +144,7 @@ public class AsientoDAO {
    Conexion c=new Conexion();
    Connection conn=c.getConexion();
    Statement st = conn.createStatement();
-   String sql="select * from  asiento where idAsiento="+id;
+   String sql="select * from  asientoaux where idAsiento="+id;
    ResultSet rs = st.executeQuery(sql);
        while(rs.next()){
         AsientoClass r= new AsientoClass();
@@ -178,7 +169,7 @@ public class AsientoDAO {
    Conexion c=new Conexion();
    Connection conn=c.getConexion();
    Statement st = conn.createStatement();
-   String sql="SELECT * FROM  asiento where fechaasiento='"+fecha+"' ORDER BY numerodiario  DESC LIMIT 1";
+   String sql="SELECT * FROM  asientoaux where fechaasiento='"+fecha+"' ORDER BY numerodiario  DESC LIMIT 1";
    ResultSet rs = st.executeQuery(sql);
        while(rs.next()){
         AsientoClass r= new AsientoClass();
@@ -202,7 +193,7 @@ public class AsientoDAO {
    Conexion c=new Conexion();
    Connection conn=c.getConexion();
    Statement st = conn.createStatement();
-   String sql="select * from  asiento where fechaAsiento='"+fecha+"' and numeroasiento='"+numerodiario+"'";
+   String sql="select * from  asientoaux where fechaAsiento='"+fecha+"' and numeroasiento='"+numerodiario+"'";
    ResultSet rs = st.executeQuery(sql);
        while(rs.next()){
         AsientoClass r= new AsientoClass();
@@ -226,7 +217,7 @@ public class AsientoDAO {
    AsientoClass r= new AsientoClass();
    Connection conn=c.getConexion();
    Statement st = conn.createStatement();
-   String sql="Select * from asiento order by idasiento desc limit 1";
+   String sql="Select * from asientoaux order by idasiento desc limit 1";
    ResultSet rs = st.executeQuery(sql);
        while(rs.next()){
         
