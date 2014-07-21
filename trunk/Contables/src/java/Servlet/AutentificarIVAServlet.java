@@ -6,13 +6,8 @@
 
 package Servlet;
 
-import Clases.FormaspagoClass;
-import DAO.FormaspagoDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -23,10 +18,9 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author User
  */
-@WebServlet(name = "FormaspagoModificarServlet", urlPatterns = {"/FormaspagoModificarServlet"})
-public class FormaspagoModificarServlet extends HttpServlet {
-private static final long serialVersionUID = 1L;
-FormaspagoDAO ud = new FormaspagoDAO();
+@WebServlet(name = "AutentificarIVAServlet", urlPatterns = {"/AutentificarIVAServlet"})
+public class AutentificarIVAServlet extends HttpServlet {
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -44,10 +38,10 @@ FormaspagoDAO ud = new FormaspagoDAO();
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet TipoModificarServlet</title>");            
+            out.println("<title>Servlet AutentificarServlet</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet TipoModificarServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet AutentificarServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -79,26 +73,12 @@ FormaspagoDAO ud = new FormaspagoDAO();
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-    try {
-        String nombre = request.getParameter("descripcionFormaspago").toUpperCase();
-        String id = request.getParameter("idcuentaFormaspago").toUpperCase();
-        FormaspagoClass u=new FormaspagoClass(nombre, id);
-        boolean sw=ud.modificar(u);
-        if(sw){
-            request.getRequestDispatcher("Formaspago.jsp").forward(request, response);
-        }else{
-            PrintWriter out=response.getWriter();
-            out.println("Fail registration.");
-        }  
-    } catch (SQLException ex) {
-        Logger.getLogger(FormaspagoModificarServlet.class.getName()).log(Level.SEVERE, null, ex);
-    } catch (ClassNotFoundException ex) {
-        Logger.getLogger(FormaspagoModificarServlet.class.getName()).log(Level.SEVERE, null, ex);
-    } catch (InstantiationException ex) {
-        Logger.getLogger(FormaspagoModificarServlet.class.getName()).log(Level.SEVERE, null, ex);
-    } catch (IllegalAccessException ex) {
-        Logger.getLogger(FormaspagoModificarServlet.class.getName()).log(Level.SEVERE, null, ex);
-    }
+        String usuario=request.getParameter("usuario").toString();
+        String contrasenia=request.getParameter("contrasenia").toString();
+        if(usuario.equals("admin") && contrasenia.equals("admin")){
+        request.getRequestDispatcher("IVA.jsp").forward(request, response);
+        }
+        
     }
 
     /**

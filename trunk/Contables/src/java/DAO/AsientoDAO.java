@@ -178,7 +178,7 @@ public class AsientoDAO {
    Conexion c=new Conexion();
    Connection conn=c.getConexion();
    Statement st = conn.createStatement();
-   String sql="SELECT * FROM  asiento where fechaasiento='"+fecha+"' ORDER BY numerodiario  DESC LIMIT 1";
+   String sql="SELECT * FROM  asiento ORDER BY numeroasiento  DESC LIMIT 1";
    ResultSet rs = st.executeQuery(sql);
        while(rs.next()){
         AsientoClass r= new AsientoClass();

@@ -102,15 +102,15 @@
         <td class='estilo1'>
            <select name="descuentoFactura" id="descuentoFactura" onchange="Descuento()"> 
             <option value="0.0" selected>0.0</option>
-            <option value="0.1" selected>0.1</option>
-            <option value="0.2" selected>0.2</option>
-            <option value="0.3" selected>0.3</option>
-            <option value="0.4" selected>0.4</option>
-            <option value="0.5" selected>0.5</option>
-            <option value="0.6" selected>0.6</option>
-            <option value="0.7" selected>0.7</option>
-            <option value="0.8" selected>0.8</option>
-            <option value="0.9" selected>0.9</option>
+            <option value="0.10" selected>0.10</option>
+            <option value="0.20" selected>0.20</option>
+            <option value="0.30" selected>0.30</option>
+            <option value="0.40" selected>0.40</option>
+            <option value="0.50" selected>0.50</option>
+            <option value="0.60" selected>0.60</option>
+            <option value="0.70" selected>0.70</option>
+            <option value="0.80" selected>0.80</option>
+            <option value="0.90" selected>0.90</option>
             <option value="1.0" selected>1.0</option>                               
            </select>
         </td>
@@ -177,7 +177,7 @@
         <%
         total=(iva+subtotaldescuento);
         %>
-        <td class='estilo1'><input style="width:45px" type="text" id="cedldatotal" name="cedldatotal" required="required" readonly="readonly" value=<%=total%> ></td>
+        <td class='estilo1'><input style="width:45px" type="text" id="cedldatotal" name="cedldatotal" required="required" readonly="readonly" value=<%=total%>></td>
         <td class='estilo1'></td>
         <td class='estilo1'></td>
         <td class='estilo1'></td>
@@ -197,7 +197,7 @@
                     lista3 = FormaspagoDAO.consultar();
                     for (int i=0;i<lista3.size();i++)
                     {
-                    out.println("<option value='"+lista3.get(i).getIdformaspago()+"' selected>"+lista3.get(i).getDescripcionformaspago()+"</option>");
+                    out.println("<option value='"+lista3.get(i).getIdformaspago()+"-"+lista3.get(i).getIdcuenta()+"' selected>"+lista3.get(i).getDescripcionformaspago()+"</option>");
                     }  
                     %>
                     </select> 
@@ -285,12 +285,12 @@
         });              
       
             function Iva(){
-                var subtotaldescuento=parseFloat(document.getElementById("cedldasubtotaldescuento").innerHTML);
-                var posicion=document.getElementById("ivaFactura").options.selectedIndex;
-                var iva=parseFloat(document.getElementById("ivaFactura").options[posicion].text);
-                var subtotaliva=iva*subtotaldescuento;
+                var subtotaldescuento = parseFloat(document.getElementById("cedldasubtotaldescuento").innerHTML);
+                var posicion = document.getElementById("ivaFactura").options.selectedIndex;
+                var iva = parseFloat(document.getElementById("ivaFactura").options[posicion].text);
+                var subtotaliva = iva * subtotaldescuento;
                 document.getElementById("cedldasubtotaliva").innerHTML = subtotaliva;
-                var total=subtotaliva+subtotaldescuento;
+                var total= subtotaliva+subtotaldescuento;
                 document.getElementById("cedldatotal").innerHTML = total;                 
             }
 
@@ -302,9 +302,9 @@
                 var subtotaldescuento=parseFloat(document.getElementById("cedldasubtotaldescuento").innerHTML);
                 var posicion2=document.getElementById("ivaFactura").options.selectedIndex;
                 var iva=parseFloat(document.getElementById("ivaFactura").options[posicion2].text);
-                var subtotaliva=iva*subtotaldescuento;
+                var subtotaliva = iva*subtotaldescuento;
                 document.getElementById("cedldasubtotaliva").innerHTML = subtotaliva;    
-                var total=subtotaliva+subtotaldescuento;
+                var total= subtotaliva+subtotaldescuento;
                 document.getElementById("cedldatotal").innerHTML = total;
             } 
            

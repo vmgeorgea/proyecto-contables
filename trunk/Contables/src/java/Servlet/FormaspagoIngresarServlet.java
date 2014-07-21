@@ -81,7 +81,8 @@ FormaspagoDAO ud = new FormaspagoDAO();
             throws ServletException, IOException {
     try {
         String nombre = request.getParameter("descripcionFormaspago").toUpperCase();
-        FormaspagoClass u=new FormaspagoClass(nombre);
+        String id = request.getParameter("idcuentaFormaspago").toUpperCase();
+        FormaspagoClass u=new FormaspagoClass(nombre, id);
         boolean sw=ud.insertar(u);
         if(sw){
             request.getRequestDispatcher("Formaspago.jsp").forward(request, response);

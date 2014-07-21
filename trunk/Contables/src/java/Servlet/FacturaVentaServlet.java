@@ -12,16 +12,24 @@ import Clases.ProductoClass;
 import Clases.FacturaVentaProductoClass;
 import Clases.ProductoVentaClass;
 import Clases.FacturaVentaClass;
+import Clases.IVAClass;
+import Clases.ProductoCompraClass;
 import Clases.TransaccionClass;
 import DAO.AsientoDAO;
 import DAO.TransaccionDAO;
 import DAO.FacturaVentaProductoDAO;
 import DAO.FacturaVentaDAO;
+import DAO.IVADAO;
 import DAO.ProductoDAO;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.PdfWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.Calendar;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -101,12 +109,25 @@ public class FacturaVentaServlet extends HttpServlet {
             TransaccionDAO td= new TransaccionDAO();
             ClienteClass cc= new ClienteClass();
             AsientoDAO ad= new AsientoDAO();
-            AsientoClass ac= new AsientoClass();                         
+            AsientoClass ac1= new AsientoClass();                         
             cc= (ClienteClass)session.getAttribute("cliente");
             String a=session.getAttribute("idFactura").toString();
             String b=session.getAttribute("fechaFactura").toString();
-            ac =ad.consultarfecha(b);
-            if(ac.getIdAsiento()!=null){
+            
+            ac1 =ad.consultarfecha(b);
+            AsientoClass ac2= new AsientoClass(); 
+            Calendar cal = Calendar.getInstance();
+                
+                if(ac1.getIdAsiento()==null){            
+                ac2= new AsientoClass("1", Integer.toString(cal.get(Calendar.YEAR)), b, "1", "", "0", "0");
+                ad.insertar(ac2);
+                ac2 =ad.consultarfecha(b);             
+                }else{
+                 int xvr=Integer.parseInt(ac1.getNumeroAsiento())+1;
+                ac2= new AsientoClass(ac1.getNumeroDiario(), ac1.getPeriodoAsiento(), b, String.valueOf(xvr), "", "0", "0");
+                ad.insertar(ac2);
+                ac2 =ad.consultarfecha(b);   
+                }                
                 
             String c=request.getParameter("descuentoFactura").toString();
             String d=cc.getIdCliente();
@@ -122,54 +143,35 @@ public class FacturaVentaServlet extends HttpServlet {
                         FacturaVentaProductoClass u=new FacturaVentaProductoClass(idFactura, idProducto, cantidadProducto);
                         boolean sw=fvpd.insertar(u);
                         if(sw){
-                        String cuenta1=null;
-                        String cuenta2=null;
-                        String concepto=null;
-                              if(request.getParameter("formaspagoFactura").toString().equals("1")){ 
-                                  //caja
-                              cuenta1="4";
-                              cuenta2="21";
-                              concepto="venta de productos, pago efectivo";
-                              }
-                              if(request.getParameter("formaspagoFactura").equals("2")){  
-                                  //banco
-                              cuenta1="7";
-                              cuenta2="21";
-                              concepto="venta de productos, pago por cheque";
-                              }
-                              if(request.getParameter("formaspagoFactura").equals("3")){ 
-                                  //deudas por cobrar
-                              cuenta1="11";
-                              cuenta2="21";
-                              concepto="venta de productos credito";
-                               }
+                        int val1=request.getParameter("formaspagoFactura").toString().indexOf("-");
+                        int val2=request.getParameter("formaspagoFactura").toString().length();
+                        String cuenta1=request.getParameter("formaspagoFactura").toString().substring(val1+1, val2);
+                        String cuenta2="21";
+                        String concepto="Venta de productos";
                                  String debe=request.getParameter("cedldatotal");
                                  String haber=request.getParameter("cedldatotal");
                                  String referencia="Factura Venta";                         
                                  String documento=session.getAttribute("idFactura").toString();
-                                 String idAsiento=ac.getIdAsiento();
-                                 String numeroDiario=String.valueOf(Integer.parseInt(ac.getNumeroDiario()));
-                                 String periodoAsiento=ac.getPeriodoAsiento();
-                                 String fechaAsiento=ac.getFechaAsiento();
-                                 String numeroAsiento=ac.getNumeroAsiento();
-                                 String conceptoAsiento=ac.getConceptoAsiento();
-                                 String debeAsiento=String.valueOf(Float.parseFloat(ac.getDebeAsiento())+Float.parseFloat(debe));
-                                 String haberAsiento=String.valueOf(Float.parseFloat(ac.getHaberAsiento())+Float.parseFloat(haber));
-                                 AsientoClass ac1, ac2;
-                                 ac1= new AsientoClass(idAsiento, numeroDiario, periodoAsiento, fechaAsiento, numeroAsiento,conceptoAsiento, debeAsiento, haberAsiento);
-                                 boolean sw5=ad.modificar(ac1);
-                                 ac2= new AsientoClass(String.valueOf(Integer.parseInt(numeroDiario)+1), periodoAsiento, fechaAsiento, numeroAsiento, "", "0", "0");
-                                 boolean sw6=ad.insertar(ac2);
-                                     if (sw5 && sw6){
-                                     TransaccionClass u1=new TransaccionClass(debe, "0", referencia, documento, cuenta1, ac1.getIdAsiento());
-                                     TransaccionClass u2=new TransaccionClass("0", haber, referencia, documento, cuenta2, ac1.getIdAsiento());
+                                 String idAsiento=ac2.getIdAsiento();
+                                 String numeroDiario=String.valueOf(Integer.parseInt(ac2.getNumeroDiario()));
+                                 String periodoAsiento=ac2.getPeriodoAsiento();
+                                 String fechaAsiento=ac2.getFechaAsiento();
+                                 String numeroAsiento=ac2.getNumeroAsiento();
+                                 String conceptoAsiento=ac2.getConceptoAsiento();
+                                 String debeAsiento=String.valueOf(Float.parseFloat(ac2.getDebeAsiento())+Float.parseFloat(debe));
+                                 String haberAsiento=String.valueOf(Float.parseFloat(ac2.getHaberAsiento())+Float.parseFloat(haber));
+                                 AsientoClass ac3;
+                                 ac3= new AsientoClass(idAsiento, numeroDiario, periodoAsiento, fechaAsiento, numeroAsiento,conceptoAsiento, debeAsiento, haberAsiento);
+                                 boolean sw5=ad.insertar(ac3);
+                                     if (sw5){
+                                     TransaccionClass u1=new TransaccionClass(debe, "0", referencia, documento, cuenta1, ac2.getIdAsiento());
+                                     TransaccionClass u2=new TransaccionClass("0", haber, referencia, documento, cuenta2, ac2.getIdAsiento());
                                      boolean sw3=td.insertar(u1);
                                      boolean sw4=td.insertar(u2);
                                                 if(sw3 && sw4){    
                                                 try {
                                                 sw1=sw;                                
                                                 boolean sw2=pd.modificarcantidadventa((String)lista.get(i).getIdProducto().toString(), (String) lista.get(i).getCantidadProducto().toString());
-                                                lista.remove(i);
                                                     if(sw2){
 
                                                     }else{
@@ -208,14 +210,57 @@ public class FacturaVentaServlet extends HttpServlet {
                         Logger.getLogger(FacturaVentaServlet.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
+                /////////////////////////////////////
+                    Document document = new Document();
+                    response.setContentType("application/pdf");
+                    PdfWriter.getInstance(document, response.getOutputStream());
+                    LinkedList<ProductoVentaClass> listaxvr =(LinkedList) session.getAttribute("productos"); 
+                    int i=0;
+                    float to=0;
+                    document.open();
+
+                    /* new paragraph instance initialized and add function write in pdf file*/
+                    document.add(new Paragraph(" Factura " + a + "\n\n"));
+                    document.add(new Paragraph(" Fecha " + b + "\n\n"));
+                    document.add(new Paragraph("------------------------------------------------------"));
+                    document.add(new Paragraph(" Nombre Cliente " + cc.getNombre() + "\n\n"));
+                    document.add(new Paragraph(" RUC/Cedula" + cc.getCedula() + "\n\n"));
+                    document.add(new Paragraph(" Direccion Cliente " + cc.getDireccion() + "\n\n"));
+                    document.add(new Paragraph(" Telefono Cliente " + cc.getTelefono() + "\n\n"));
+                    document.add(new Paragraph("------------------------------------------------------"));
+                    document.add(new Paragraph("ID ::   Cantidad ::   Precio ::   Total::\n\n"));
+                    for (Iterator iter = listaxvr.iterator(); iter.hasNext();) {
+                        ProductoVentaClass customerBean = (ProductoVentaClass) iter.next();
+                        String id = customerBean.getIdProducto();
+                        String cantidad = customerBean.getCantidadProducto();
+                        String costo = customerBean.getPrecioProducto();
+                        String total = String.valueOf(Float.valueOf(cantidad)*Float.valueOf(costo));
+                        document.add(new Paragraph("     " +id + "          " + cantidad + "         " + costo + "         " + total+ "\n\n"));
+                        listaxvr.remove(i);
+                        i++;
+                        to=to+Float.valueOf(total);
+                        session.setAttribute("productos",  listaxvr);
+                    }
+                    float descuento=to*(Float.valueOf(c));
+                    IVAClass i1= new IVAClass();
+                    IVADAO i2= new IVADAO();
+                    i1=i2.consultariva(e);
+                    float iva=((to-descuento)*Float.valueOf(i1.getValorIva()));
+                    float x=to-descuento+iva;
+                    document.add(new Paragraph("------------------------------------------------------"));
+                    document.add(new Paragraph(" SubTotal:                    " + String.valueOf(to) + "\n\n"));
+                    document.add(new Paragraph(" Descuento:                   " + c + "\n\n"));
+                    document.add(new Paragraph(" SubTotal Descuento: " + String.valueOf(descuento) + "\n\n"));
+                    document.add(new Paragraph(" IVA:                         " + i1.getValorIva() + "\n\n"));   
+                    document.add(new Paragraph(" SubTotal IVA:           " + String.valueOf(iva) + "\n\n"));
+                    document.add(new Paragraph(" Total:                       " + String.valueOf(x) + "\n\n"));                     
+                    document.close(); //document instance closed  
+                    
+                ////////////////////////////////////                   
                 }else{
                     PrintWriter out=response.getWriter();
                     out.println("Fail registration.");
                 }
-            }else{
-            PrintWriter out=response.getWriter();
-            out.println("Ingrese un asiento.");            
-            }
         } catch (SQLException ex) {
             Logger.getLogger(FacturaVentaServlet.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
@@ -223,6 +268,8 @@ public class FacturaVentaServlet extends HttpServlet {
         } catch (InstantiationException ex) {
             Logger.getLogger(FacturaVentaServlet.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
+            Logger.getLogger(FacturaVentaServlet.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (DocumentException ex) {
             Logger.getLogger(FacturaVentaServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

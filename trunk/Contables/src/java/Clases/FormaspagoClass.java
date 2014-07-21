@@ -13,12 +13,23 @@ package Clases;
 public class FormaspagoClass {
 String idformaspago;
 String descripcionformaspago;
+String idcuenta;
+
+    public String getIdcuenta() {
+        return idcuenta;
+    }
+
+    public void setIdcuenta(String idcuenta) {
+        this.idcuenta = idcuenta;
+    }
+
 
     public FormaspagoClass() {
     }
 
-    public FormaspagoClass(String descripcionformaspago) {
+    public FormaspagoClass(String descripcionformaspago, String idcuenta) {
         this.descripcionformaspago = descripcionformaspago;
+        this.idcuenta = idcuenta;
     }
 
     public String getIdformaspago() {

@@ -42,7 +42,6 @@
          %>
          <center>
             <table id="miTabla">
-            
             <tr>
                 <td class="estilo1">Id Asiento</td>
                 <td class="estilo1">Número Diario</td>
@@ -103,7 +102,7 @@
             
             
                 <label for="NumeroCuenta">Numero Diario  </label>
-                <input align='right' type="NumeroCuenta" id="numeroCuenta" name="numeroDiario" class="txtingresar" required="required" value="<% out.print(fech); %>" onkeypress="return Numeros(event)">
+                <input align='right' type="text" id="numeroCuenta" name="numeroDiario" class="txtingresar" required="required" value="<% out.print(fech); %>" onkeypress="return Numeros(event)">
                 <br>	
 
                 <label for="PeriodoAsiento">Periodo Asiento</label>
@@ -152,7 +151,7 @@
 	<form id="modificarform" name="modificarform" action="TransaccionIngresarServlet1" method="post" >
             
             <label for="Asiento_idAsiento">Id Asiento</label>
-                <input align='right' type="asiento_idAsiento" id="asiento_idAsiento" name="Asiento_idAsiento" class="txtingresar" required="required" onkeypress="return Numeros(event)">
+                <input align='right' type="text" id="asiento_idAsiento" name="Asiento_idAsiento" class="txtingresar" required="required" onkeypress="return Numeros(event)">
                  
 		<br>
             

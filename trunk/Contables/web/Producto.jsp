@@ -4,6 +4,8 @@
     Author     : Leitos
 --%>
 
+<%@page import="DAO.IVADAO"%>
+<%@page import="Clases.IVAClass"%>
 <%@page import="DAO.ProductoDAO"%>
 <%@page import="Clases.ProductoClass"%>
 <%@page import="java.util.LinkedList"%>
@@ -70,24 +72,33 @@
 	<form id="ingresarform" name="ingresarform" action="ProductoIngresarServlet" method="post" >
             
             <label for="NombreProducto">Nombre Producto  </label>
-		<input align='right' type="NombreProducto" id="nombreProducto" name="nombreProducto" class="txtingresar" required="required">
+		<input type="text" id="nombreProducto" name="nombreProducto" class="txtingresar" required="required">
 		<br>
                 
             <label for="CostoProducto">Costo Producto  </label>
-		<input align='right' type="CostoProducto" id="costoProducto" name="costoProducto" class="txtingresar" required="required" onkeypress="return Numeros(event)">
+		<input type="text" id="costoProducto" name="costoProducto" class="txtingresar" required="required" onkeypress="return Numeros(event)">
 		<br>
 	    
             <label for="PrecioProducto">Precio Producto  </label>
-		<input align='right' type="PrecioProducto" id="precioProducto" name="precioProducto" class="txtingresar" required="required" onkeypress="return Numeros(event)">
+		<input type="text" id="precioProducto" name="precioProducto" class="txtingresar" required="required" onkeypress="return Numeros(event)">
 		<br>
             
             <label for="StockProducto">Stock Producto  </label>
-		<input align='right' type="StockProducto" id="stockProducto" name="stockProducto" class="txtingresar" required="required" onkeypress="return Numeros(event)">
+		<input type="text" id="stockProducto" name="stockProducto" class="txtingresar" required="required" value="0.0" readonly="readonly" >
 		<br>
             
             <label for="ImpuestoProducto">Impuesto Producto  %</label>
-		<input align='right' type="ImpuestoProducto" id="impuestoProducto" name="impuestoProducto" class="txtingresar" required="required" onkeypress="return Numeros(event)">
-		<br>
+               <select class="txtingresar" id="impuestoProducto" name="impuestoProducto">                    
+                            <%
+                            LinkedList<IVAClass> lista2 =new LinkedList<IVAClass>();
+                            lista2 = IVADAO.consultar();
+                            for (int i=0;i<lista2.size();i++)
+                            {
+                            out.println("<option value='"+lista2.get(i).getIdIva()+"' selected>"+lista2.get(i).getValorIva()+"</option>");
+                            }  
+                            %>
+                </select>         
+
                 
             <input type="submit" value="Ingresar" id="send">
             

@@ -85,7 +85,7 @@ ClienteDAO ud = new ClienteDAO();
         String apellido = request.getParameter("apellido").toUpperCase();
         String direccion = request.getParameter("direccion").toUpperCase();
         String telefono = request.getParameter("telefono").toUpperCase();
-        String tipo = request.getParameter("tipo").toUpperCase();
+        String tipo = request.getParameter("tipox").toUpperCase();
         
         ClienteClass u=new ClienteClass(cedula, nombre, apellido, direccion, telefono, tipo);
         boolean sw=ud.insertar(u);
