@@ -100,18 +100,17 @@
         <td class='estilo1'></td>
         <td class='estilo1' >Descuento</td>   
         <td class='estilo1'>
-           <select name="descuentoFactura" id="descuentoFactura" onchange="Descuento()" style="width:45px"> 
+           <select name="descuentoFactura" id="descuentoFactura" onchange="Descuento()" style="width:45px" value="1"> 
             <option value="0.0" selected>0.0</option>
-            <option value="0.10" selected>0.10</option>
-            <option value="0.20" selected>0.20</option>
-            <option value="0.30" selected>0.30</option>
-            <option value="0.40" selected>0.40</option>
-            <option value="0.50" selected>0.50</option>
-            <option value="0.60" selected>0.60</option>
-            <option value="0.70" selected>0.70</option>
-            <option value="0.80" selected>0.80</option>
-            <option value="0.90" selected>0.90</option>
-            <option value="1.0" selected>1.0</option>                               
+            <option value="0.10" >0.10</option>
+            <option value="0.20" >0.20</option>
+            <option value="0.30" >0.30</option>
+            <option value="0.40" >0.40</option>
+            <option value="0.50" >0.50</option>
+            <option value="0.60" >0.60</option>
+            <option value="0.70" >0.70</option>
+            <option value="0.80" >0.80</option>
+            <option value="0.90" >0.90</option>                              
            </select>            
         </td>
         <td class='estilo1'></td>        

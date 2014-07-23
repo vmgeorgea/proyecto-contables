@@ -34,7 +34,7 @@
         }else{
         f=fecha.get(java.util.Calendar.DATE) + "/"+ (fecha.get(java.util.Calendar.MONTH)+1)+ "/"+ fecha.get(java.util.Calendar.YEAR);
         }
-    session.setAttribute("fechaFactura", f);
+    session.setAttribute("fechaFacturacompra", f);
     %>    
     <body>
        <center>
@@ -100,18 +100,17 @@
         <td class='estilo1'></td>
         <td class='estilo1' >Descuento</td>   
         <td class='estilo1'>
-           <select name="descuentoFactura" id="descuentoFactura" onchange="Descuento()"> 
+           <select name="descuentoFacturacompra" id="descuentoFacturacompra" onchange="Descuento()" style="width:45px" value="0.0"> 
             <option value="0.0" selected>0.0</option>
-            <option value="0.10" selected>0.10</option>
-            <option value="0.20" selected>0.20</option>
-            <option value="0.30" selected>0.30</option>
-            <option value="0.40" selected>0.40</option>
-            <option value="0.50" selected>0.50</option>
-            <option value="0.60" selected>0.60</option>
-            <option value="0.70" selected>0.70</option>
-            <option value="0.80" selected>0.80</option>
-            <option value="0.90" selected>0.90</option>
-            <option value="1.0" selected>1.0</option>                               
+            <option value="0.10" >0.10</option>
+            <option value="0.20" >0.20</option>
+            <option value="0.30" >0.30</option>
+            <option value="0.40" >0.40</option>
+            <option value="0.50" >0.50</option>
+            <option value="0.60" >0.60</option>
+            <option value="0.70" >0.70</option>
+            <option value="0.80" >0.80</option>
+            <option value="0.90" >0.90</option>                              
            </select>
         </td>
         <td class='estilo1'></td>        
@@ -136,7 +135,7 @@
         <td class='estilo1'></td>
         <td class='estilo1'>IVA</td>
         <td class='estilo1'>
-       <select id="ivaFactura" name="ivaFactura" onchange="Iva()">                    
+       <select id="ivaFacturacompra" name="ivaFacturacompra" onchange="Iva()">                    
                     <%
                     LinkedList<IVAClass> lista2 =new LinkedList<IVAClass>();
                     lista2 = IVADAO.consultar();
@@ -177,7 +176,7 @@
         <%
         total=(iva+subtotaldescuento);
         %>
-        <td class='estilo1'><input style="width:45px" type="text" id="cedldatotal" name="cedldatotal" required="required" readonly="readonly" value=<%=total%>></td>
+        <td class='estilo1'><input style="width:45px" type="text" id="cedldatotalcompra" name="cedldatotalcompra" required="required" readonly="readonly" value=<%=total%>></td>
         <td class='estilo1'></td>
         <td class='estilo1'></td>
         <td class='estilo1'></td>
@@ -191,7 +190,7 @@
                     <td  class='estilo1'></td>
                     <td  class='estilo1'></td>
                     <td class='estilo1'></td>                     
-                    <select id="formaspagoFactura" name="formaspagoFactura" >                                  
+                    <select id="formaspagoFacturacompra" name="formaspagoFacturacompra" >                                  
                     <%
                     LinkedList<FormaspagoClass> lista3 =new LinkedList<FormaspagoClass>();
                     lista3 = FormaspagoDAO.consultar();
@@ -285,27 +284,27 @@
         });              
       
             function Iva(){
-                var subtotaldescuento = parseFloat(document.getElementById("cedldasubtotaldescuento").innerHTML);
-                var posicion = document.getElementById("ivaFactura").options.selectedIndex;
-                var iva = parseFloat(document.getElementById("ivaFactura").options[posicion].text);
-                var subtotaliva = iva * subtotaldescuento;
+                var subtotaldescuento=parseFloat(document.getElementById("cedldasubtotaldescuento").innerHTML);
+                var posicion=document.getElementById("ivaFacturacompra").options.selectedIndex;
+                var iva=parseFloat(document.getElementById("ivaFacturacompra").options[posicion].text);
+                var subtotaliva=iva*subtotaldescuento;
                 document.getElementById("cedldasubtotaliva").innerHTML = subtotaliva;
-                var total= subtotaliva+subtotaldescuento;
-                document.getElementById("cedldatotal").innerHTML = total;                 
+                var total=subtotaliva+subtotaldescuento;
+                document.getElementById("cedldatotalcompra").value  = total;                 
             }
 
             function Descuento() { 
                 var subtotal=parseFloat(document.getElementById("cedldasubtotal").innerHTML);
-                var posicion1=document.getElementById("descuentoFactura").options.selectedIndex;
-                var descuento=parseFloat(document.getElementById("descuentoFactura").options[posicion1].text);
+                var posicion1=document.getElementById("descuentoFacturacompra").options.selectedIndex;
+                var descuento=parseFloat(document.getElementById("descuentoFacturacompra").options[posicion1].text);
                 document.getElementById("cedldasubtotaldescuento").innerHTML = subtotal-(subtotal*descuento);
                 var subtotaldescuento=parseFloat(document.getElementById("cedldasubtotaldescuento").innerHTML);
-                var posicion2=document.getElementById("ivaFactura").options.selectedIndex;
-                var iva=parseFloat(document.getElementById("ivaFactura").options[posicion2].text);
-                var subtotaliva = iva*subtotaldescuento;
+                var posicion2=document.getElementById("ivaFacturacompra").options.selectedIndex;
+                var iva=parseFloat(document.getElementById("ivaFacturacompra").options[posicion2].text);
+                var subtotaliva=(iva*subtotaldescuento);
                 document.getElementById("cedldasubtotaliva").innerHTML = subtotaliva;    
-                var total= subtotaliva+subtotaldescuento;
-                document.getElementById("cedldatotal").innerHTML = total;
+                var total=subtotaliva+subtotaldescuento;
+                document.getElementById("cedldatotalcompra").value = total;
             } 
            
 </script>                          

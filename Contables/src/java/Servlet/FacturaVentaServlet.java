@@ -21,14 +21,21 @@ import DAO.FacturaVentaProductoDAO;
 import DAO.FacturaVentaDAO;
 import DAO.IVADAO;
 import DAO.ProductoDAO;
+import com.itextpdf.text.Chunk;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Element;
 import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.Phrase;
+import com.itextpdf.text.Rectangle;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.logging.Level;
@@ -103,6 +110,7 @@ public class FacturaVentaServlet extends HttpServlet {
             HttpSession session = request.getSession(true);
             boolean sw1=false;
             LinkedList<ProductoVentaClass> lista =(LinkedList) session.getAttribute("productos");
+            Calendar fecha = new GregorianCalendar();
             FacturaVentaProductoDAO fvpd = new  FacturaVentaProductoDAO();
             FacturaVentaDAO fvd = new  FacturaVentaDAO();
             ProductoDAO pd =new ProductoDAO();
@@ -132,7 +140,29 @@ public class FacturaVentaServlet extends HttpServlet {
             String c=request.getParameter("descuentoFactura").toString();
             String d=cc.getIdCliente();
             String e=request.getParameter("ivaFactura");
-            FacturaVentaClass fvc=new FacturaVentaClass(a, b,"986789456734", "PARQUE INDUSTRIAL", "001", c, d,e);
+            int hora = fecha.get(Calendar.HOUR_OF_DAY);
+            String hr;
+                if (hora<10){
+                hr="0"+String.valueOf(hora);
+                }else{
+                hr=String.valueOf(hora);
+                }
+            int minuto = fecha.get(Calendar.MINUTE);
+            String mnt;
+                if (minuto<10){
+                mnt="0"+String.valueOf(minuto);
+                }else{
+                mnt=String.valueOf(minuto);
+                }
+            int segundo = fecha.get(Calendar.SECOND);
+            String sgd;
+                if (segundo<10){
+                sgd="0"+String.valueOf(segundo);
+                }else{
+                sgd=String.valueOf(segundo);
+                }        
+            String horaactual=hr+":"+mnt+":"+sgd;  
+            FacturaVentaClass fvc=new FacturaVentaClass(a, horaactual, b,"986789456734", "PARQUE INDUSTRIAL", "001", c, d,e);
             boolean sw0=fvd.insertar(fvc);
                 if(sw0){
                 for(int i=0; i<lista.size();i++){
@@ -147,22 +177,22 @@ public class FacturaVentaServlet extends HttpServlet {
                         int val2=request.getParameter("formaspagoFactura").toString().length();
                         String cuenta1=request.getParameter("formaspagoFactura").toString().substring(val1+1, val2);
                         String cuenta2="21";
-                        String concepto="Venta de productos";
+                        String concepto="Venta de productos. Factura Venta "+a;
                                  String debe=request.getParameter("cedldatotal");
                                  String haber=request.getParameter("cedldatotal");
-                                 String referencia="Factura Venta";                         
+                                 String referencia="Factura Venta "+a;                         
                                  String documento=session.getAttribute("idFactura").toString();
                                  String idAsiento=ac2.getIdAsiento();
                                  String numeroDiario=String.valueOf(Integer.parseInt(ac2.getNumeroDiario()));
                                  String periodoAsiento=ac2.getPeriodoAsiento();
                                  String fechaAsiento=ac2.getFechaAsiento();
                                  String numeroAsiento=ac2.getNumeroAsiento();
-                                 String conceptoAsiento=ac2.getConceptoAsiento();
-                                 String debeAsiento=String.valueOf(Float.parseFloat(ac2.getDebeAsiento())+Float.parseFloat(debe));
-                                 String haberAsiento=String.valueOf(Float.parseFloat(ac2.getHaberAsiento())+Float.parseFloat(haber));
+                                 String conceptoAsiento=concepto;
+                                 String debeAsiento=String.valueOf(Float.parseFloat(debe));
+                                 String haberAsiento=String.valueOf(Float.parseFloat(haber));
                                  AsientoClass ac3;
                                  ac3= new AsientoClass(idAsiento, numeroDiario, periodoAsiento, fechaAsiento, numeroAsiento,conceptoAsiento, debeAsiento, haberAsiento);
-                                 boolean sw5=ad.insertar(ac3);
+                                 boolean sw5=ad.modificar(ac3);
                                      if (sw5){
                                      TransaccionClass u1=new TransaccionClass(debe, "0", referencia, documento, cuenta1, ac2.getIdAsiento());
                                      TransaccionClass u2=new TransaccionClass("0", haber, referencia, documento, cuenta2, ac2.getIdAsiento());
@@ -215,47 +245,113 @@ public class FacturaVentaServlet extends HttpServlet {
                     response.setContentType("application/pdf");
                     PdfWriter.getInstance(document, response.getOutputStream());
                     LinkedList<ProductoVentaClass> listaxvr =(LinkedList) session.getAttribute("productos"); 
+                    PdfPCell cell;
                     int i=0;
                     float to=0;
                     document.open();
 
-                    /* new paragraph instance initialized and add function write in pdf file*/
-                    document.add(new Paragraph(" Factura " + a + "\n\n"));
-                    document.add(new Paragraph(" Fecha " + b + "\n\n"));
-                    document.add(new Paragraph("------------------------------------------------------"));
-                    document.add(new Paragraph(" Nombre Cliente " + cc.getNombre() + "\n\n"));
-                    document.add(new Paragraph(" RUC/Cedula" + cc.getCedula() + "\n\n"));
-                    document.add(new Paragraph(" Direccion Cliente " + cc.getDireccion() + "\n\n"));
-                    document.add(new Paragraph(" Telefono Cliente " + cc.getTelefono() + "\n\n"));
-                    document.add(new Paragraph("------------------------------------------------------"));
-                    document.add(new Paragraph("ID ::   Cantidad ::   Precio ::   Total::\n\n"));
+                               /* new paragraph instance initialized and add function write in pdf file*/
+                    PdfPTable mitablafactura=new PdfPTable(2);
+                    cell = new PdfPCell(new Phrase("Factura"));
+                    cell.setBorder(Rectangle.NO_BORDER);
+                    mitablafactura.addCell(cell);
+                    cell = new PdfPCell(new Phrase("Fecha"));
+                    cell.setHorizontalAlignment(Element.ALIGN_MIDDLE);
+                    cell.setBorder(Rectangle.NO_BORDER);
+                    mitablafactura.addCell(cell);
+                    cell = new PdfPCell(new Phrase(a));
+                    cell.setBorder(Rectangle.NO_BORDER);
+                    mitablafactura.addCell(cell);
+                    cell = new PdfPCell(new Phrase(b));
+                    cell.setHorizontalAlignment(Element.ALIGN_MIDDLE);
+                    cell.setBorder(Rectangle.NO_BORDER);
+                    mitablafactura.addCell(cell); 
+                    document.add(mitablafactura);
+                    document.add(new Phrase("\n"));
+                    PdfPTable mitablaproveedor=new PdfPTable(2);                    
+                    cell = new PdfPCell(new Phrase("Cedula/RUC Cliente"));
+                    cell.setBorder(Rectangle.NO_BORDER);
+                    mitablaproveedor.addCell(cell);
+                    cell = new PdfPCell(new Phrase(cc.getCedula()));
+                    cell.setHorizontalAlignment(Element.ALIGN_MIDDLE);
+                    cell.setBorder(Rectangle.NO_BORDER);
+                    mitablaproveedor.addCell(cell);                    
+                    cell = new PdfPCell(new Phrase("Nombre Cliente"));
+                    cell.setBorder(Rectangle.NO_BORDER);
+                    mitablaproveedor.addCell(cell);
+                    cell = new PdfPCell(new Phrase(cc.getNombre()+" "+cc.getApellido()));
+                    cell.setHorizontalAlignment(Element.ALIGN_MIDDLE);
+                    cell.setBorder(Rectangle.NO_BORDER);
+                    mitablaproveedor.addCell(cell);                   
+                    cell = new PdfPCell(new Phrase("Direccion Cliente"));
+                    cell.setBorder(Rectangle.NO_BORDER);
+                    mitablaproveedor.addCell(cell);
+                    cell = new PdfPCell(new Phrase(cc.getDireccion()));
+                    cell.setHorizontalAlignment(Element.ALIGN_MIDDLE);
+                    cell.setBorder(Rectangle.NO_BORDER);
+                    mitablaproveedor.addCell(cell);      
+                    cell = new PdfPCell(new Phrase("Telefono Cliente"));
+                    cell.setBorder(Rectangle.NO_BORDER);
+                    mitablaproveedor.addCell(cell);
+                    cell = new PdfPCell(new Phrase(cc.getTelefono()));
+                    cell.setHorizontalAlignment(Element.ALIGN_MIDDLE);
+                    cell.setBorder(Rectangle.NO_BORDER);
+                    mitablaproveedor.addCell(cell);                     
+                    document.add(mitablaproveedor);
+                    document.add(new Phrase("\n"));
+                    PdfPTable mitablasimple=new PdfPTable(4);
+                        mitablasimple.addCell("ID");
+                        mitablasimple.addCell("Cantidad");
+                        mitablasimple.addCell("Costo");
+                        mitablasimple.addCell("Total");
                     for (Iterator iter = listaxvr.iterator(); iter.hasNext();) {
                         ProductoVentaClass customerBean = (ProductoVentaClass) iter.next();
                         String id = customerBean.getIdProducto();
                         String cantidad = customerBean.getCantidadProducto();
                         String costo = customerBean.getPrecioProducto();
                         String total = String.valueOf(Float.valueOf(cantidad)*Float.valueOf(costo));
-                        document.add(new Paragraph("     " +id + "          " + cantidad + "         " + costo + "         " + total+ "\n\n"));
+                        mitablasimple.addCell(id);
+                        mitablasimple.addCell(cantidad);
+                        mitablasimple.addCell(costo);
+                        mitablasimple.addCell(total);
                         listaxvr.remove(i);
                         i++;
                         to=to+Float.valueOf(total);
                         session.setAttribute("productos",  listaxvr);
                     }
+
                     float descuento=to*(Float.valueOf(c));
                     IVAClass i1= new IVAClass();
                     IVADAO i2= new IVADAO();
                     i1=i2.consultariva(e);
-                    float iva=((to-descuento)*Float.valueOf(i1.getValorIva()));
+                    float iva=(to-descuento)*Float.valueOf(i1.getValorIva());
                     float x=to-descuento+iva;
-                    document.add(new Paragraph("------------------------------------------------------"));
-                    document.add(new Paragraph(" SubTotal:                    " + String.valueOf(to) + "\n\n"));
-                    document.add(new Paragraph(" Descuento:                   " + c + "\n\n"));
-                    document.add(new Paragraph(" SubTotal Descuento: " + String.valueOf(descuento) + "\n\n"));
-                    document.add(new Paragraph(" IVA:                         " + i1.getValorIva() + "\n\n"));   
-                    document.add(new Paragraph(" SubTotal IVA:           " + String.valueOf(iva) + "\n\n"));
-                    document.add(new Paragraph(" Total:                       " + String.valueOf(x) + "\n\n"));                     
-                    document.close(); //document instance closed  
-                    
+                        mitablasimple.addCell("");
+                        mitablasimple.addCell("");
+                        mitablasimple.addCell("SubTotal");
+                        mitablasimple.addCell(String.valueOf(to));
+                        mitablasimple.addCell("");
+                        mitablasimple.addCell("");
+                        mitablasimple.addCell("Descuento");
+                        mitablasimple.addCell(c);                        
+                        mitablasimple.addCell("");
+                        mitablasimple.addCell("");
+                        mitablasimple.addCell("SubTotal Descuento");
+                        mitablasimple.addCell(String.valueOf(descuento));  
+                        mitablasimple.addCell("");
+                        mitablasimple.addCell("");
+                        mitablasimple.addCell("IVA");
+                        mitablasimple.addCell(i1.getValorIva());    
+                        mitablasimple.addCell("");
+                        mitablasimple.addCell("");
+                        mitablasimple.addCell("SubTotal IVA");
+                        mitablasimple.addCell(String.valueOf(iva));    
+                        mitablasimple.addCell("");
+                        mitablasimple.addCell("");
+                        mitablasimple.addCell("Total");
+                        mitablasimple.addCell(String.valueOf(x));                        
+                    document.add(mitablasimple);                    
+                    document.close(); //document instance closed
                 ////////////////////////////////////                   
                 }else{
                     PrintWriter out=response.getWriter();

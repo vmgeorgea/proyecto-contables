@@ -11,11 +11,20 @@ package Clases;
  * @author User
  */
 public class KardexClass {
-String fecha;
+String hora;
+String fecha;    
 String idfactura;
 String detalle;
 String cantidad;
 String precio;
+
+    public String getHora() {
+        return hora;
+    }
+
+    public void setHora(String hora) {
+        this.hora = hora;
+    }
 
     public String getFecha() {
         return fecha;

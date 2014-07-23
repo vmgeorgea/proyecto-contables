@@ -57,7 +57,7 @@
                                              a=Integer.parseInt(lista1.get(0).getIdFactura())+1;
                                             out.println("<td class='estilo1'><input type='text' id='numeroFactura' name='numeroFactura' readonly='readonly' value='"+a+"'/></td>");
                                         }
-                                        session.setAttribute("idFactura", a);
+                                        session.setAttribute("idFacturacompra", a);
                                 %>                                       
                                 <td class="estilo1">Fecha:</td>
                                 <td class="estilo1"><input type="text" id="fechaFactura" name="fechaFactura" readonly="readonly"/></td>

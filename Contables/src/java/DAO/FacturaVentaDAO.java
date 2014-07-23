@@ -40,16 +40,17 @@ public class FacturaVentaDAO {
        Connection conn=c.getConexion();
        if(conn!=null){
         PreparedStatement pst = null;                
-        String sql="insert into facturaventa (numeroFactura, fechaFactura, autorizacionFactura, establecimientoFactura, puntoemisionFactura, descuentoFactura, Cliente_idCliente , IVA_idIVA) values (?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql="insert into facturaventa (numeroFactura, horaFactura, fechaFactura, autorizacionFactura, establecimientoFactura, puntoemisionFactura, descuentoFactura, Cliente_idCliente , IVA_idIVA) values (?, ?, ?, ?, ?, ?, ?, ?, ?)";
         pst = conn.prepareStatement(sql);        
         pst.setString(1, u.getNumeroFactura());
-        pst.setString(2, u.getFechaFactura());
-        pst.setString(3, u.getAutorizacionFactura());
-        pst.setString(4, u.getEstablecimientoFactura());
-        pst.setString(5, u.getPuntoemisionFactura());
-        pst.setString(6, u.getDescuentoFactura());
-        pst.setString(7, u.getCliente_idCliente());
-        pst.setString(8, u.getIVA_idIVA());        
+        pst.setString(2, u.getHoraFactura());
+        pst.setString(3, u.getFechaFactura());
+        pst.setString(4, u.getAutorizacionFactura());
+        pst.setString(5, u.getEstablecimientoFactura());
+        pst.setString(6, u.getPuntoemisionFactura());
+        pst.setString(7, u.getDescuentoFactura());
+        pst.setString(8, u.getCliente_idCliente());
+        pst.setString(9, u.getIVA_idIVA());        
         pst.execute();
         agregado=true;
         pst.close();
