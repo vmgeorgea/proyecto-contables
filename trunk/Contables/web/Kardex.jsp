@@ -4,10 +4,10 @@
     Author     : User
 --%>
 
-<%@page import="DAO.ProductoDAO"%>
-<%@page import="Clases.ProductoClass"%>
+<%@page import = "DAO.ProductoDAO"%>
+<%@page import = "Clases.ProductoClass"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@ page import="java.io.*,java.util.*,java.net.*,java.sql.*" %>
+<%@ page import ="java.io.*,java.util.*,java.net.*,java.sql.*" %>
 <%@ page import = "DAO.KardexDAO"%> 
 <%@ page import = "Clases.KardexClass"%> 
 <%@ page import = "java.util.LinkedList"%> 
@@ -84,9 +84,10 @@
                         <%
                         LinkedList<ProductoClass> lista2 =new LinkedList<ProductoClass>();
                         lista2 = ProductoDAO.consultar();
+                        out.println("<option selected></option>");
                         for (int i=0;i<lista2.size();i++)
                         {
-                        out.println("<option value='"+lista2.get(i).getIdProducto()+"' selected>"+lista2.get(i).getNombreProducto()+"</option>");
+                        out.println("<option value='"+lista2.get(i).getIdProducto()+"'>"+lista2.get(i).getNombreProducto()+"</option>");
                         }  
                         %>
            </select>

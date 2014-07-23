@@ -89,7 +89,7 @@ public class BuscarProveedorServlet extends HttpServlet {
             out.println("</center>");
             out.println("</body>");
             out.println("</html>");
-            session.setAttribute("proveedor", cc);
+            session.setAttribute("proveedorcompra", cc);
                 }
             
         }

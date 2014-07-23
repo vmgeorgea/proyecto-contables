@@ -13,6 +13,7 @@ package Clases;
 public class FacturaCompraClass {
 String idFactura;
 String numeroFactura;
+String horaFactura;
 String fechaFactura;
 String autorizacionFactura;
 String establecimientoFactura;
@@ -24,9 +25,10 @@ String IVA_idIVA;
     public FacturaCompraClass() {
     }
 
-    public FacturaCompraClass(String idFactura, String numeroFactura, String fechaFactura, String autorizacionFactura, String establecimientoFactura, String puntoemisionFactura, String descuentoFactura, String Cliente_idCliente, String IVA_idIVA) {
+    public FacturaCompraClass(String idFactura, String numeroFactura, String horaFactura, String fechaFactura, String autorizacionFactura, String establecimientoFactura, String puntoemisionFactura, String descuentoFactura, String Cliente_idCliente, String IVA_idIVA) {
         this.idFactura = idFactura;
         this.numeroFactura = numeroFactura;
+        this.horaFactura = horaFactura;
         this.fechaFactura = fechaFactura;
         this.autorizacionFactura = autorizacionFactura;
         this.establecimientoFactura = establecimientoFactura;
@@ -35,8 +37,10 @@ String IVA_idIVA;
         this.Cliente_idCliente = Cliente_idCliente;
         this.IVA_idIVA = IVA_idIVA;
     }
-    public FacturaCompraClass( String numeroFactura, String fechaFactura, String autorizacionFactura, String establecimientoFactura, String puntoemisionFactura, String descuentoFactura, String Cliente_idCliente, String IVA_idIVA) {
+
+    public FacturaCompraClass(String numeroFactura, String horaFactura, String fechaFactura, String autorizacionFactura, String establecimientoFactura, String puntoemisionFactura, String descuentoFactura, String Cliente_idCliente, String IVA_idIVA) {
         this.numeroFactura = numeroFactura;
+        this.horaFactura = horaFactura;
         this.fechaFactura = fechaFactura;
         this.autorizacionFactura = autorizacionFactura;
         this.establecimientoFactura = establecimientoFactura;
@@ -45,6 +49,16 @@ String IVA_idIVA;
         this.Cliente_idCliente = Cliente_idCliente;
         this.IVA_idIVA = IVA_idIVA;
     }
+
+    public String getHoraFactura() {
+        return horaFactura;
+    }
+
+    public void setHoraFactura(String horaFactura) {
+        this.horaFactura = horaFactura;
+    }
+
+
    
     public String getIdFactura() {
         return idFactura;
